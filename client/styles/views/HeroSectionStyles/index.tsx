@@ -23,6 +23,9 @@ export const HeroWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   min-height: 600px;
+  @media (min-width: 1600px){
+    max-width: 1600px; 
+  }
   @media (max-width: 700px) {
     justify-content: center;
   }
@@ -35,6 +38,9 @@ export const TextWrapper = styled.div`
   max-width: 450px;
   gap: 5px;
   padding: 10px;
+  @media (min-width: 1600px){
+    max-width: 600px; 
+  }
   h1 {
     color: #e91a29;
     font-size: 50px;

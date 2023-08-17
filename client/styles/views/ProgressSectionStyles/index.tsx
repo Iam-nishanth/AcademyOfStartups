@@ -19,6 +19,9 @@ export const ProgressSectionWrapper = styled.div`
   min-height: 400px;
   position: relative;
   bottom: -100px;
+  @media (min-width: 1600px){
+    max-width: 1600px; 
+  }
 `;
 export const PercentageWrapper = styled.div`
   position: relative;
