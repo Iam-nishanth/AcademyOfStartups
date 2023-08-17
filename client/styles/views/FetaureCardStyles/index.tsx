@@ -21,6 +21,9 @@ export const CardsWrapper = styled.div`
   max-width: 1200px;
   min-height: 250px;
   gap: 50px;
+  @media (min-width: 1600px){
+    max-width: 1600px; 
+  }
   @media (max-width: 1200px) {
     flex-wrap: wrap;
   }

@@ -28,6 +28,10 @@ export const Container = styled.div`
   p {
     padding: 0 250px;
   }
+  @media (min-width: 1600px){
+    max-width: 1600px; 
+    padding: 0;
+  }
   @media (max-width: 1100px) {
     padding: 0 20px;
     p {

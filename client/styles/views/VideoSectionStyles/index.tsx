@@ -21,6 +21,9 @@ export const VideoSectionWrapper = styled.div`
   min-height: 600px;
   flex-direction: column;
   gap: 30px;
+  @media (min-width: 1600px){
+    max-width: 1500px; 
+  }
 `;
 export const ContentWrapper = styled.div`
   display: flex;
@@ -44,6 +47,9 @@ export const ListWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   max-width: 1100px;
+  @media (min-width: 1600px){
+    max-width: 1500px; 
+  }
   @media (max-width: 800px) {
     flex-direction: column;
     gap: 30px;

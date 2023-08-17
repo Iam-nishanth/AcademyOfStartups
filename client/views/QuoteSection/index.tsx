@@ -12,8 +12,8 @@ export default function QuoteSection() {
         </MainHeading>
         <Paragraph>
           Challenges are situations in business. Many will consider it as
-          problemsand leave the industry. We will help businesses &startups at
-          any level to grow by analyzing structure, implementinggrowth methods
+          problems and leave the industry. We will help businesses &startups at
+          any level to grow by analyzing structure, implementing growth methods
           and execute in result oriented milestones.
         </Paragraph>
         <CommonButton2 name="Join Us" width="160px" height="50px" />

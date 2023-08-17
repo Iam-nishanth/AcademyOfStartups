@@ -14,6 +14,9 @@ export const TeamWrapper = styled.div`
   padding: 30px 15px;
   flex-direction: column;
   gap: 20px;
+  @media (min-width: 1600px){
+    max-width: 1600px; 
+  }
 `;
 export const Headings = styled.div`
   display: flex;
