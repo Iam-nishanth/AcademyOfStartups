@@ -1,0 +1,46 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ant-design/cssinjs": "^1.13.2",
+    "@ant-design/icons": "^5.1.4",
+    "@emotion/is-prop-valid": "^1.2.1",
+    "@hookform/resolvers": "^3.1.1",
+    "@types/node": "20.4.5",
+    "@types/react": "18.2.18",
+    "@types/react-dom": "18.2.7",
+    "antd": "^5.7.3",
+    "aos": "^2.3.4",
+    "axios": "^1.4.0",
+    "eslint": "8.46.0",
+    "eslint-config-next": "13.4.12",
+    "framer-motion": "^10.13.1",
+    "next": "13.4.12",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.45.2",
+    "react-icons": "^4.10.1",
+    "react-modal-video": "^2.0.1",
+    "react-slick": "^0.29.0",
+    "sass": "^1.64.1",
+    "sharp": "^0.32.4",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.0.5",
+    "typescript": "5.1.6",
+    "use-count-up": "^3.0.1",
+    "yup": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/aos": "^3.0.4",
+    "@types/react-modal-video": "^1.2.0",
+    "@types/react-slick": "^0.23.10",
+    "styled-components": "^6.0.5"
+  }
+}

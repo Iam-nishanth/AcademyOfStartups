@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Startup {
+  id               Int      @id @default(autoincrement())
+  name             String
+  email            String   @unique
+  phoneNo          String
+  businessName     String   @map("business_name")
+  businessCategory String   @map("business_category")
+  registrationType String   @map("registration_type")
+  productOrService String   @map("product_or_service")
+  incNo            String?  @unique @map("inc_no")
+  companyWebsite   String?  @map("company_website")
+  panNo            String?  @unique @map("pan_no")
+  gstNo            String?  @unique @map("gst_no")
+  itrPerYear       String   @map("itr_per_year")
+  address          String
+  isVerified       Boolean  @default(false)
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+}
+
+model user {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  password   String
+  isVerified Boolean  @default(false)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+}
