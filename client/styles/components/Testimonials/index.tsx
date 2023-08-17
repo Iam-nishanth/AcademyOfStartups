@@ -63,7 +63,7 @@ export const Container = styled.div`
   }
 
   .slick-dots li.slick-active button {
-    background: #01be96;
+    background: #316aff;
     width: 15px;
   }
 
@@ -84,10 +84,11 @@ export const Buttons = styled.div`
   button {
     background-color: transparent;
     margin-left: 0.5rem;
+    margin-top: 0.5rem;
     border: none;
-    color: #01be96;
+    color: #316aff;
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
   }
 
   @media (max-width: 530px) {

@@ -65,7 +65,10 @@ const LoginForm: React.FC = () => {
     const signIn = async () => {
       try {
         const loadingMessage = message.loading("Loading...", 0);
-        const response = await axios.post("http://localhost:8080/login", data);
+        const response = await axios.post(
+          "http://localhost:8080/auth/login",
+          data
+        );
         // console.log(response);
         localStorage.setItem("token", response.data.token);
 
@@ -90,18 +93,6 @@ const LoginForm: React.FC = () => {
     };
 
     signIn();
-  };
-
-  const verifyAuth = () => {
-    axios
-      .get("http://localhost:8080/verified", {
-        headers: {
-          "x-access-token": localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      });
   };
 
   return (
@@ -149,7 +140,6 @@ const LoginForm: React.FC = () => {
           <CommonButton name="Submit" width="30%" height="40px" />
         </InputDiv>
       </LoginFORM>
-      {user && <button onClick={verifyAuth}>Verify</button>}
     </LoginContainer>
   );
 };

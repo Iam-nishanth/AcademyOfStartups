@@ -89,6 +89,9 @@ app.get("/login", (req, res) => {
 
 
 // })
+app.get("/details", (req, res) => {
+    res.redirect("http://localhost:3000/")
+})
 
 
 app.listen(port, () => {
