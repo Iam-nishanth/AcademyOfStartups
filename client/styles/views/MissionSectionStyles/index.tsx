@@ -17,6 +17,9 @@ export const SectionWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   min-height: 400px;
+  @media (min-width: 1600px){
+    max-width: 1600px; 
+  }
 `;
 export const Card = styled.div`
   display: flex;
@@ -47,6 +50,9 @@ export const Card = styled.div`
   }
 
   margin-top: -80px;
+  @media (min-width: 1600px){
+    max-width: 1400px; 
+  }
 `;
 export const Content = styled.div`
   display: flex;

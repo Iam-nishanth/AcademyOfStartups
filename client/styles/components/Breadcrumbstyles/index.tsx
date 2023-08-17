@@ -25,6 +25,9 @@ export const BreadcrumbWrapper = styled.div`
   max-width: 1200px;
   min-height: 150px;
   padding: 0 20px;
+  @media (min-width: 1600px){
+    max-width: 1400px; 
+  }
 `;
 export const Crumbs = styled.div`
   display: flex;

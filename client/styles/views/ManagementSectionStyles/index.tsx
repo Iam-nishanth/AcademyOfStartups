@@ -14,6 +14,9 @@ export const SectionWrapper = styled.div`
   align-items: center;
   gap: 30px;
   padding: 30px 10px;
+  @media (min-width: 1600px){
+    max-width: 1600px; 
+  }
   @media (max-width: 1000px) {
     flex-direction: column;
     gap: 30px;

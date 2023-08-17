@@ -18,6 +18,9 @@ export const FaqWrapper = styled.div`
   min-height: 800px;
   gap: 30px;
   padding: 0 30px;
+  @media (min-width: 1600px){
+    max-width: 1600px; 
+  }
   @media (max-width: 800px) {
     flex-direction: column;
   }

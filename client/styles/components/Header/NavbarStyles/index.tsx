@@ -15,6 +15,9 @@ export const NavWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   min-height: 90px;
+  @media (min-width: 1600px){
+    max-width: 1600px; 
+  }
   a {
     text-decoration: none;
     font: inherit;

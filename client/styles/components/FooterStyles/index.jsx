@@ -17,6 +17,10 @@ export const FooterWrapper = styled.div`
   min-height: 300px;
   padding: 50px 10px;
 
+  @media (min-width: 1600px){
+    max-width: 1400px; 
+  }
+
   @media (max-width: 1000px) {
     flex-direction: column;
     padding: 50px 10px 20px 50px;
