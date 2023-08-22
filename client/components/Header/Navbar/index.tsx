@@ -23,7 +23,7 @@ export default function Navbar({ toggle }: NavbarProps): JSX.Element {
     <>
       <NavbarContainer>
         <NavWrapper>
-          <Link href={"/"}>
+          <Link href="/">
             <Logo>
               <Image
                 src="/images/logo.png"
@@ -36,22 +36,22 @@ export default function Navbar({ toggle }: NavbarProps): JSX.Element {
           </Link>
           <NavLinks>
             <NavItem>
-              <Link href={"about"}>About us</Link>
+              <Link href="/about">About us</Link>
             </NavItem>
             <NavItem>
-              <Link href={"team"}>Team</Link>
+              <Link href="/team">Team</Link>
             </NavItem>
             <NavItem>
-              <Link href={"startups"}>Startups</Link>
+              <Link href="/startups">Startups</Link>
             </NavItem>
             <NavItem>
-              <Link href={"investors"}>Investors</Link>
+              <Link href="/investors">Investors</Link>
             </NavItem>
             <NavItem>
-              <Link href={"events"}>Events</Link>
+              <Link href="/events">Events</Link>
             </NavItem>
             <NavItem>
-              <Link href={"contact"}>Contact us</Link>
+              <Link href="/contact">Contact us</Link>
             </NavItem>
           </NavLinks>
           <ButtonWrapper>

@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+
 import { PrismaClient } from "@prisma/client"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
@@ -19,7 +23,7 @@ export const LoginController = async (req, res) => {
     });
 
     const id = user?.id;
-    const token = jwt.sign({ id }, 'jwtSecrect', {
+    const token = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: 60 * 60 * 24,
     })
 

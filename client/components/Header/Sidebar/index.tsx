@@ -24,22 +24,22 @@ export default function Sidebar({
       </Close>
       <NavLinks>
         <NavItem onClick={toggle}>
-          <LINK href={"about"}>About us</LINK>
+          <LINK href="/about">About us</LINK>
         </NavItem>
         <NavItem onClick={toggle}>
-          <LINK href={"team"}>Team</LINK>
+          <LINK href="/team">Team</LINK>
         </NavItem>
         <NavItem onClick={toggle}>
-          <LINK href={"startups"}>Startups</LINK>
+          <LINK href="/startups">Startups</LINK>
         </NavItem>
         <NavItem onClick={toggle}>
-          <LINK href={"investors"}>Investors</LINK>
+          <LINK href="/investors">Investors</LINK>
         </NavItem>
         <NavItem onClick={toggle}>
-          <LINK href={"events"}>Events</LINK>
+          <LINK href="/events">Events</LINK>
         </NavItem>
         <NavItem onClick={toggle}>
-          <LINK href={"contact"}>Contact us</LINK>
+          <LINK href="/contact">Contact us</LINK>
         </NavItem>
       </NavLinks>
     </SidebarContainer>

@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -7,8 +10,7 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import jwt from "jsonwebtoken";
 import { authRouter } from './routers/auth.js';
-
-
+import { startupRouter } from "./routers/startups.js";
 
 const app = express();
 const prisma = new PrismaClient();
@@ -36,23 +38,12 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.use('/auth', authRouter);
+app.use(startupRouter);
 
 
-// ------------Startups--------------
-
-app.get("/startups", async (req, res) => {
-    const allStartups = await prisma.startup.findMany();
-    res.json(allStartups);
-});
-app.post("/startups", async (req, res) => {
-    const newStartup = await prisma.startup.create({
-        data: req.body,
-    });
-    res.json(newStartup);
-});
 
 const verfiyJWT = (req, res, next) => {
     const token = req.headers["x-access-token"];
@@ -70,28 +61,6 @@ const verfiyJWT = (req, res, next) => {
         })
     }
 }
-
-
-// -----------Login------------
-
-app.get("/login", (req, res) => {
-    console.log(req.session.user)
-    if (req.session.user) {
-        res.status(200).json({ loggedIn: true, user: req.session.user });
-    } else {
-        res.status(404).json({ loggedIn: false });
-    }
-})
-
-// app.get('/verified', verfiyJWT, (req, res) => {
-//     // res.send('verified')
-
-
-
-// })
-app.get("/details", (req, res) => {
-    res.redirect("http://localhost:3000/")
-})
 
 
 app.listen(port, () => {

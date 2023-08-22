@@ -42,7 +42,7 @@ const LoginForm: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/login");
+        const response = await axios.get("http://localhost:8080/auth/login");
       } catch (error) {
         console.error(error);
       }
@@ -76,7 +76,7 @@ const LoginForm: React.FC = () => {
           loadingMessage();
           message.success("Login Successful");
           reset();
-          setUser(true);
+          console.log(response.data);
         }
       } catch (error: any) {
         message.destroy();

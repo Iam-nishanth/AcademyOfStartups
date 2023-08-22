@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import styled from "styled-components";
 import { IoIosQuote } from "react-icons/io";
-import Image from "next/image";
 
 interface ClientSliderProps {
   item: {

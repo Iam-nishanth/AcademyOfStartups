@@ -14,8 +14,8 @@ export const ContactWrapper = styled.div`
   max-width: 1200px;
   min-height: 600px;
   padding: 30px 10px;
-  @media (min-width: 1600px){
-    max-width: 14k00px; 
+  @media (min-width: 1600px) {
+    max-width: 1400px;
   }
   @media (max-width: 700px) {
     flex-direction: column;
