@@ -10,10 +10,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id         String   @id @default(uuid()) @map("user_id")
+  email      String   @unique
+  password   String
+  isVerified Boolean  @default(false) @map("is_verified")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  startup      Startup?       @relation(fields: [email], references: [businessEmail])
+  refreshToken RefreshToken[]
+}
+
 model Startup {
-  id               Int      @id @default(autoincrement())
+  id               String   @id @default(uuid()) @map("startup_id")
+  businessEmail    String   @unique @map("business_email")
   name             String
-  email            String   @unique
   phoneNo          String
   businessName     String   @map("business_name")
   businessCategory String   @map("business_category")
@@ -25,16 +37,15 @@ model Startup {
   gstNo            String?  @unique @map("gst_no")
   itrPerYear       String   @map("itr_per_year")
   address          String
-  isVerified       Boolean  @default(false)
+  isVerified       Boolean  @default(false) @map("is_verified")
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
+  User             User?
 }
 
-model user {
-  id         String   @id @default(uuid())
-  email      String   @unique
-  password   String
-  isVerified Boolean  @default(false)
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+model RefreshToken {
+  id     String @id @default(uuid()) @map("token_id")
+  token  String @unique
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
 }

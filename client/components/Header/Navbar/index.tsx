@@ -55,7 +55,7 @@ export default function Navbar({ toggle }: NavbarProps): JSX.Element {
             </NavItem>
           </NavLinks>
           <ButtonWrapper>
-            <Button>Get Started</Button>
+            <Button><Link href="/login">Get Started </Link></Button>
           </ButtonWrapper>
           <SidebarIcon onClick={toggle}>
             <FaBars />

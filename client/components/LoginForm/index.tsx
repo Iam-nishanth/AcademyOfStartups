@@ -15,6 +15,7 @@ import {
 import { CommonButton } from "../Common/Button";
 import axios from "axios";
 import { message } from "antd";
+import { useRouter } from "next/router";
 
 type FormData = {
   email: string;
@@ -38,18 +39,8 @@ const LoginForm: React.FC = () => {
   });
 
   axios.defaults.withCredentials = true;
+ const router = useRouter();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/auth/login");
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState(false);
@@ -69,14 +60,18 @@ const LoginForm: React.FC = () => {
           "http://localhost:8080/auth/login",
           data
         );
-        // console.log(response);
-        localStorage.setItem("token", response.data.token);
+        console.log(response);
 
         if (response.status === 200) {
           loadingMessage();
           message.success("Login Successful");
           reset();
-          console.log(response.data);
+          // console.log(response.data);
+
+          router.push({
+            pathname: "/users",
+            query: { username: response.data.user.id }, // Pass the user details as query parameters
+          });
         }
       } catch (error: any) {
         message.destroy();

@@ -15,7 +15,7 @@ import { CommonButton } from "../Common/Button";
 import axios from "axios";
 export interface Datamodel {
   name: string;
-  email: string;
+  businessEmail: string;
   phoneNo: string;
   businessName: string;
   businessCategory: string;
@@ -32,7 +32,7 @@ const phoneRegExp = /^\d{10}$/;
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
-  email: yup.string().email("Invalid email").required("Email is required"),
+  businessEmail: yup.string().email("Invalid email").required("Email is required"),
   phoneNo: yup
     .string()
     .matches(phoneRegExp, "Phone number must be 10 digits")
@@ -102,17 +102,17 @@ export default function StartupsLogin() {
           Email<Required>*</Required>
         </Label>
         <Controller
-          name="email"
+          name="businessEmail"
           control={control}
           defaultValue=""
           render={({ field }) => <Input placeholder="Email" {...field} />}
         />
-        {errors.email && <Error>{errors.email.message}</Error>}
+        {errors.businessEmail && <Error>{errors.businessEmail.message}</Error>}
       </InputDiv>
 
       <InputDiv>
         <Label>
-          phoneNo<Required>*</Required>
+          Phone No.<Required>*</Required>
         </Label>
         <Controller
           name="phoneNo"
@@ -251,7 +251,6 @@ export default function StartupsLogin() {
             <Input placeholder="Company Website" {...field} />
           )}
         />
-        {/* {errors.companyWebsite && <div>{errors.companyWebsite.message}</div>} */}
       </InputDiv>
 
       <InputDiv>

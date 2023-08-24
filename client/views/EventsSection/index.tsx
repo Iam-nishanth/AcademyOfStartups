@@ -11,6 +11,14 @@ import Link from "next/link";
 
 export const Timings = [
   {
+    id: 11,
+    date: "10th Sep 2023",
+    time: "11 AM - 1PM",
+    title: "Academy of Startups",
+    desc: "Investment Webinar",
+    price: "99",
+  },
+  {
     id: 1,
     date: "2nd Sep 2023",
     time: "11 AM - 1PM",
@@ -48,8 +56,8 @@ const EventsSection = () => {
   const CardPreview = Timings.map((item) => (
     <EventCard key={item.id}>
       <div>
-        <h2>Digital Mahila</h2>
-        <p>Webinar</p>
+        <h2>{item.title}</h2>
+        <p>{item.desc}</p>
       </div>
       <div>
         <p>
