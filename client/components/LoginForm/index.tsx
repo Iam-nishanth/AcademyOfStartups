@@ -16,6 +16,8 @@ import { CommonButton } from "../Common/Button";
 import axios from "axios";
 import { message } from "antd";
 import { useRouter } from "next/router";
+import { LoginResponse } from "@/types/LoginForm";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 type FormData = {
   email: string;
@@ -39,11 +41,11 @@ const LoginForm: React.FC = () => {
   });
 
   axios.defaults.withCredentials = true;
- const router = useRouter();
+  const router = useRouter();
 
 
   const [showPassword, setShowPassword] = useState(false);
-  const [user, setUser] = useState(false);
+  const { dispatch } = useAuthContext()
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -56,7 +58,7 @@ const LoginForm: React.FC = () => {
     const signIn = async () => {
       try {
         const loadingMessage = message.loading("Loading...", 0);
-        const response = await axios.post(
+        const response = await axios.post<LoginResponse>(
           "http://localhost:8080/auth/login",
           data
         );
@@ -64,13 +66,17 @@ const LoginForm: React.FC = () => {
 
         if (response.status === 200) {
           loadingMessage();
+          // save the user to local storage
+          localStorage.setItem('user', JSON.stringify(response.data.user))
+
+          // update the auth context
+          dispatch({ type: 'LOGIN', payload: response.data.user })
           message.success("Login Successful");
           reset();
           // console.log(response.data);
 
           router.push({
             pathname: "/users",
-            query: { username: response.data.user.id }, // Pass the user details as query parameters
           });
         }
       } catch (error: any) {

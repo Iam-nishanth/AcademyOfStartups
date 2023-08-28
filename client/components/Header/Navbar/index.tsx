@@ -13,12 +13,15 @@ import {
   SidebarIcon,
 } from "@/styles/components/Header/NavbarStyles";
 import { LINK } from "@/styles/Globalstyles";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 type NavbarProps = {
   toggle: () => void;
 };
 
 export default function Navbar({ toggle }: NavbarProps): JSX.Element {
+  const { user } = useAuthContext();
+
   return (
     <>
       <NavbarContainer>
@@ -53,10 +56,18 @@ export default function Navbar({ toggle }: NavbarProps): JSX.Element {
             <NavItem>
               <Link href="/contact">Contact us</Link>
             </NavItem>
+            <NavItem>
+              <Link href="/users">Join</Link>
+            </NavItem>
           </NavLinks>
-          <ButtonWrapper>
-            <Button><Link href="/login">Get Started </Link></Button>
-          </ButtonWrapper>
+          {
+            user ? (
+              <h2>Hello {user.email.split('@')[0]}</h2>
+            ) : <ButtonWrapper>
+              <Link href="/login"><Button>Get Started</Button></Link>
+            </ButtonWrapper>
+          }
+
           <SidebarIcon onClick={toggle}>
             <FaBars />
           </SidebarIcon>
