@@ -1,5 +1,3 @@
-'use client'
-
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 const Navbar = dynamic(() => import("@/components/Header/Navbar"));
@@ -10,14 +8,15 @@ import withAuth from "../../components/HighOrders/WithAuth";
 
 
 
-const UserPage = () => {
+const DashBoard = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { user, dispatch, loading } = useAuthContext();
 
   useEffect(() => {
     console.log('rerender')
-  }, [user, loading, router.isReady, router]);
+    if (!loading && !user) router.push('/login')
+  }, [user, loading, router.isReady]);
 
   const logout = () => {
     localStorage.removeItem('user')
@@ -41,4 +40,4 @@ const UserPage = () => {
   );
 };
 
-export default withAuth(UserPage);
+export default withAuth(DashBoard);

@@ -14,6 +14,8 @@ import {
 } from "@/styles/components/Header/NavbarStyles";
 import { LINK } from "@/styles/Globalstyles";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import LogoutDrop from '@/components/Common/LogoutDrop';
+import { CommonButton } from "@/components/Common/Button";
 
 type NavbarProps = {
   toggle: () => void;
@@ -21,6 +23,11 @@ type NavbarProps = {
 
 export default function Navbar({ toggle }: NavbarProps): JSX.Element {
   const { user } = useAuthContext();
+  const capitalizeFirstWord = (email: string) => {
+    const firstWord = email.split("@")[0];
+    const capitalizedFirstWord = firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
+    return `${capitalizedFirstWord} `
+  };
 
   return (
     <>
@@ -56,20 +63,18 @@ export default function Navbar({ toggle }: NavbarProps): JSX.Element {
             <NavItem>
               <Link href="/contact">Contact us</Link>
             </NavItem>
-            <NavItem>
-              <Link href="/users">Join</Link>
-            </NavItem>
           </NavLinks>
           {
             user ? (
-              <h2>Hello {user.email.split('@')[0]}</h2>
+              <LogoutDrop user={capitalizeFirstWord(user.email)} />
             ) : <ButtonWrapper>
-              <Link href="/login"><Button>Get Started</Button></Link>
+              <Link href="/login"><Button>Sign In</Button></Link>
             </ButtonWrapper>
           }
 
-          <SidebarIcon onClick={toggle}>
-            <FaBars />
+          <SidebarIcon >
+            <Link href="/login"><CommonButton name="Sign In" width="100px" /></Link>
+            <FaBars onClick={toggle} />
           </SidebarIcon>
         </NavWrapper>
       </NavbarContainer>

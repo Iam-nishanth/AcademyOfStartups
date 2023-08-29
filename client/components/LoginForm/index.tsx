@@ -41,7 +41,6 @@ const LoginForm: React.FC = () => {
   });
 
   axios.defaults.withCredentials = true;
-  const router = useRouter();
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -53,31 +52,23 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = (data: FormData) => {
     console.log(data);
-    // Perform login logic here, e.g., sending login data to the server
 
     const signIn = async () => {
       try {
         const loadingMessage = message.loading("Loading...", 0);
         const response = await axios.post<LoginResponse>(
-          "http://localhost:8080/auth/login",
+          "http://192.168.0.180:8080/auth/login",
           data
         );
         console.log(response);
 
         if (response.status === 200) {
           loadingMessage();
-          // save the user to local storage
           localStorage.setItem('user', JSON.stringify(response.data.user))
 
-          // update the auth context
           dispatch({ type: 'LOGIN', payload: response.data.user })
           message.success("Login Successful");
           reset();
-          // console.log(response.data);
-
-          router.push({
-            pathname: "/users",
-          });
         }
       } catch (error: any) {
         message.destroy();

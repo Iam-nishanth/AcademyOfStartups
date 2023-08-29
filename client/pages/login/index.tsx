@@ -5,11 +5,16 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 const Navbar = dynamic(() => import("@/components/Header/Navbar"));
 const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
-import SignedIn from "../../components/HighOrders/SignedIn";
 
 
 const LoginPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const router = useRouter();
+  const { user, dispatch, loading } = useAuthContext();
+  useEffect(() => {
+    console.log('rerender')
+    if (!loading && user) router.push('/dashboard')
+  }, [user, loading, router.isReady]);
 
   const toggle = (): void => {
     setIsOpen(!isOpen);
@@ -24,4 +29,4 @@ const LoginPage = () => {
   );
 }
 
-export default SignedIn(LoginPage)
+export default LoginPage

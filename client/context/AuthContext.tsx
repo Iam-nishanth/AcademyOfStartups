@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, ReactNode, Dispatch, useEffect } from "react";
+import React, { createContext, useReducer, ReactNode, Dispatch, useEffect, useCallback } from "react";
 
 interface User {
     id: string;
@@ -27,6 +27,7 @@ type AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+
 export const authReducer = (state: State, action: Action): State => {
     switch (action.type) {
         case 'LOGIN':
@@ -48,6 +49,7 @@ export const authReducer = (state: State, action: Action): State => {
             return state;
     }
 };
+
 
 interface AuthContextProviderProps {
     children: ReactNode;

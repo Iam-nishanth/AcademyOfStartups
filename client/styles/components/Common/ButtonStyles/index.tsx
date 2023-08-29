@@ -3,6 +3,8 @@ import styled from "styled-components";
 interface GlobalButtonProps {
   width?: string;
   height?: string;
+  paddingLeft?: string;
+  paddingRight?: string;
 }
 
 export const GlobalButton = styled.button<GlobalButtonProps>`

@@ -1,32 +1,36 @@
-import React, { useContext, useEffect } from 'react';
+import { useAuthContext } from '@/hooks/useAuthContext';
 import { useRouter } from 'next/router';
-import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useEffect } from 'react';
 
-// Define a type for the WrappedComponent
-type ComponentType<T> = React.FC<T>;
+interface AuthProps {
+    children: React.ReactNode;
+}
 
-const PlaceholderComponent: React.FC = () => null; // Placeholder component that doesn't affect hydration
+const withAuth = <P extends AuthProps>(
+    WrappedComponent: React.ComponentType<P>
+) => {
 
-const withAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
-    const ComponentWithAuth: ComponentType<P> = (props: P) => {
+    const AuthHOC = (props: Omit<P, keyof AuthProps>) => {
+
         const { user, loading } = useAuthContext();
         const router = useRouter();
 
         useEffect(() => {
-            // If user is not authenticated and router is ready, redirect to login page
-            if (!user && router.isReady) {
-                router.replace('/login'); // Replace with your login route
+            if (!loading && !user) {
+                router.push('/login');
             }
-        }, [user, router.isReady, loading, router]); // Include user and router.isReady in the dependency array
+        }, [user, loading]);
 
-        // Render the wrapped component when user is authenticated and router is ready,
-        // or render the placeholder component for other cases
-        const ContentComponent = user && router.isReady ? WrappedComponent : PlaceholderComponent;
+        if (loading || !user) {
+            return null;
+        }
 
-        return <ContentComponent {...props} />;
-    };
+        return <WrappedComponent {...(props as P)} />;
 
-    return ComponentWithAuth;
-};
+    }
+
+    return AuthHOC;
+
+}
 
 export default withAuth;

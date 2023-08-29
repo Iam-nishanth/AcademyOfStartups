@@ -24,13 +24,7 @@ export const CommonButton: React.FC<ButtonProps> = ({
   width,
   height,
 }) => {
-  /**
-   * Button component
-   * @param {string} name - The name of the button
-   * @param {string} width - The width of the button (optional)
-   * @param {string} height - The height of the button (optional)
-   * @returns {JSX.Element} - The button component
-   */
+
   return (
     <GlobalButton width={width} height={height}>
       {name}
@@ -43,13 +37,7 @@ export const CommonButton2: React.FC<ButtonProps> = ({
   width,
   height,
 }) => {
-  // /**
-  //  * Button component
-  //  * @param {string} name - The name of the button
-  //  * @param {string} width - The width of the button (optional)
-  //  * @param {string} height - The height of the button (optional)
-  //  * @returns {JSX.Element} - The button component
-  //  */
+
   return (
     <GlobalButton2 width={width} height={height}>
       {name}

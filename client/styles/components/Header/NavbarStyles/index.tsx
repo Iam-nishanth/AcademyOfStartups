@@ -77,10 +77,13 @@ export const SidebarIcon = styled.div`
   @media (max-width: 1000px) {
     display: flex;
     align-items: center;
+    gap: 10px;
+    max-width: 200px;
+    padding-right: 2  0px;
     svg {
       cursor: pointer;
       position: relative;
-      right: 20px;
+      /* right: 20px; */
       font-size: 25px;
     }
   }

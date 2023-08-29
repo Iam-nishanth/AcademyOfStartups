@@ -23,4 +23,4 @@ const EventsPage = () => {
   );
 }
 
-export default withAuth(EventsPage);
+export default EventsPage;
