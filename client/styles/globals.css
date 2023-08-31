@@ -14,3 +14,7 @@ body {
   margin: 0;
   padding: 0;
 }
+  .ant-btn:hover {
+  background-color:#001439  !important; /* Replace with your desired background color */
+  transition: all 0.3s ease-in-out;
+}

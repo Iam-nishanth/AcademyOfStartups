@@ -1,43 +1,21 @@
-import React, { createContext, useReducer, ReactNode, Dispatch, useEffect, useCallback } from "react";
-
-interface User {
-    id: string;
-    email: string;
-    password: string;
-    isVerified: boolean;
-    createdAt: string;
-    updatedAt: string;
-}
-
-interface State {
-    user: User | null;
-    loading: boolean;
-}
-
-interface Action {
-    type: string;
-    payload?: any;
-}
-
-type AuthContextType = {
-    dispatch: Dispatch<Action>;
-    user: User | null | undefined;
-    loading: boolean;
-};
+import React, { createContext, useReducer, useEffect } from "react";
+import { AuthContextProviderProps, AuthContextType, Startup, State, Action } from '@/types/AuthTypes';
+import { start } from "repl";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
 
 export const authReducer = (state: State, action: Action): State => {
     switch (action.type) {
         case 'LOGIN':
             return {
-                user: action.payload,
-                loading: false
+                user: action.payload.user,
+                loading: false,
+                startup: action.payload.startup
             };
         case 'LOGOUT':
             return {
                 user: null,
+                startup: null,
                 loading: false
             };
         case 'LOADING':
@@ -50,14 +28,10 @@ export const authReducer = (state: State, action: Action): State => {
     }
 };
 
-
-interface AuthContextProviderProps {
-    children: ReactNode;
-}
-
 const initialState: State = {
     user: null,
-    loading: true
+    loading: true,
+    startup: null
 }
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
@@ -65,19 +39,26 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
     useEffect(() => {
         const user = localStorage.getItem('user');
+        const startup = localStorage.getItem('startup');
+
         if (user) {
+            const userObject = JSON.parse(user);
+            const startupObject = startup ? JSON.parse(startup) : null;
+
             dispatch({
                 type: 'LOGIN',
-                payload: JSON.parse(user)
+                payload: {
+                    user: userObject,
+                    startup: startupObject
+                }
             });
 
-            // Set loading to false after user is fetched
             dispatch({ type: 'LOADING', payload: false });
         } else {
-            // Set loading to false if user is not found
             dispatch({ type: 'LOADING', payload: false });
         }
     }, []);
+
 
     console.log("AuthContext", state);
 

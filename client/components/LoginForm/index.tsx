@@ -16,7 +16,7 @@ import { CommonButton } from "../Common/Button";
 import axios from "axios";
 import { message } from "antd";
 import { useRouter } from "next/router";
-import { LoginResponse } from "@/types/LoginForm";
+import { LoginResponse } from "@/types/Logintypes";
 import { useAuthContext } from "@/hooks/useAuthContext";
 
 type FormData = {
@@ -31,7 +31,6 @@ const validationSchema = yup.object().shape({
 
 const LoginForm: React.FC = () => {
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
@@ -57,7 +56,7 @@ const LoginForm: React.FC = () => {
       try {
         const loadingMessage = message.loading("Loading...", 0);
         const response = await axios.post<LoginResponse>(
-          "http://192.168.0.180:8080/auth/login",
+          "http://localhost:8080/auth/login",
           data
         );
         console.log(response);
@@ -65,8 +64,13 @@ const LoginForm: React.FC = () => {
         if (response.status === 200) {
           loadingMessage();
           localStorage.setItem('user', JSON.stringify(response.data.user))
-
-          dispatch({ type: 'LOGIN', payload: response.data.user })
+          localStorage.setItem('startup', JSON.stringify(response.data.startup))
+          dispatch({
+            type: 'LOGIN', payload: {
+              user: response.data.user,
+              startup: response.data.startup
+            }
+          })
           message.success("Login Successful");
           reset();
         }
