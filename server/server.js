@@ -71,20 +71,17 @@ app.post('/users', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
+
+
+
 app.get('/', (req, res) => {
-=======
-app.get('/', async (req, res) => {
->>>>>>> 162f6f1c5efc8ba8dba343c68c85363096079662
   res.send('Hello World!');
 })
 
 
 
 app.listen(port, () => {
-<<<<<<< HEAD
-    console.log(`app listening on http://localhost:${port}`);
-=======
+  console.log(`app listening on http://localhost:${port}`);
   console.log(`Example app listening on port ${port}`);
->>>>>>> 162f6f1c5efc8ba8dba343c68c85363096079662
+
 });
