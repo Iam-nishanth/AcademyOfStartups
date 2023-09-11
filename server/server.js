@@ -11,13 +11,19 @@ import { startupRouter } from "./routers/startups.js";
 const app = express();
 const prisma = new PrismaClient();
 
-app.use(cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization", "x-access-token", "x-csrf-token"],
-    exposedHeaders: ['*', 'authorization'],
-}));
+// app.use(cors({
+//   origin: ['*'],
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   credentials: true,
+//   allowedHeaders: ["Content-Type", "Authorization", "x-access-token", "x-csrf-token"],
+//   exposedHeaders: ['*', 'authorization'],
+// }));
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -34,7 +40,7 @@ app.use(startupRouter);
 
 app.post('/users', async (req, res) => {
   const { username } = req.body;
-//   console.log(userId)
+  //   console.log(userId)
 
 
   try {
@@ -49,28 +55,36 @@ app.post('/users', async (req, res) => {
       return;
     }
     let startup = null;
-        const existingStartup = await prisma.startup.findUnique({
-          where: {
-            businessEmail: user.email,
-          },
-        });
+    const existingStartup = await prisma.startup.findUnique({
+      where: {
+        businessEmail: user.email,
+      },
+    });
 
-        if (existingStartup) {
-          startup = existingStartup;
-        }
+    if (existingStartup) {
+      startup = existingStartup;
+    }
 
-    res.status(200).json({user: user, startup: startup});
+    res.status(200).json({ user: user, startup: startup });
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
+<<<<<<< HEAD
 app.get('/', (req, res) => {
+=======
+app.get('/', async (req, res) => {
+>>>>>>> 162f6f1c5efc8ba8dba343c68c85363096079662
   res.send('Hello World!');
 })
 
 
 
 app.listen(port, () => {
+<<<<<<< HEAD
     console.log(`app listening on http://localhost:${port}`);
+=======
+  console.log(`Example app listening on port ${port}`);
+>>>>>>> 162f6f1c5efc8ba8dba343c68c85363096079662
 });
