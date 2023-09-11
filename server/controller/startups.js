@@ -7,8 +7,14 @@ export const StartupGetController = async (req, res) => {
     res.json(allStartups);
 }
 export const StartupPostController = async (req, res) => {
-    const newStartup = await prisma.startup.create({
-        data: req.body,
-    });
-    res.json(newStartup);
+    try {
+        const newStartup = await prisma.startup.create({
+            data: req.body,
+        });
+        res.json(newStartup);
+    } catch (error) {
+        console.error("Error creating startup:", error);
+        res.status(500).json({ message: "An error occurred while creating the startup.", error: error });
+    }
 }
+

@@ -4,6 +4,12 @@ dotenv.config();
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import * as yup from 'yup';
+
+const registerSchema = yup.object().shape({
+  email: yup.string().email().matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/).required(),
+  password: yup.string().min(8).required(),
+});
 
 const prisma = new PrismaClient();
 
@@ -38,12 +44,12 @@ export const LoginController = async (req, res) => {
           process.env.REFRESH_TOKEN_SECRET
         );
 
-         // Store the refresh token in the database
-         const newRefreshToken = await prisma.refreshToken.create({
-            data: {
-                token: refreshToken,
-                userId: user.id,
-            },
+        // Store the refresh token in the database
+        const newRefreshToken = await prisma.refreshToken.create({
+          data: {
+            token: refreshToken,
+            userId: user.id,
+          },
         });
 
         // Fetch startup details if available
@@ -76,22 +82,41 @@ export const LoginController = async (req, res) => {
   }
 };
 
+
+
+
 export const RegisterController = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // Validate the email and password
+    await registerSchema.validate({ email, password });
+
     const hashedPassword = await bcrypt.hash(password, saltrounds);
+
+    // Create the user record
     const newUser = await prisma.user.create({
       data: {
         email: email,
         password: hashedPassword,
       },
     });
+
+
+
     res.status(201).json(newUser);
   } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
+    if (error.name === 'ValidationError') {
+      // Handle validation errors
+      const validationErrors = error.errors;
+      res.status(400).json({ error: validationErrors });
+    } else {
+      res.status(500).json({ message: "Internal server error", error: error });
+    }
   }
 };
+
+
 
 export const LogoutController = async (req, res) => {
   const { userId } = req.body;

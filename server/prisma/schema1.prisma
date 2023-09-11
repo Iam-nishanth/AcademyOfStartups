@@ -1,0 +1,60 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id         String   @id @default(uuid()) @map("user_id")
+    email      String   @unique
+    password   String
+    isVerified Boolean  @default(false) @map("is_verified")
+    isAdmin    Boolean  @default(false) @map("is_admin")
+    createdAt  DateTime @default(now()) @map("created_at")
+    updatedAt  DateTime @updatedAt @map("updated_at")
+
+    // User can have a startup, but it's optional
+    startup   Startup? @relation(fields: [startupId], references: [id])
+    startupId String?  @map("startup_id")
+
+    refreshToken RefreshToken[]
+}
+
+model Business {
+    id               String   @id @default(uuid()) @map("business_id")
+    businessEmail    String   @map("business_email")
+    name             String
+    phoneNo          String
+    businessName     String   @map("business_name")
+    businessCategory String   @map("business_category")
+    registrationType String   @map("registration_type")
+    productOrService String   @map("product_or_service")
+    incNo            String?  @unique @map("inc_no") // Allow null
+    companyWebsite   String?  @map("company_website") // Allow null
+    panNo            String?  @unique @map("pan_no") // Allow null
+    gstNo            String?  @unique @map("gst_no") // Allow null
+    itrPerYear       String   @map("itr_per_year")
+    address          String
+    isVerified       Boolean  @default(false) @map("is_verified")
+    createdAt        DateTime @default(now()) @map("created_at")
+    updatedAt        DateTime @updatedAt @map("updated_at")
+}
+
+model Startup {
+    id     String @id @default(uuid()) @map("startup_id")
+    userId String @map("user_id")
+    // Add other startup-specific fields here
+
+    user     User     @relation(fields: [userId], references: [id])
+    business Business @relation(fields: [businessEmail], references: [businessEmail])
+}
+
+model RefreshToken {
+    id     String @id @default(uuid()) @map("token_id")
+    token  String @unique
+    userId String @map("user_id")
+    user   User   @relation(fields: [userId], references: [id])
+}
