@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useEffect } from "react";
-import { AuthContextProviderProps, AuthContextType, Startup, State, Action } from '@/types/AuthTypes';
+import { AuthContextProviderProps, AuthContextType, Business, State, Action } from '@/types/AuthTypes';
 import { start } from "repl";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -10,12 +10,12 @@ export const authReducer = (state: State, action: Action): State => {
             return {
                 user: action.payload.user,
                 loading: false,
-                startup: action.payload.startup
+                business: action.payload.business
             };
         case 'LOGOUT':
             return {
                 user: null,
-                startup: null,
+                business: null,
                 loading: false
             };
         case 'LOADING':
@@ -31,7 +31,7 @@ export const authReducer = (state: State, action: Action): State => {
 const initialState: State = {
     user: null,
     loading: true,
-    startup: null
+    business: null
 }
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
@@ -39,17 +39,17 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
     useEffect(() => {
         const user = localStorage.getItem('user');
-        const startup = localStorage.getItem('startup');
+        const business = localStorage.getItem('business');
 
         if (user) {
             const userObject = JSON.parse(user);
-            const startupObject = startup ? JSON.parse(startup) : null;
+            const businessObject = business ? JSON.parse(business) : null;
 
             dispatch({
                 type: 'LOGIN',
                 payload: {
                     user: userObject,
-                    startup: startupObject
+                    business: businessObject
                 }
             });
 

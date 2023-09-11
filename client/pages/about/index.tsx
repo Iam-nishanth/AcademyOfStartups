@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { useState } from "react";
 const Navbar = dynamic(() => import("@/components/Header/Navbar"));
 const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
@@ -17,16 +18,24 @@ export default function AboutPage(): JSX.Element {
   };
 
   return (
-    <main>
-      <Navbar toggle={toggle} />
-      <Sidebar toggle={toggle} isOpen={isOpen} />
-      <Breadcumb name="About us" link="about" />
-      <ManagementSection />
-      <MissionSection />
-      <RoadmapSection />
-      <QuoteSection />
-      <MentorsSection />
-      <Footer />
-    </main>
+    <>
+      <main>
+        {/* <Head>
+          <title>About</title>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+        </Head> */}
+        <Navbar toggle={toggle} />
+        <Sidebar toggle={toggle} isOpen={isOpen} />
+        <Breadcumb name="About us" link="about" />
+        <ManagementSection />
+        <MissionSection />
+        <RoadmapSection />
+        <QuoteSection />
+        <MentorsSection />
+        <Footer />
+      </main>
+    </>
   );
 }

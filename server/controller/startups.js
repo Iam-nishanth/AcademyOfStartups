@@ -8,7 +8,7 @@ export const StartupGetController = async (req, res) => {
 }
 export const StartupPostController = async (req, res) => {
     try {
-        const newStartup = await prisma.startup.create({
+        const newStartup = await prisma.business.create({
             data: req.body,
         });
         res.json(newStartup);

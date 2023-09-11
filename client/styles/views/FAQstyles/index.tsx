@@ -24,6 +24,9 @@ export const FaqWrapper = styled.div`
   @media (max-width: 800px) {
     flex-direction: column;
   }
+  @media (max-width: 400px) {
+    padding: 10px;
+  }
 `;
 
 export const ContentWrapper = styled.div`

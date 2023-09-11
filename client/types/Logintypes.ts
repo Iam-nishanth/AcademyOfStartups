@@ -7,7 +7,7 @@ export interface User {
     updatedAt: string;
   }
   
-  export interface Startup {
+  export interface Business {
     id: string;
     businessEmail: string;
     name: string;
@@ -32,5 +32,5 @@ export interface User {
     accessToken: string;
     refreshToken: string;
     user: User;
-    startup: Startup;
+    business: Business;
   }

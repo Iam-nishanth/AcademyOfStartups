@@ -2,20 +2,20 @@ import { Dispatch, ReactNode } from "react";
 
 export interface User {
     id: string;
-    email: string;
+    userEmail: string;
     password: string;
     isVerified: boolean;
     createdAt: string;
     updatedAt: string;
-    startup: Startup | null;
+    business: Business | null;
 }
 
 export interface State {
     user: User | null;
     loading: boolean;
-    startup: Startup | null;
+    business: Business | null;
 }
-export interface Startup {
+export interface Business {
     id: string;
     businessEmail: string;
     name: string;
@@ -44,7 +44,7 @@ export type AuthContextType = {
     dispatch: Dispatch<Action>;
     user: User | null | undefined;
     loading: boolean;
-    startup: Startup | null | undefined;
+    business: Business | null | undefined;
 };
 
 export interface AuthContextProviderProps {

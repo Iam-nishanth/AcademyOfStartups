@@ -64,11 +64,11 @@ const LoginForm: React.FC = () => {
         if (response.status === 200) {
           loadingMessage();
           localStorage.setItem('user', JSON.stringify(response.data.user))
-          localStorage.setItem('startup', JSON.stringify(response.data.startup))
+          localStorage.setItem('business', JSON.stringify(response.data.business))
           dispatch({
             type: 'LOGIN', payload: {
               user: response.data.user,
-              startup: response.data.startup
+              startup: response.data.business
             }
           })
           message.success("Login Successful");

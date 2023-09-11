@@ -1,3 +1,4 @@
+import { CommonButton, CommonButton2 } from "@/components/Common/Button";
 import { LINK } from "@/styles/Globalstyles";
 import {
   Close,
@@ -6,6 +7,7 @@ import {
   NavLinks,
   SidebarContainer,
 } from "@/styles/components/Header/SidebarStyles";
+import Link from "next/link";
 import React, { ReactElement } from "react";
 
 type SidebarProps = {
@@ -41,6 +43,9 @@ export default function Sidebar({
         <NavItem onClick={toggle}>
           <LINK href="/contact">Contact us</LINK>
         </NavItem>
+        <Link href="/login">
+          <CommonButton name="Sign In" width="200px" />
+        </Link>
       </NavLinks>
     </SidebarContainer>
   );

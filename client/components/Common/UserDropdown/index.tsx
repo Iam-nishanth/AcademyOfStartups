@@ -1,5 +1,5 @@
 import React from 'react';
-import { CaretDownOutlined, DownOutlined } from '@ant-design/icons';
+import { CaretDownOutlined } from '@ant-design/icons';
 import { Dropdown, Space, Divider, Button, theme } from 'antd';
 import type { MenuProps } from 'antd';
 import { useRouter } from 'next/router';
@@ -54,6 +54,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
         console.log('clicked logout');
 
         localStorage.removeItem('user');
+        localStorage.removeItem('business');
         dispatch({ type: 'LOGOUT' });
         router.push('/');
     }
@@ -75,7 +76,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
         >
             <a >
                 <Space>
-                    Hello <strong>{user}</strong><CaretDownOutlined />
+                    <strong>{user}</strong><CaretDownOutlined />
                 </Space>
             </a>
         </Dropdown>

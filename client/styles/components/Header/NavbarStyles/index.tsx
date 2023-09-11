@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { usePathname } from "next/navigation";
+import { CommonButton } from "@/components/Common/Button";
 
 export const NavbarContainer = styled.nav`
   display: flex;
@@ -74,18 +75,32 @@ export const ButtonWrapper = styled.div`
 `;
 export const SidebarIcon = styled.div`
   display: none;
+
   @media (max-width: 1000px) {
     display: flex;
     align-items: center;
     gap: 10px;
     max-width: 200px;
     padding-right: 2  0px;
+    strong{
+      display: none;
+    }
     svg {
       cursor: pointer;
       position: relative;
       /* right: 20px; */
       font-size: 25px;
     }
+
+    @media (max-width: 365px) {
+      button{
+        display: none;
+      }
+      strong{
+        display: block;
+      }
+    }
+    
   }
 `;
 export const Button = styled.button`
@@ -107,3 +122,9 @@ export const Button = styled.button`
     transform: translateY(-5px);
   }
 `;
+
+export const UserWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
