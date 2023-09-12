@@ -11,19 +11,14 @@ import { startupRouter } from "./routers/startups.js";
 const app = express();
 const prisma = new PrismaClient();
 
-// app.use(cors({
-//   origin: ['*'],
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-//   credentials: true,
-//   allowedHeaders: ["Content-Type", "Authorization", "x-access-token", "x-csrf-token"],
-//   exposedHeaders: ['*', 'authorization'],
-// }));
-const corsOptions = {
-  origin: 'http://localhost:3000',
+app.use(cors({
+  origin: ["http://localhost:3000", 'http://192.168.0.180:3000'],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
-};
+  allowedHeaders: ["Content-Type", "Authorization", "x-access-token", "x-csrf-token"],
+  exposedHeaders: ['*', 'authorization'],
+}));
 
-app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

@@ -75,13 +75,17 @@ export const ButtonWrapper = styled.div`
 `;
 export const SidebarIcon = styled.div`
   display: none;
+  strong{
+    color: #316aff;
+    
+  }
 
   @media (max-width: 1000px) {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     max-width: 200px;
-    padding-right: 2  0px;
+    padding-right: 10px;
     strong{
       display: none;
     }
@@ -92,7 +96,7 @@ export const SidebarIcon = styled.div`
       font-size: 25px;
     }
 
-    @media (max-width: 365px) {
+    @media (max-width: 450px) {
       button{
         display: none;
       }

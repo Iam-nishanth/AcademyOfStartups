@@ -4,11 +4,13 @@ export interface User {
     id: string;
     userEmail: string;
     password: string;
+    role: string;
     isVerified: boolean;
     createdAt: string;
     updatedAt: string;
     business: Business | null;
 }
+
 
 export interface State {
     user: User | null;

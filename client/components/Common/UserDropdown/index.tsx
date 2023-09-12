@@ -8,25 +8,7 @@ import Link from 'next/link';
 
 const { useToken } = theme;
 
-const items: MenuProps['items'] = [
-    {
-        key: '1',
-        label: (
-            <Link style={{ fontWeight: 'bold' }} href="/dashboard">
-                Dashboard
-            </Link>
-        ),
-    },
-    {
-        key: '2',
-        label: (
-            <Link style={{ fontWeight: 'bold' }} href="/dashboard">
-                My Account
-            </Link>
-        ),
-    },
 
-];
 interface userProps {
     user: string | null | undefined;
 }
@@ -34,7 +16,36 @@ interface userProps {
 const UserDropdown: React.FC<userProps> = ({ user }) => {
     const { token } = useToken();
     const router = useRouter();
-    const { dispatch } = useAuthContext()
+    const { dispatch, user: authUser } = useAuthContext()
+    const isAdmin = authUser?.role === 'ADMIN';
+    const items: MenuProps['items'] = [
+        {
+            key: '1',
+            label: (
+                <Link style={{ fontWeight: 'bold' }} href="/dashboard">
+                    Dashboard
+                </Link>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <Link style={{ fontWeight: 'bold' }} href="/dashboard">
+                    My Account
+                </Link>
+            ),
+        },
+    ];
+    const adminItems: MenuProps['items'] = [
+        {
+            key: '1',
+            label: (
+                <Link style={{ fontWeight: 'bold' }} href="/admin/dashboard">
+                    Dashboard
+                </Link>
+            )
+        }
+    ]
 
     const contentStyle: React.CSSProperties = {
         backgroundColor: token.colorBgElevated,
@@ -63,7 +74,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
     return (
         <Dropdown
 
-            menu={{ items }}
+            menu={isAdmin ? { items: adminItems } : { items: items }}
             dropdownRender={(menu) => (
                 <div style={contentStyle}>
                     {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
