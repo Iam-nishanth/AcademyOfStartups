@@ -68,7 +68,7 @@ const LoginForm: React.FC = () => {
           dispatch({
             type: 'LOGIN', payload: {
               user: response.data.user,
-              startup: response.data.business
+              business: response.data.business
             }
           })
           message.success("Login Successful");

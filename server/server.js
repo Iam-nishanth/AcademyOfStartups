@@ -12,7 +12,7 @@ const app = express();
 const prisma = new PrismaClient();
 
 app.use(cors({
-  origin: ["http://localhost:3000", 'http://192.168.0.180:3000'],
+  origin: ["http://localhost:3000", 'http://192.168.0.180:3000', 'http://localhost:3001', 'http://192.168.0.180:3001'],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization", "x-access-token", "x-csrf-token"],

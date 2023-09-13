@@ -19,7 +19,7 @@ const withAuth = <P extends AuthProps>(
             if (!loading && !user) {
                 router.push('/login');
             }
-        }, [user, loading]);
+        }, [user, loading, router.isReady, router]);
 
         if (loading || !user) {
             return null;

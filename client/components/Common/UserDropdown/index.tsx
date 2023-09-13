@@ -22,7 +22,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
         {
             key: '1',
             label: (
-                <Link style={{ fontWeight: 'bold' }} href="/dashboard">
+                <Link style={{ fontWeight: 'bold' }} href="/user/dashboard">
                     Dashboard
                 </Link>
             ),
@@ -30,7 +30,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
         {
             key: '2',
             label: (
-                <Link style={{ fontWeight: 'bold' }} href="/dashboard">
+                <Link style={{ fontWeight: 'bold' }} href="/user/account">
                     My Account
                 </Link>
             ),
@@ -44,7 +44,23 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
                     Dashboard
                 </Link>
             )
-        }
+        },
+        {
+            key: '2',
+            label: (
+                <Link style={{ fontWeight: 'bold' }} href="/user/dashboard">
+                    User-Dashboard
+                </Link>
+            )
+        },
+        {
+            key: '3',
+            label: (
+                <Link style={{ fontWeight: 'bold' }} href="/admin/account">
+                    My Account
+                </Link>
+            )
+        },
     ]
 
     const contentStyle: React.CSSProperties = {

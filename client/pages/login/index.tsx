@@ -13,8 +13,8 @@ const LoginPage = () => {
   const { user, dispatch, loading } = useAuthContext();
   useEffect(() => {
     if (!loading && user?.role === "ADMIN") router.push('/admin/dashboard')
-    else if (!loading && user) router.push('/dashboard')
-  }, [user, loading, router.isReady]);
+    else if (!loading && user) router.push('/user/dashboard')
+  }, [user, loading,router, router.isReady]);
 
   const toggle = (): void => {
     setIsOpen(!isOpen);

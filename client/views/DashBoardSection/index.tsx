@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React from 'react'
 import { Card, CardContent, DashboardCards, DashboardContainer, DashboardWrapper, IconBackground, InvestorCard, InvestorCards, Investors } from '@/styles/views/DashBoardstyles'
 import { useAuthContext } from '@/hooks/useAuthContext'
@@ -7,7 +8,7 @@ import { Heading, SubHeading } from '@/styles/Globalstyles'
 import { CommonButton } from '@/components/Common/Button'
 
 const DashBoardsection = () => {
-    const { user, startup, loading } = useAuthContext()
+    const { user, business, loading } = useAuthContext()
 
     return (
         <DashboardContainer>
