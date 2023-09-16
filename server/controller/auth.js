@@ -5,6 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import * as yup from 'yup';
+import cookieParser from "cookie-parser";
 
 const registerSchema = yup.object().shape({
   email: yup.string().email().matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/).required(),
@@ -18,7 +19,7 @@ const saltrounds = 10;
 // ----------------ACCESS TOKEN GENERATION----------------
 function generateAccessToken(userId) {
   return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15s", 
+    expiresIn: "1d", 
   });
 }
 
@@ -33,6 +34,11 @@ export const LoginController = async (req, res) => {
       where: {
         userEmail: email,
       },
+      select: {
+        userEmail: true,
+        password: true,
+        id: true,
+      }
     });
 
     if (!user) {
@@ -48,11 +54,17 @@ export const LoginController = async (req, res) => {
           },
         })
 
+        res.cookie('jwt', accessToken, {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'Strict',
+          maxAge: 24 * 60 * 60 * 100
+        })
+
         res
           .status(200)
           .json({
             auth: true,
-            accessToken,
             user: user,
             business: business
           });

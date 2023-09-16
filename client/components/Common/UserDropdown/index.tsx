@@ -41,7 +41,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
             key: '1',
             label: (
                 <Link style={{ fontWeight: 'bold' }} href="/admin/dashboard">
-                    Dashboard
+                    Admin-Dashboard
                 </Link>
             )
         },

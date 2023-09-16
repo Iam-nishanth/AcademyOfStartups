@@ -19,12 +19,12 @@ export default function StartupsView() {
           <br /> for Unparalleled Growth and Networking
         </Heading>
         <FormContainer>
-          <ContentWrapper>
+          {/* <ContentWrapper>
             <h1>
               If you need any kind of services from our end contact us through
               this number
             </h1>
-          </ContentWrapper>
+          </ContentWrapper> */}
           <FormWrapper>
             <StartupsLogin />
           </FormWrapper>

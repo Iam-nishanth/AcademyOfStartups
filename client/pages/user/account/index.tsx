@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic';
 import React, { useState } from 'react'
 const Navbar = dynamic(() => import("@/components/Header/Navbar"));
 const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
+import AccountSection from '@/views/AccountSection';
+import { useAuthContext } from '@/hooks/useAuthContext';
 
 const MyAccount = () => {
 
@@ -15,7 +17,7 @@ const MyAccount = () => {
         <main>
             <Navbar toggle={toggle} />
             <Sidebar toggle={toggle} isOpen={isOpen} />
-            <Heading>My Account</Heading>
+            <AccountSection />
         </main>
     )
 }
