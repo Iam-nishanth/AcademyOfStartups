@@ -33,11 +33,6 @@ export const LoginController = async (req, res) => {
     const user = await prisma.user.findUnique({
       where: {
         userEmail: email,
-      },
-      select: {
-        userEmail: true,
-        password: true,
-        id: true,
       }
     });
 

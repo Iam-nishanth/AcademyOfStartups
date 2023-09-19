@@ -41,6 +41,25 @@ model Business {
     owner User @relation(fields: [businessEmail], references: [userEmail])
 }
 
+model Investor {
+    id           String         @id @default(uuid())
+    email        String         @unique
+    password     String
+    name         String
+    isVerified   Boolean        @default(false) @map("is_verified")
+    createdAt    DateTime       @default(now()) @map("created_at")
+    updatedAt    DateTime       @updatedAt @map("updated_at")
+    InvestorInfo InvestorInfo[]
+}
+
+model InvestorInfo {
+    id       String   @id @default(uuid())
+    PhoneNo  String
+    Address  String
+    Image    String
+    investor Investor @relation(fields: [id], references: [id])
+}
+
 enum Role {
     ADMIN
     USER
