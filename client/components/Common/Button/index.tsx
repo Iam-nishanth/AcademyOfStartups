@@ -23,6 +23,7 @@ export const CommonButton: React.FC<ButtonProps> = ({
   name,
   width,
   height,
+  onClick,
 }) => {
 
   return (

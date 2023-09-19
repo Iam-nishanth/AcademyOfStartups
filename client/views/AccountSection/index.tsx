@@ -1,17 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router';
 import { Heading } from '@/styles/Globalstyles'
 import { AccountSectionContainer, AccountSectionWrapper, DetailsWrapper, PairHolder, ValueHolder } from '@/styles/views/AccountSectionStyles';
 import { Tabs } from 'antd';
 import { useAuthContext } from '@/hooks/useAuthContext';
-import { H3 } from '@/styles/views/VideoSectionStyles';
+import { IoCaretBack } from 'react-icons/io5';
+import ModalComponent from '@/components/AccountDetailsModal';
+
 
 const AccountSection = () => {
     const { user, business } = useAuthContext();
+    const [open, setOpen] = useState(false);
+    const router = useRouter();
+
+    const showModal = () => {
+        setOpen(true);
+        console.log('Clicked open modal');
+    }
+    const handleBack = () => {
+        router.back();
+    }
 
     return (
         <AccountSectionContainer>
             <AccountSectionWrapper>
-                <Heading>Account Details</Heading>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                    <div onClick={handleBack} >
+                        <IoCaretBack style={{ cursor: 'pointer', fontSize: '30px' }} />
+                    </div>
+                    <Heading>Account Details</Heading>
+                </div>
                 <div>
                     <Tabs
                         defaultActiveKey="1"
@@ -113,6 +131,7 @@ const AccountSection = () => {
                                         <p>{business && business.address}</p>
                                     </ValueHolder>
                                 </PairHolder>
+                                <ModalComponent showModal={showModal} setOpen={setOpen} open={open} />
                             </DetailsWrapper>
                         </Tabs.TabPane>
                     </Tabs>

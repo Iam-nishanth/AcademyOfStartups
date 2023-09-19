@@ -25,6 +25,11 @@ export const DetailsWrapper = styled.div`
   width: 100%;
   padding: 30px 50px;
 
+  button{
+    align-self: center;
+    margin-top: 40px;
+  }
+
   @media (max-width: 600px){
     padding: 20px;
   }
