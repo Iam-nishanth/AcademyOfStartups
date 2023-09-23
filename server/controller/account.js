@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
@@ -16,7 +16,7 @@ export const ChangePasswordController = async (req, res) => {
 
   try {
     // Check if the token is valid.
-    const decodedToken =  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
     if (!decodedToken) {
       return res.status(401).json({ message: "Invalid token" });

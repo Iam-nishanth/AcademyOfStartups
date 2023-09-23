@@ -8,48 +8,17 @@ import {
 } from "@/styles/views/StartupsStyles";
 import React from "react";
 import { Select, Radio, message } from "antd";
-import { useForm, Controller, Control } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { CommonButton } from "../Common/Button";
 import axios from "axios";
-export interface Datamodel {
-  name: string;
-  businessEmail: string;
-  phoneNo: string;
-  businessName: string;
-  businessCategory: string;
-  registrationType: string;
-  productOrService: string;
-  incNo: string;
-  companyWebsite: string | undefined;
-  panNo: string;
-  gstNo: string | undefined;
-  itrPerYear: string;
-  address: string;
-}
-const phoneRegExp = /^\d{10}$/;
+import { StartupValidationSchma } from "@/utils/validation";
+import { Datamodel } from "@/types/Startup";
 
-const validationSchema = yup.object().shape({
-  name: yup.string().required("Name is required"),
-  businessEmail: yup.string().email("Invalid email").required("Email is required"),
-  phoneNo: yup
-    .string()
-    .matches(phoneRegExp, "Phone number must be 10 digits")
-    .required("Phone is required"),
-  businessName: yup.string().required("Business Name is required"),
-  businessCategory: yup.string().required("Business Category is required"),
-  registrationType: yup
-    .string()
-    .required("Business Registration Type is required"),
-  productOrService: yup.string().required("Business Type is required"),
-  companyWebsite: yup.string(),
-  gstNo: yup.string(),
-  incNo: yup.string().required("INC No. of Company is required"),
-  panNo: yup.string().required("PAN No. of Company is required"),
-  itrPerYear: yup.string().required("Income Tax Return is required"),
-  address: yup.string().required("Address of the company is required"),
-});
+
+
+
 
 export default function StartupsLogin() {
   const {
@@ -58,7 +27,7 @@ export default function StartupsLogin() {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(StartupValidationSchma),
   });
 
   const onSubmit = async (data: Datamodel) => {
@@ -177,6 +146,7 @@ export default function StartupsLogin() {
           defaultValue=""
           render={({ field }) => (
             <Select
+              placeholder="Business Registration Type"
               options={[
                 { value: undefined, label: "select", disabled: true },
                 { value: "Proprietorship", label: "Proprietorship" },

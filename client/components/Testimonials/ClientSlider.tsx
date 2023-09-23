@@ -2,6 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import { IoIosQuote } from "react-icons/io";
+import Image from "next/image";
 
 interface ClientSliderProps {
   item: {
@@ -25,10 +26,10 @@ const ClientSlider: React.FC<ClientSliderProps> = (props) => {
       </Header>
       <Body>{disc}</Body>
       <Footer>
-        <img src={img_url} alt={name} />
+        <Image width={70} height={70} src={img_url} alt={name} />
         <div className="details">
           <h1>{name}</h1>
-          <p>{position}</p>
+          <Position>{position}</Position>
         </div>
       </Footer>
     </Container>
@@ -66,14 +67,13 @@ const Body = styled.p`
   font-size: 0.8rem;
   margin-bottom: 1.5rem;
 `;
+const Position = styled.p``
 
 const Footer = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
   img {
-    width: 4rem;
-    height: 4rem;
     border-radius: 50px;
     object-fit: cover;
   }
@@ -89,11 +89,12 @@ const Footer = styled.div`
     }
   }
 
-  p {
-    font-size: 0.8rem;
+  ${Position} {
+    font-size: 0.9rem;
+    font-weight: 500;
     color: #001336;
     @media (max-width: 538px) {
-      font-size: 0.6rem;
+      font-size: 0.7rem;
     }
   }
 `;

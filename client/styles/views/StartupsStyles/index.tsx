@@ -55,6 +55,11 @@ export const InputContainer = styled.form`
   background-color: #fff;
   .ant-select {
     width: 100%;
+    min-height: 40px;
+    .ant-select-selection-placeholder{
+      font-size: 1rem;
+      color: #757575;
+    }
   }
 
   .ant-select-selection-item {

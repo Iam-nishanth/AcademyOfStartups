@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { CountUp } from "use-count-up";
 import FAQ from "@/components/FAQ";
 import { Heading, SmallHeading, SubHeading } from "@/styles/Globalstyles";
@@ -18,11 +19,6 @@ import { useEffect } from "react";
 import { data } from "./questions";
 
 export default function FAQSection() {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-    });
-  });
 
   const clientsArr = data.map((client) => {
     return {
@@ -51,7 +47,7 @@ export default function FAQSection() {
           <Image src={"/images/Faq.png"} alt="faq" width={300} height={300} />
           <Tile>
             <TbTargetArrow />
-            <Number data-aos="fade-up">
+            <Number>
               <CountUp isCounting end={300} duration={3.2} />+
             </Number>
             <SmallHeading>Business Startegies</SmallHeading>

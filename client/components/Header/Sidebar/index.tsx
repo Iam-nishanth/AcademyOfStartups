@@ -32,7 +32,7 @@ export default function Sidebar({
           <LINK href="/team">Team</LINK>
         </NavItem>
         <NavItem onClick={toggle}>
-          <LINK href="/startups">Startups</LINK>
+          <LINK href="/services">Services</LINK>
         </NavItem>
         <NavItem onClick={toggle}>
           <LINK href="/investors">Investors</LINK>

@@ -1,11 +1,30 @@
-FROM node:16
-WORKDIR /app 
+# FROM node:18
+# WORKDIR /app 
 
-COPY package*.json ./
+# COPY package*.json ./
 
-COPY . .
+# COPY . .
+
+# EXPOSE 8080
+# ENV NODE_ENV production
+
+# CMD ["node", "server.js"]
+
+
+FROM node:18-alpine3.16
+
+WORKDIR /app
+
+COPY server/package.json server/package-lock.json ./
+
+RUN npm cache clean --force && rm -rf node_modules && npm install
+# RUN npm install --production
+
+
+COPY server/. .
 
 EXPOSE 8080
+
 ENV NODE_ENV production
 
-CMD ["node", "server.js"]
+CMD ["npm", "start"]

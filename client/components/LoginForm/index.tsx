@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import {
   Error,
   Input,
@@ -18,16 +17,14 @@ import { message } from "antd";
 import { useRouter } from "next/router";
 import { LoginResponse } from "@/types/Logintypes";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { LoginValidationSchema } from "@/utils/validation";
 
 type FormData = {
   email: string;
   password: string;
 };
 
-const validationSchema = yup.object().shape({
-  password: yup.string().required("Password is required"),
-  email: yup.string().email("Invalid email").required("Email is required"),
-});
+
 
 const LoginForm: React.FC = () => {
   const {
@@ -36,7 +33,7 @@ const LoginForm: React.FC = () => {
     formState: { errors },
     reset,
   } = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(LoginValidationSchema),
   });
 
   axios.defaults.withCredentials = true;
@@ -56,7 +53,7 @@ const LoginForm: React.FC = () => {
       try {
         const loadingMessage = message.loading("Loading...", 0);
         const response = await axios.post<LoginResponse>(
-          "http://localhost:8080/auth/login",
+          "https://pglgl7pl-8080.inc1.devtunnels.ms/auth/login",
           data
         );
         console.log(response);

@@ -34,7 +34,7 @@
     "sass": "^1.64.1",
     "sharp": "^0.32.4",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^6.0.5",
+    "styled-components": "^6.0.8",
     "typescript": "5.1.6",
     "use-count-up": "^3.0.1",
     "yup": "^1.2.0"
@@ -43,6 +43,6 @@
     "@types/aos": "^3.0.4",
     "@types/react-modal-video": "^1.2.0",
     "@types/react-slick": "^0.23.10",
-    "styled-components": "^6.0.5"
+    "styled-components": "^6.0.8"
   }
 }

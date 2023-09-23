@@ -5,7 +5,7 @@ const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
 const DashBoardSection = dynamic(() => import("@/views/DashBoardSection"));
 import { useRouter } from "next/router";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import withAuth from "../../components/HighOrders/WithAuth";
+import WithAuth from '@/components/HighOrders/WithAuth'
 
 
 
@@ -15,10 +15,6 @@ const DashBoard = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { user, dispatch, loading } = useAuthContext();
 
-  // useEffect(() => {
-  //   console.log('rerender')
-  //   if (!loading && !user) router.push('/login')
-  // }, [user, loading, router.isReady]);
 
   const logout = () => {
     localStorage.removeItem('user')

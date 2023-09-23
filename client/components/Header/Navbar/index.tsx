@@ -16,7 +16,6 @@ import {
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { AnchorButton, CommonButton } from "@/components/Common/Button";
 import UserDropdown from "@/components/Common/UserDropdown";
-import { Anchor } from "antd";
 
 type NavbarProps = {
   toggle: () => void;
@@ -45,6 +44,7 @@ export default function Navbar({ toggle }: NavbarProps): JSX.Element {
                 width={200}
                 height={90}
                 priority={true}
+                quality={100}
               />
             </Logo>
           </Link>
@@ -56,7 +56,7 @@ export default function Navbar({ toggle }: NavbarProps): JSX.Element {
               <Link href="/team">Team</Link>
             </NavItem>
             <NavItem>
-              <Link href="/startups">Startups</Link>
+              <Link href="/services">Services</Link>
             </NavItem>
             <NavItem>
               <Link href="/investors">Investors</Link>

@@ -34,3 +34,16 @@ export interface User {
     user: User;
     business: Business;
   }
+
+  export interface Investors {
+    name: string;
+    email: string;
+    phoneNo: string;
+    password: string;
+    confirmPassword: string | undefined | null;
+    address: string;
+    investorType: string;
+    investmentRange: string;
+    domainsOfInterest: string[];
+    existingInvestments?: string;
+}

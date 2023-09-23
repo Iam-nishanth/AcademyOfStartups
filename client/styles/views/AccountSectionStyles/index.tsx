@@ -5,6 +5,11 @@ export const AccountSectionContainer = styled.section`
     align-items: center;
     justify-content: center;
     width: 100%;
+
+    .ant-tabs-tab-btn{
+        font-size: 16px;
+        font-weight: 600;
+    }
 `
 export const AccountSectionWrapper = styled.div`
     display: flex;
@@ -26,8 +31,8 @@ export const DetailsWrapper = styled.div`
   padding: 30px 50px;
 
   button{
-    align-self: center;
-    margin-top: 40px;
+    align-self: flex-end;
+    margin-top: 10px 0;
   }
 
   @media (max-width: 600px){

@@ -27,8 +27,8 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ showModal, setOpen, ope
 
     return (
         <>
-            <Button type="primary" onClick={showModal} style={{ width: '150px', height: '50px' }}>
-                Edit
+            <Button type="primary" onClick={showModal} style={{ width: '120px', height: '40px' }}>
+                Edit Details
             </Button>
 
             <Modal

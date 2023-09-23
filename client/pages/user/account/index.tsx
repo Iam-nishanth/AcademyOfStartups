@@ -15,8 +15,8 @@ const MyAccount = () => {
     };
     return (
         <main>
-            <Navbar toggle={toggle} />
-            <Sidebar toggle={toggle} isOpen={isOpen} />
+            {/* <Navbar toggle={toggle} />
+            <Sidebar toggle={toggle} isOpen={isOpen} /> */}
             <AccountSection />
         </main>
     )

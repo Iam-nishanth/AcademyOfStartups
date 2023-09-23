@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import * as yup from 'yup';
 import cookieParser from "cookie-parser";
@@ -19,7 +19,7 @@ const saltrounds = 10;
 // ----------------ACCESS TOKEN GENERATION----------------
 function generateAccessToken(userId) {
   return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "1d", 
+    expiresIn: "1d",
   });
 }
 
@@ -28,11 +28,12 @@ function generateAccessToken(userId) {
 // ----------------USER LOGIN----------------
 export const LoginController = async (req, res) => {
   const { email, password } = req.body;
+  const Email = email.toLowerCase();
 
   try {
     const user = await prisma.user.findUnique({
       where: {
-        userEmail: email,
+        userEmail: Email,
       }
     });
 
@@ -77,7 +78,6 @@ export const LoginController = async (req, res) => {
 // ----------------USER REGISTER----------------
 export const RegisterController = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     await registerSchema.validate({ email, password });
 
