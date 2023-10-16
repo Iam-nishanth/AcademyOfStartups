@@ -14,6 +14,7 @@ import {
 } from "../../styles/components/FooterStyles";
 import { FooterAnchor } from "../Common/Button";
 import { HiClock, HiLocationMarker, HiMail, HiPhone } from "react-icons/hi";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -60,13 +61,29 @@ export default function Footer() {
           <FooterHR />
           <FooterList>
             <li>
-              <FooterAnchor name="About us" />
+              <Link href="/about">
+                <FooterAnchor name="About us" />
+              </Link>
             </li>
             <li>
-              <FooterAnchor name="Contact us" />
+              <Link href='/team'>
+                <FooterAnchor name="Team" />
+              </Link>
             </li>
             <li>
-              <FooterAnchor name="Events" />
+              <Link href='/investors'>
+                <FooterAnchor name="Investors" />
+              </Link>
+            </li>
+            <li>
+              <Link href='/events'>
+                <FooterAnchor name="Events" />
+              </Link>
+            </li>
+            <li>
+              <Link href='/contact'>
+                <FooterAnchor name="Contact us" />
+              </Link>
             </li>
           </FooterList>
         </QuickLinks>
@@ -85,9 +102,6 @@ export default function Footer() {
             </li>
             <li>
               <FooterAnchor name="Support" />
-            </li>
-            <li>
-              <FooterAnchor name="FAQ" />
             </li>
           </FooterList>
         </UsefulLinks>

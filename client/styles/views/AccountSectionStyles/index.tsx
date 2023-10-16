@@ -49,11 +49,20 @@ export const PairHolder = styled.div`
     font-weight: 800;
     width: 300px;
   }
+  form{
+    padding-left: 60px;
+  }
 
+  @media (max-width: 940px){
+    form{
+      padding-left: 0;
+    }
+  }
   @media (max-width: 600px){
     flex-direction: column;
     align-items: start;
     gap: 5px;
+    
   }
 `
 

@@ -17,6 +17,7 @@ interface ButtonProps {
 
 interface AnchorProps {
   name: string;
+  href?: string;
 }
 
 export const CommonButton: React.FC<ButtonProps> = ({
@@ -27,7 +28,7 @@ export const CommonButton: React.FC<ButtonProps> = ({
 }) => {
 
   return (
-    <GlobalButton width={width} height={height}>
+    <GlobalButton width={width} height={height} onClick={onClick}>
       {name}
     </GlobalButton>
   );
@@ -45,8 +46,8 @@ export const CommonButton2: React.FC<ButtonProps> = ({
     </GlobalButton2>
   );
 };
-export const AnchorButton: React.FC<AnchorProps> = ({ name }) => {
-  return <Anchor>{name}</Anchor>;
+export const AnchorButton: React.FC<AnchorProps> = ({ name, href }) => {
+  return <Anchor href={href}>{name}</Anchor>;
 };
 export const FooterAnchor: React.FC<AnchorProps> = ({ name }) => {
   return <Anchor2>{name}</Anchor2>;

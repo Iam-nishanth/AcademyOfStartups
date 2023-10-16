@@ -14,22 +14,26 @@ import {
   UserWrapper,
 } from "@/styles/components/Header/NavbarStyles";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import { AnchorButton, CommonButton } from "@/components/Common/Button";
+import { CommonButton } from "@/components/Common/Button";
 import UserDropdown from "@/components/Common/UserDropdown";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 
 type NavbarProps = {
   toggle: () => void;
+  NavBackground?: boolean;
 };
 
-export default function Navbar({ toggle }: NavbarProps): JSX.Element {
+export default function Navbar({ toggle, NavBackground }: NavbarProps): JSX.Element {
   const { user, business } = useAuthContext();
-  const capitalizeFirstWord = (email: string) => {
-    const firstWord = email.split("@")[0];
-    const capitalizedFirstWord = firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
-    return `${capitalizedFirstWord} `
-  };
 
-  const DisplayName = business?.name || user && capitalizeFirstWord(user.userEmail);
+  const router = useRouter();
+
+  const capitalizeFirstLetter = (word: string): string => {
+    return word[0].toUpperCase() + word.slice(1);
+  }
+
+  const DisplayName = user && `${capitalizeFirstLetter(user?.name)}`;
 
 
   return (
@@ -49,22 +53,22 @@ export default function Navbar({ toggle }: NavbarProps): JSX.Element {
             </Logo>
           </Link>
           <NavLinks>
-            <NavItem>
+            <NavItem className={router.pathname.match('/about') ? 'active' : ''}>
               <Link href="/about">About us</Link>
             </NavItem>
-            <NavItem>
+            <NavItem className={router.pathname.match('/team') ? 'active' : ''}>
               <Link href="/team">Team</Link>
             </NavItem>
-            <NavItem>
+            <NavItem className={router.pathname.match('/services') ? 'active' : ''}>
               <Link href="/services">Services</Link>
             </NavItem>
-            <NavItem>
+            <NavItem className={router.pathname.match('/investors') ? 'active' : ''}>
               <Link href="/investors">Investors</Link>
             </NavItem>
-            <NavItem>
+            <NavItem className={router.pathname.match('/events') ? 'active' : ''}>
               <Link href="/events">Events</Link>
             </NavItem>
-            <NavItem>
+            <NavItem className={router.pathname.match('/contact') ? 'active' : ''}>
               <Link href="/contact">Contact us</Link>
             </NavItem>
           </NavLinks>
@@ -95,8 +99,8 @@ export default function Navbar({ toggle }: NavbarProps): JSX.Element {
             )}
           </UserWrapper>
 
-        </NavWrapper>
-      </NavbarContainer>
+        </NavWrapper >
+      </NavbarContainer >
     </>
   );
 }

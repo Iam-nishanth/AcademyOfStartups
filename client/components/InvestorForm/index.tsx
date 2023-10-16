@@ -22,6 +22,7 @@ import { domainOptions, investmentRangeOptions } from './Data';
 const InvestorValidationSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup.string().email("Invalid email").required("Email is required"),
+    gender: yup.string().required("Gender is required"),
     phoneNo: yup.string().required("Phone is required"),
 
     address: yup.string().required("Address is required"),
@@ -97,6 +98,22 @@ const InvestorForm = () => {
                     render={({ field }) => <Input placeholder="Email" {...field} />}
                 />
                 {errors.email && <Error>{errors.email.message}</Error>}
+            </InputDiv>
+
+            <InputDiv>
+                <Label>Gender<Required>*</Required></Label>
+                <Controller
+                    name="gender"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                        <Radio.Group {...field}>
+                            <Radio value="Male">Male</Radio>
+                            <Radio value="Female">Female</Radio>
+                        </Radio.Group>
+                    )}
+                />
+                {errors.gender && <Error>{errors.gender.message}</Error>}
             </InputDiv>
 
             <InputDiv>

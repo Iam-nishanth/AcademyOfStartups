@@ -6,12 +6,15 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthContextProvider } from "@/context/AuthContext";
 import Head from "next/head";
+import axios, { AxiosProxyConfig } from "axios";
 
 export default function App({ Component, pageProps }: AppProps) {
   const pathname = usePathname();
+
+
   return (
-    <AuthContextProvider>
-      <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
+    <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
+      <AuthContextProvider>
         <AnimatePresence mode="wait">
           <motion.div
             key={pathname}
@@ -28,7 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </motion.div>
         </AnimatePresence>
-      </StyleSheetManager>
-    </AuthContextProvider>
+      </AuthContextProvider>
+    </StyleSheetManager>
   );
 }

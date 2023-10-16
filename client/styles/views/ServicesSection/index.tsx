@@ -9,6 +9,9 @@ export const ServicesSectionContainer = styled.div`
     .ant-tabs-tab-btn{
         font-size: 16px;
         font-weight: 600;
+        @media (max-width: 370px){
+            font-size: 13px;
+        }
     }
 `
 export const ServicesSectionWrapper = styled.div`
@@ -20,6 +23,7 @@ export const ServicesSectionWrapper = styled.div`
     flex-direction: column;
     gap: 20px;
     padding: 30px 10px;
+    text-align: center;
 
 
 `
@@ -49,6 +53,9 @@ export const Card = styled.div`
         font-size: 45px;
         color: #316aff;
     }
+    @media (max-width: 600px){
+        min-height: 300px;
+    }
 
 `
 export const StartupCard = styled.div`
@@ -67,6 +74,9 @@ export const StartupCard = styled.div`
     svg{
         font-size: 45px;
         color: #316aff;
+    }
+    @media (max-width: 600px){
+        min-height: 250px;
     }
 `
 

@@ -1,6 +1,5 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import { AuthContextProviderProps, AuthContextType, Business, State, Action } from '@/types/AuthTypes';
-import { cookies } from "next/dist/client/components/headers";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -10,18 +9,37 @@ export const authReducer = (state: State, action: Action): State => {
             return {
                 user: action.payload.user,
                 loading: false,
-                business: action.payload.business
+                business: action.payload.business,
+                token: action.payload.token,
+                investorData: state.investorData
             };
         case 'LOGOUT':
             return {
                 user: null,
                 business: null,
-                loading: false
+                loading: false,
+                token: null,
+                investorData: state.investorData
             };
         case 'LOADING':
             return {
                 ...state,
                 loading: action.payload
+            }
+        case 'EDIT':
+            return {
+                ...state,
+                business: action.payload
+            }
+        case 'INVESTOR':
+            return {
+                ...state,
+                investorData: action.payload
+            }
+        case 'INVESTOR_LOGOUT':
+            return {
+                ...state,
+                investorData: null
             }
         default:
             return state;
@@ -31,7 +49,9 @@ export const authReducer = (state: State, action: Action): State => {
 const initialState: State = {
     user: null,
     loading: true,
-    business: null
+    business: null,
+    token: null,
+    investorData: null
 }
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
@@ -40,21 +60,50 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     useEffect(() => {
         const user = localStorage.getItem('user');
         const business = localStorage.getItem('business');
+        const token = localStorage.getItem('token');
+        const investor = localStorage.getItem('investor');
 
-        if (user) {
+        if (user && business && token) {
             const userObject = JSON.parse(user);
             const businessObject = business ? JSON.parse(business) : null;
+            const AccessToken = token ? JSON.parse(token) : null;
+            const InvestorObject = investor ? JSON.parse(investor) : null;
 
             dispatch({
                 type: 'LOGIN',
                 payload: {
                     user: userObject,
-                    business: businessObject
-                }
+                    business: businessObject,
+                    token: AccessToken
+                },
             });
+            dispatch({
+                type: 'INVESTOR',
+                payload: InvestorObject
+            })
 
             dispatch({ type: 'LOADING', payload: false });
-        } else {
+        }
+        else if (user && !business && !token) {
+            const userObject = JSON.parse(user);
+            dispatch({
+                type: 'LOGIN',
+                payload: {
+                    user: userObject,
+                },
+            });
+            dispatch({ type: 'LOADING', payload: false });
+        }
+        else if (investor) {
+            const InvestorObject = investor ? JSON.parse(investor) : null;
+            dispatch({
+                type: 'INVESTOR',
+                payload: InvestorObject
+            })
+
+            dispatch({ type: 'LOADING', payload: false });
+        }
+        else {
             dispatch({ type: 'LOADING', payload: false });
         }
     }, []);
@@ -65,6 +114,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     return (
         <AuthContext.Provider value={{ ...state, dispatch }}>
             {children}
-        </AuthContext.Provider>
+        </AuthContext.Provider >
     );
 }

@@ -1,15 +1,24 @@
 import * as yup from "yup";
 
 const phoneRegExp = /^\d{10}$/;
+const passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;
 
 
 export const LoginValidationSchema = yup.object().shape({
     password: yup.string().required("Password is required"),
     email: yup.string().email("Invalid email").required("Email is required"),
 });
+export const RegisterValidationSchema = yup.object().shape({
+    name: yup.string().required("Name is required"),
+    password: yup.string().matches(passwordRegex, "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters").required("Password is required"),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("password")], "Passwords must match").required("Confirm Password is required"),
+    email: yup.string().email("Invalid email").required("Email is required"),
+});
 
 export const StartupValidationSchma = yup.object().shape({
-    name: yup.string().required("Name is required"),
+    ownerName: yup.string().required("Name is required"),
     businessEmail: yup.string().email("Invalid email").required("Email is required"),
     phoneNo: yup
         .string()
@@ -21,7 +30,7 @@ export const StartupValidationSchma = yup.object().shape({
         .string()
         .required("Business Registration Type is required"),
     productOrService: yup.string().required("Business Type is required"),
-    companyWebsite: yup.string(),
+    companyWebsite: yup.string().url("Invalid URL"),
     gstNo: yup.string(),
     incNo: yup.string().required("INC No. of Company is required"),
     panNo: yup.string().required("PAN No. of Company is required"),

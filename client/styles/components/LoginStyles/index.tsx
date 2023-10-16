@@ -77,9 +77,15 @@ export const Password = styled.div`
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    background-color: transparent;
+    background-color: #316bff58;
+    padding: 10px 10px;
+    border-radius: 50%;
     border: none;
     outline: none;
+    svg{
+      color: #000;
+      font-size: 1.2rem;
+    }
   }
 `;
 export const PasswordInput = styled.input`

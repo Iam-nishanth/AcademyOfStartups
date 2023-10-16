@@ -7,8 +7,8 @@ export const FORM = styled.form`
   justify-content: center;
   background: #fff;
   width: 100%;
-  padding: 30px;
-  gap: 30px;
+  padding: 20px;
+  gap: 20px;
   @media (max-width: 800px) {
     gap: 10px;
     padding: 30px 15px;
@@ -17,7 +17,7 @@ export const FORM = styled.form`
     align-self: center;
   }
   @media (max-width: 600px) {
-    input,
+    
     textarea,
     label {
       font-size: 0.9rem;
@@ -38,7 +38,8 @@ export const Input = styled.input`
   border-radius: 10px;
   border: 1px solid #ccc;
   min-height: 50px;
-  font-size: 1rem;
+  font-size: 16px;
+  font-weight: 500px;
   &:focus {
     border: 2px solid #316aff;
     outline: none;

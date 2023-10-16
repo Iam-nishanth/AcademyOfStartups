@@ -22,17 +22,17 @@ export default function MentorsSection() {
           <Card image="/images/SudheerSir.jpg">
             <Overlay>
               <Icons>
-                <LINK href="https://www.facebook.com/">
+                <LINK target="_blank" href="https://www.facebook.com/">
                   <FaFacebook />
                 </LINK>
               </Icons>
               <Icons>
-                <LINK href="https://www.instagram.com/">
+                <LINK target="_blank" href="https://www.instagram.com/">
                   <FaInstagram />
                 </LINK>
               </Icons>
               <Icons>
-                <LINK href={"https://www.linkedin.com/"}>
+                <LINK target="_blank" href={"https://www.linkedin.com/"}>
                   <FaLinkedin />
                 </LINK>
               </Icons>
@@ -45,17 +45,17 @@ export default function MentorsSection() {
           <Card image="/images/Usman Sir.jpg">
             <Overlay>
               <Icons>
-                <LINK href="https://www.facebook.com/">
+                <LINK target="_blank" href="https://www.facebook.com/">
                   <FaFacebook />
                 </LINK>
               </Icons>
               <Icons>
-                <LINK href="https://www.instagram.com/">
+                <LINK target="_blank" href="https://www.instagram.com/">
                   <FaInstagram />
                 </LINK>
               </Icons>
               <Icons>
-                <LINK href="https://www.linkedin.com/">
+                <LINK target="_blank" href="https://www.linkedin.com/">
                   <FaLinkedin />
                 </LINK>
               </Icons>

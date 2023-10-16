@@ -2,6 +2,7 @@ import { Dispatch, ReactNode } from "react";
 
 export interface User {
     id: string;
+    name: string;
     userEmail: string;
     password: string;
     role: string;
@@ -16,6 +17,8 @@ export interface State {
     user: User | null;
     loading: boolean;
     business: Business | null;
+    token: string | null;
+    investorData?: Investor | null;
 }
 export interface Business {
     id: string;
@@ -47,8 +50,40 @@ export type AuthContextType = {
     user: User | null | undefined;
     loading: boolean;
     business: Business | null | undefined;
+    token: string | null | undefined;
+    investorData?: Investor | null | undefined;
 };
 
 export interface AuthContextProviderProps {
     children: ReactNode;
+}
+
+export interface InvestorResponse {
+    auth: boolean;
+    investor: Investor | null;
+    investorInfo: InvestorInfo | null;
+}
+
+export interface Investor {
+    id: string;
+    role: string;
+    gender: string;
+    email: string;
+    password: string;
+    name: string;
+    isVerified: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    investorInfo: InvestorInfo | null;
+}
+
+export interface InvestorInfo {
+    id: string;
+    PhoneNo: string;
+    Address: string;
+    Image: null;
+    InvestorType: string;
+    InvestmentRange: string;
+    DomainsOfInterest: string[];
+    ExistingInvestments: string;
 }

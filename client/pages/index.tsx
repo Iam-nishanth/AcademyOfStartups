@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import styled from "styled-components";
 const Navbar = dynamic(() => import("@/components/Header/Navbar"));
 const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
 const HeroSection = dynamic(() => import("@/views/HeroSection"));
@@ -13,13 +14,24 @@ const FAQSection = dynamic(() => import("@/views/FAQSection"));
 const Footer = dynamic(() => import("@/components/Footer"));
 export default function Home(): JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const BodyRef = useRef<HTMLElement>();
+  const [NavBackground, setNavBackground] = useState<boolean>(false);
+
+  const ScrollHandler = (): void => {
+    console.log('scrolling');
+    if (BodyRef.current) {
+      BodyRef.current.scrollTop >= 30
+        ? setNavBackground(true)
+        : setNavBackground(false);
+    }
+  };
 
   const toggle = (): void => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <main>
+    <Container ref={BodyRef} onScroll={ScrollHandler}>
       {/* <Head>
         <title>About</title>
         <meta charSet="utf-8" />
@@ -36,6 +48,12 @@ export default function Home(): JSX.Element {
       <TestimonialSection />
       <FAQSection />
       <Footer />
-    </main>
+    </Container>
   );
 }
+
+
+const Container = styled.div<{ ref: any }>`
+  width: 100%;
+  height: 100%;
+`

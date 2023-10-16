@@ -67,6 +67,33 @@ export const InputContainer = styled.form`
     margin: auto 0;
   }
 `;
+
+
+export const ModalInputContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 30px;
+  background-color: #fff;
+  .ant-select {
+    width: 100%;
+    min-height: 40px;
+    .ant-select-selection-placeholder{
+      font-size: 1rem;
+      color: #757575;
+    }
+  }
+
+  .ant-select-selection-item {
+    font-size: 1rem;
+    margin: auto 0;
+  }
+`;
+
+
+
 export const InputDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -113,3 +140,11 @@ export const Heading = styled.h2`
     font-size: 25px;
   }
 `;
+
+
+export const Text = styled.p`
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000;
+  text-align: center;
+`

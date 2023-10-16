@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   InputContainer,
   InputDiv,
@@ -5,8 +6,9 @@ import {
   Error,
   Label,
   Required,
+  Text
 } from "@/styles/views/StartupsStyles";
-import React from "react";
+import React, { useEffect } from "react";
 import { Select, Radio, message } from "antd";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,6 +17,8 @@ import { CommonButton } from "../Common/Button";
 import axios from "axios";
 import { StartupValidationSchma } from "@/utils/validation";
 import { Datamodel } from "@/types/Startup";
+import { useRouter } from "next/router";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 
 
@@ -27,14 +31,19 @@ export default function StartupsLogin() {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(StartupValidationSchma),
+    resolver: yupResolver(StartupValidationSchma,)
   });
+
+  const { user } = useAuthContext();
+
+
+
 
   const onSubmit = async (data: Datamodel) => {
     try {
       const loadingMessage = message.loading("Submitting form...", 0);
 
-      const response = await axios.post("http://localhost:8080/startups", data);
+      const response = await axios.post("http://localhost:8080/startups/add", { business: data });
 
       if (response.status === 200) {
         loadingMessage();
@@ -53,17 +62,18 @@ export default function StartupsLogin() {
 
   return (
     <InputContainer onSubmit={handleSubmit(onSubmit)}>
+      <Required style={{ paddingBottom: "10px" }}>Please don't refresh the page until the form is submitted</Required>
       <InputDiv>
         <Label>
-          Name<Required>*</Required>
+          Full Name<Required>*</Required>
         </Label>
         <Controller
-          name="name"
+          name="ownerName"
           control={control}
           defaultValue=""
           render={({ field }) => <Input placeholder="Name" {...field} />}
         />
-        {errors.name && <Error>{errors.name.message}</Error>}
+        {errors.ownerName && <Error>{errors.ownerName.message}</Error>}
       </InputDiv>
 
       <InputDiv>
@@ -73,8 +83,8 @@ export default function StartupsLogin() {
         <Controller
           name="businessEmail"
           control={control}
-          defaultValue=""
-          render={({ field }) => <Input placeholder="Email" {...field} />}
+          defaultValue={user?.userEmail}
+          render={({ field }) => <Input {...field} placeholder="Email" disabled />}
         />
         {errors.businessEmail && <Error>{errors.businessEmail.message}</Error>}
       </InputDiv>
@@ -114,10 +124,10 @@ export default function StartupsLogin() {
         <Controller
           name="businessCategory"
           control={control}
-          defaultValue=""
           render={({ field }) => (
             <Select
               // style={{ width: 500 }}
+              placeholder="Business Category"
               options={[
                 { value: undefined, label: "select", disabled: true },
                 { value: "Life Style", label: "Life Style Startup" },
@@ -143,7 +153,6 @@ export default function StartupsLogin() {
         <Controller
           name="registrationType"
           control={control}
-          defaultValue=""
           render={({ field }) => (
             <Select
               placeholder="Business Registration Type"

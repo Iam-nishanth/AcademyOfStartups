@@ -1,9 +1,11 @@
 import express from 'express'
-import { LoginController, RegisterController } from '../controller/auth.js';
+import Auth from '../controller/auth.js';
+import verifyToken from '../middleware/index.js';
+
 
 export const authRouter = express.Router();
 
-authRouter.post('/login', LoginController)
-// authRouter.get('/login', CheckSession)
-authRouter.post('/register', RegisterController)
+authRouter.post('/login', Auth.LoginController)
+authRouter.post('/register', Auth.RegisterController)
+authRouter.put('/user/change-password/:id', verifyToken, Auth.ChangePasswordController)
 

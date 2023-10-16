@@ -1,4 +1,4 @@
-import { Heading, MainHeading } from '@/styles/Globalstyles';
+import { Heading } from '@/styles/Globalstyles';
 import dynamic from 'next/dynamic';
 import React, { useState } from 'react'
 const Navbar = dynamic(() => import("@/components/Header/Navbar"));

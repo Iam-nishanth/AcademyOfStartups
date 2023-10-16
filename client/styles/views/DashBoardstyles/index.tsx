@@ -31,8 +31,7 @@ export const Card = styled.div`
     padding: 20px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px;
     gap: 10px;
-    background-color: #232529ab;
-        color: #fff;
+    color: #fff;
     h2{
         font-size: 25px;
     }
@@ -65,6 +64,16 @@ export const DashboardCards = styled.div`
     flex-wrap: wrap;
     gap: 20px;
 
+    .blue{
+        background: linear-gradient(45deg,#4099ff,#73b4ff);
+    }
+    .green{
+        background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+    }
+    .yellow{
+        background: linear-gradient(45deg,#FFB64D,#ffcb80);
+    }
+
     @media (max-width: 700px){
         flex-direction: column;
         gap: 10px;
@@ -77,10 +86,10 @@ export const IconBackground = styled.div`
     width: 100%;
     min-height: 60px;
     max-width: 60px;
-    background-color: #b4e4c9;
     border-radius: 10px;
+    background-color: #ddd;
     svg{
-        font-size: 25px;
+        font-size: 28px;
         color: #232529;
     }
 
@@ -107,21 +116,30 @@ export const Investors = styled.section`
     width: 100%;
 `
 export const InvestorCards = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: center;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
     width: 100%;
-    margin-top: 20px;
 
-`
+    @media (max-width: 800px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+    }
+
+    @media (max-width: 550px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(9, 1fr);
+    }
+`;
 export const InvestorCard = styled.div`
     display: flex;
     gap: 20px;
 
     width: 100%;
-    max-width: 360px;
-    min-height: 200px;
+    min-height: 230px;
     border-radius: 10px;
     background: white;
     padding: 20px 10px;

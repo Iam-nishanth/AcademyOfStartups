@@ -7,6 +7,7 @@ const Footer = dynamic(() => import("@/components/Footer"));
 import ServicesSection from '@/views/ServicesSection'
 import MissionSection from "@/views/MissionSection";
 import PricingSection from "@/views/PricingSection";
+import CountCards from "@/components/CountCards";
 
 export default function StartupsPage() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -19,6 +20,7 @@ export default function StartupsPage() {
     <main>
       <Navbar toggle={toggle} />
       <Sidebar toggle={toggle} isOpen={isOpen} />
+      <CountCards />
       <ServicesSection />
       <MissionSection />
       <PricingSection />

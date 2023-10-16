@@ -2,15 +2,39 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router';
 import { Heading } from '@/styles/Globalstyles'
 import { AccountSectionContainer, AccountSectionWrapper, DetailsWrapper, PairHolder, ValueHolder } from '@/styles/views/AccountSectionStyles';
-import { Tabs } from 'antd';
+import { Tabs, message } from 'antd';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { IoCaretBack } from 'react-icons/io5';
 import ModalComponent from '@/components/AccountDetailsModal';
+import { CommonButton } from '@/components/Common/Button';
+import { Error, FORM, Input, InputContainer, Label, Required } from '@/styles/components/FormStyles';
+import { Password, PasswordInput } from '@/styles/components/LoginStyles';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
+import axios from 'axios';
+
+
+const PasswordSchema = yup.object().shape({
+    oldPassword: yup.string().required('Old Password is required'),
+    newPassword: yup.string().required('New Password is required'),
+    confirmPassword: yup.string().oneOf([yup.ref('newPassword')], 'Passwords must match'),
+})
 
 const AccountSection = () => {
-    const { user, business } = useAuthContext();
+    const { handleSubmit, control, formState: { errors } } = useForm({
+        resolver: yupResolver(PasswordSchema),
+    });
+    const { user, business, token } = useAuthContext();
     const [open, setOpen] = useState(false);
     const router = useRouter();
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevState) => !prevState);
+    };
 
     const showModal = () => {
         setOpen(true);
@@ -20,30 +44,32 @@ const AccountSection = () => {
         router.back();
     }
 
+    const ChangePassword = async (data: any) => {
+        console.log(data)
+        try {
+            const loadingMessage = message.loading("Loading...", 0);
+            const response = await axios.put(`http://localhost:8080/auth/user/change-password/${user?.id}`, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log(response);
+            if (response.status === 200) {
+                loadingMessage();
+                message.success("Password Changed Successfully");
+            }
+        } catch (error: any) {
+            message.destroy();
+            message.error('Something went wrong');
+            console.log(error);
+        }
+    }
+
     const AccountSectionTabs = [
+
         {
-            label: 'User Details',
+            label: 'Business Details',
             key: '1',
-            children: (
-                <DetailsWrapper>
-                    <PairHolder>
-                        <strong>User Name: </strong>
-                        <ValueHolder>
-                            <p>{business && business.name}</p>
-                        </ValueHolder>
-                    </PairHolder>
-                    <PairHolder>
-                        <strong>User Email: </strong>
-                        <ValueHolder>
-                            <p>{user && user.userEmail}</p>
-                        </ValueHolder>
-                    </PairHolder>
-                </DetailsWrapper>
-            ),
-        },
-        {
-            label: 'Startup Details',
-            key: '2',
             children: (
                 <DetailsWrapper>
                     <ModalComponent showModal={showModal} setOpen={setOpen} open={open} />
@@ -125,6 +151,95 @@ const AccountSection = () => {
                             <p>{business && business.address}</p>
                         </ValueHolder>
                     </PairHolder>
+                </DetailsWrapper>
+            ),
+        },
+        {
+            label: 'Account Details',
+            key: '2',
+            children: (
+                <DetailsWrapper>
+                    <PairHolder>
+                        <strong>User Name: </strong>
+                        <ValueHolder>
+                            <p>{user && user.name}</p>
+                        </ValueHolder>
+                    </PairHolder>
+                    <PairHolder>
+                        <strong>User Email: </strong>
+                        <ValueHolder>
+                            <p>{user && user.userEmail}</p>
+                        </ValueHolder>
+                    </PairHolder>
+                    <hr />
+
+                    <PairHolder>
+                        <strong>Change Password:</strong>
+                        <FORM onSubmit={handleSubmit(ChangePassword)} >
+                            <InputContainer>
+                                <Label>
+                                    Old Password<Required>*</Required>
+                                </Label>
+                                <Controller
+                                    name="oldPassword"
+                                    control={control}
+                                    defaultValue=""
+                                    render={({ field }) => (
+                                        <Input placeholder="Enter your Password" type="input" {...field} />
+                                    )}
+                                />
+                                {errors.oldPassword && <Error>{errors.oldPassword.message}</Error>}
+                            </InputContainer>
+                            <InputContainer>
+                                <Label>
+                                    New Password<Required>*</Required>
+                                </Label>
+                                <Controller
+                                    name="newPassword"
+                                    control={control}
+                                    defaultValue=""
+                                    render={({ field }) => (
+                                        <Input placeholder="Enter New Password" type="password" {...field} />
+                                    )}
+                                />
+                                {errors.newPassword && <Error>{errors.newPassword.message}</Error>}
+                            </InputContainer>
+                            <InputContainer>
+                                <Label>
+                                    Confirm New Password<Required>*</Required>
+                                </Label>
+                                <Controller
+                                    name="confirmPassword"
+                                    control={control}
+                                    defaultValue=""
+                                    render={({ field }) => (
+                                        <Password>
+                                            <PasswordInput
+                                                placeholder="Confirm New Password"
+                                                type={showPassword ? "text" : "password"}
+                                                {...field}
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={togglePasswordVisibility}
+                                                style={{ marginLeft: "8px" }}
+                                            >
+                                                {showPassword ? <BsEyeSlashFill /> : <BsEyeFill />}
+                                            </button>
+                                        </Password>
+                                    )}
+                                />
+                                {errors.confirmPassword && <Error>{errors.confirmPassword.message}</Error>}
+                            </InputContainer>
+                            <InputContainer>
+                                <CommonButton name="Submit" width="30%" height="40px" />
+                            </InputContainer>
+                        </FORM>
+                    </PairHolder>
+
+
+                    <hr />
+
                 </DetailsWrapper>
             ),
         },

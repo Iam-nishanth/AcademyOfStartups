@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,16 +15,15 @@ import {
 import { CommonButton } from "../Common/Button";
 import axios from "axios";
 import { message } from "antd";
-import { LoginResponse } from "@/types/Logintypes";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { LoginValidationSchema } from "@/utils/validation";
+import { InvestorResponse } from "@/types/AuthTypes";
+import { useRouter } from "next/router";
 
 type FormData = {
     email: string;
     password: string;
 };
-
-
 
 const InvestorLogin: React.FC = () => {
     const {
@@ -37,28 +37,37 @@ const InvestorLogin: React.FC = () => {
 
     axios.defaults.withCredentials = true;
 
-
     const [showPassword, setShowPassword] = useState(false);
-    //   const { dispatch } = useAuthContext()
-
+    const { dispatch, investorData, loading } = useAuthContext();
+    const router = useRouter();
+    useEffect(() => {
+        if (!loading && investorData) router.push("/investors/dashboard");
+    }, [dispatch, investorData]);
     const togglePasswordVisibility = () => {
         setShowPassword((prevState) => !prevState);
     };
 
     const onSubmit = (data: FormData) => {
-        console.log(data);
-
         const signIn = async () => {
             try {
                 const loadingMessage = message.loading("Loading...", 0);
-                const response = await axios.post<LoginResponse>(
-                    "http://localhost:8080/auth/investor-login",
+                const response = await axios.post<InvestorResponse>(
+                    "https://pglgl7pl-8080.inc1.devtunnels.ms/auth/investor-login",
                     data
                 );
                 console.log(response);
 
                 if (response.status === 200) {
                     loadingMessage();
+                    const InvestorData = {
+                        investor: response.data.investor,
+                        investorInfo: response.data.investorInfo,
+                    };
+                    localStorage.setItem("investor", JSON.stringify(InvestorData));
+                    dispatch({
+                        type: "INVESTOR",
+                        payload: InvestorData,
+                    });
 
                     message.success("Login Successful");
                     reset();
@@ -78,6 +87,9 @@ const InvestorLogin: React.FC = () => {
 
         signIn();
     };
+
+
+
 
     return (
         <LoginContainer>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -12,14 +13,18 @@ const withAuth = <P extends AuthProps>(
 
     const AuthHOC = (props: Omit<P, keyof AuthProps>) => {
 
-        const { user, loading } = useAuthContext();
+        const { user, loading, business } = useAuthContext();
         const router = useRouter();
 
         useEffect(() => {
             if (!loading && !user) {
                 router.push('/login');
             }
-        }, [user, loading, router.isReady, router]);
+            else if (!loading && user?.role === "ADMIN") router.push('/admin/dashboard')
+            else if (!loading && user && !business) {
+                router.push({ pathname: '/add-business', query: { email: user.userEmail } });
+            }
+        }, [user, loading]);
 
         if (loading || !user) {
             return null;

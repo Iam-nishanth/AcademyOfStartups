@@ -67,8 +67,8 @@ export default function ProgressSection() {
             </MainHeading>
             <JoinUsPara>
               Challenges are situations in business. Many will consider it as
-              problemsand leave the industry. We will help businesses &startups
-              at any level to grow by analyzing structure, implementinggrowth
+              problemsand leave the industry. We will help businesses & startups
+              at any level to grow by analyzing structure, implementing growth
               methods and execute in result oriented milestones.
             </JoinUsPara>
           </JoinHeadings>

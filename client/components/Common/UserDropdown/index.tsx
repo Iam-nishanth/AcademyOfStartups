@@ -22,7 +22,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
         {
             key: '1',
             label: (
-                <Link style={{ fontWeight: 'bold' }} href="/user/dashboard">
+                <Link style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px' }} href="/user/dashboard">
                     Dashboard
                 </Link>
             ),
@@ -30,7 +30,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
         {
             key: '2',
             label: (
-                <Link style={{ fontWeight: 'bold' }} href="/user/account">
+                <Link style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px' }} href="/user/account">
                     My Account
                 </Link>
             ),
@@ -40,7 +40,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
         {
             key: '1',
             label: (
-                <Link style={{ fontWeight: 'bold' }} href="/admin/dashboard">
+                <Link style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px' }} href="/admin/dashboard">
                     Admin-Dashboard
                 </Link>
             )
@@ -48,7 +48,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
         {
             key: '2',
             label: (
-                <Link style={{ fontWeight: 'bold' }} href="/user/dashboard">
+                <Link style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px' }} href="/user/dashboard">
                     User-Dashboard
                 </Link>
             )
@@ -56,7 +56,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
         {
             key: '3',
             label: (
-                <Link style={{ fontWeight: 'bold' }} href="/admin/account">
+                <Link style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px' }} href="/admin/account">
                     My Account
                 </Link>
             )
@@ -70,11 +70,9 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
     };
 
     const menuStyle: React.CSSProperties = {
+        fontSize: 16,
         boxShadow: 'none',
     };
-    const buttonStyles: React.CSSProperties = {
-
-    }
 
     const LogoutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -82,31 +80,41 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
 
         localStorage.removeItem('user');
         localStorage.removeItem('business');
+        localStorage.removeItem('token');
         dispatch({ type: 'LOGOUT' });
         router.push('/');
     }
 
+    const userDropdownMobileStyles = {
+        '@media (max-width: 575px)': {
+            width: '200px',
+        },
+    };
 
     return (
-        <Dropdown
+        <div className='dropdown'>
 
-            menu={isAdmin ? { items: adminItems } : { items: items }}
-            dropdownRender={(menu) => (
-                <div style={contentStyle}>
-                    {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
-                    <Divider style={{ margin: 0 }} />
-                    <Space style={{ padding: 8 }}>
-                        <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => LogoutHandler(e)} type="primary">Logout</Button>
+            <Dropdown
+
+                placement='topRight'
+                menu={isAdmin ? { items: adminItems } : { items: items }}
+                dropdownRender={(menu) => (
+                    <div style={contentStyle}>
+                        {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
+                        <Divider style={{ margin: 0 }} />
+                        <Space style={{ padding: 8 }}>
+                            <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => LogoutHandler(e)} type="primary">Logout</Button>
+                        </Space>
+                    </div>
+                )}
+            >
+                <a >
+                    <Space>
+                        <strong>{user}</strong><CaretDownOutlined />
                     </Space>
-                </div>
-            )}
-        >
-            <a >
-                <Space>
-                    <strong>{user}</strong><CaretDownOutlined />
-                </Space>
-            </a>
-        </Dropdown>
+                </a>
+            </Dropdown>
+        </div>
     );
 };
 

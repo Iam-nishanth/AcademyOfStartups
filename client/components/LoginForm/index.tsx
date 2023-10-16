@@ -18,11 +18,13 @@ import { useRouter } from "next/router";
 import { LoginResponse } from "@/types/Logintypes";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { LoginValidationSchema } from "@/utils/validation";
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 
 type FormData = {
   email: string;
   password: string;
 };
+
 
 
 
@@ -62,10 +64,12 @@ const LoginForm: React.FC = () => {
           loadingMessage();
           localStorage.setItem('user', JSON.stringify(response.data.user))
           localStorage.setItem('business', JSON.stringify(response.data.business))
+          localStorage.setItem('token', JSON.stringify(response.data.token))
           dispatch({
             type: 'LOGIN', payload: {
               user: response.data.user,
-              business: response.data.business
+              business: response.data.business,
+              token: response.data.token
             }
           })
           message.success("Login Successful");
@@ -97,7 +101,7 @@ const LoginForm: React.FC = () => {
             name="email"
             control={control}
             defaultValue=""
-            render={({ field }) => <Input type="text" {...field} />}
+            render={({ field }) => <Input type="email" {...field} />}
           />
           {errors.email && (
             <p style={{ color: "red" }}>{errors.email.message}</p>
@@ -120,7 +124,7 @@ const LoginForm: React.FC = () => {
                   onClick={togglePasswordVisibility}
                   style={{ marginLeft: "8px" }}
                 >
-                  {showPassword ? "Hide" : "Show"}
+                  {showPassword ? <BsEyeSlashFill /> : <BsEyeFill />}
                 </button>
               </Password>
             )}

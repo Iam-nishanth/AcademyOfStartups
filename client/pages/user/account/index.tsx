@@ -5,6 +5,7 @@ const Navbar = dynamic(() => import("@/components/Header/Navbar"));
 const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
 import AccountSection from '@/views/AccountSection';
 import { useAuthContext } from '@/hooks/useAuthContext';
+import withAuth from '@/components/HighOrders/WithAuth';
 
 const MyAccount = () => {
 
@@ -22,4 +23,4 @@ const MyAccount = () => {
     )
 }
 
-export default MyAccount
+export default withAuth(MyAccount);

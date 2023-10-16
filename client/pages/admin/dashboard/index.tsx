@@ -1,3 +1,4 @@
+import withAuth from '@/components/HighOrders/WithAuth';
 import { Heading, MainHeading } from '@/styles/Globalstyles';
 import dynamic from 'next/dynamic';
 import React, { useState } from 'react'
@@ -20,4 +21,4 @@ const AdminDashboard = () => {
     )
 }
 
-export default AdminDashboard
+export default withAuth(AdminDashboard)

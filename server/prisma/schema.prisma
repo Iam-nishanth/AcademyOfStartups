@@ -1,6 +1,6 @@
 generator client {
     provider      = "prisma-client-js"
-    binaryTargets = ["native", "linux-musl"]
+    binaryTargets = ["native", "linux-musl", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -10,6 +10,7 @@ datasource db {
 
 model User {
     id         String   @id @default(uuid()) @map("user_id")
+    name       String
     role       Role     @default(USER)
     userEmail  String   @unique
     password   String
@@ -23,27 +24,30 @@ model User {
 model Business {
     id               String   @id @default(uuid()) @map("business_id")
     businessEmail    String   @unique
-    name             String
+    ownerName        String
     phoneNo          String
     businessName     String   @map("business_name")
     businessCategory String   @map("business_category")
     registrationType String   @map("registration_type")
     productOrService String   @map("product_or_service")
-    incNo            String?  @unique @map("inc_no") // Allow null
-    companyWebsite   String?  @map("company_website") // Allow null
-    panNo            String?  @unique @map("pan_no") // Allow null
-    gstNo            String?  @unique @map("gst_no") // Allow null
+    incNo            String?  @unique @map("inc_no")
+    companyWebsite   String?  @map("company_website")
+    panNo            String?  @unique @map("pan_no")
+    gstNo            String?  @unique @map("gst_no")
     itrPerYear       String   @map("itr_per_year")
     address          String
     isVerified       Boolean  @default(false) @map("is_verified")
     createdAt        DateTime @default(now()) @map("created_at")
     updatedAt        DateTime @updatedAt @map("updated_at")
+    Logo             String?  @map("logo")
 
     owner User @relation(fields: [businessEmail], references: [userEmail])
 }
 
 model Investor {
     id           String         @id @default(uuid())
+    role         Role           @default(INVESTOR)
+    gender       String
     email        String         @unique
     password     String
     name         String
@@ -66,7 +70,18 @@ model InvestorInfo {
     investor Investor @relation(fields: [id], references: [id])
 }
 
+model Event {
+    id        String   @id @default(uuid()) @map("event_id")
+    name      String
+    date      String
+    time      String
+    location  String
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+}
+
 enum Role {
     ADMIN
     USER
+    INVESTOR
 }

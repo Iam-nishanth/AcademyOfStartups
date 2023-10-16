@@ -69,7 +69,7 @@ export const Anchor = styled.a`
     transform: translateY(-5px);
   }
 `;
-export const Anchor2 = styled.a`
+export const Anchor2 = styled.p`
   font-size: 1rem;
   font-weight: 500;
   text-decoration: none;

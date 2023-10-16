@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import { usePathname } from "next/navigation";
-import { CommonButton } from "@/components/Common/Button";
+
+export interface NavbarProps {
+  NavBackground: boolean;
+}
 
 export const NavbarContainer = styled.nav`
   display: flex;
@@ -8,6 +10,9 @@ export const NavbarContainer = styled.nav`
   width: 100%;
   justify-content: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0;
+  transition: 300ms ease;
 `;
 export const NavWrapper = styled.div`
   display: flex;
@@ -16,9 +21,14 @@ export const NavWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   min-height: 90px;
-  @media (min-width: 1600px){
-    max-width: 1600px; 
-  }
+
+  z-index: 10;
+  @media (min-width: 1600px) {
+        max-width: 1400px;
+    }
+    @media (min-width: 1800px) {
+        max-width: 1600px;
+    }
   a {
     text-decoration: none;
     font: inherit;
@@ -40,6 +50,9 @@ export const Logo = styled.div`
       cursor: pointer;
     }
   }
+  @media (max-width: 380px) {
+    width: 180px;
+  }
 `;
 export const NavLinks = styled.ul`
   display: flex;
@@ -51,14 +64,21 @@ export const NavLinks = styled.ul`
   @media (max-width: 1000px) {
     display: none;
   }
+  .active{
+    color: #316aff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+    font-weight: 800;
+  }
 `;
 export const NavItem = styled.li`
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   transition: all 0.3s ease;
   &:hover {
     color: #316aff;
@@ -131,4 +151,23 @@ export const UserWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
+  max-width: 200px;
+
+  @media (max-width: 600px) {
+      max-width: 150px;
+      justify-content: flex-end;
+
+      .ant-dropdown-menu-title-content{
+        a{
+          font-size: 14px;
+          padding: 5px !important;
+        }
+      }
+  
+  }
+  @media (max-width: 350px) {
+    font-size: 14px;
+    gap: 5px;
+  }
 `

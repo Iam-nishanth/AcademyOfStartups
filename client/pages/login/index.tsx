@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import Footer from "@/components/Footer";
 import LoginForm from "@/components/LoginForm";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import SignupSection from "@/views/SignupSection";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -11,10 +13,11 @@ const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
 const LoginPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
-  const { user, dispatch, loading } = useAuthContext();
+  const { user, business, dispatch, loading } = useAuthContext();
   useEffect(() => {
     if (!loading && user?.role === "ADMIN") router.push('/admin/dashboard')
-    else if (!loading && user) router.push('/user/dashboard')
+    else if (!loading && user && !business) router.push({ pathname: '/add-business', query: { email: user.userEmail } })
+    else if (!loading && user && business) router.push('/user/dashboard')
   }, [user, loading]);
 
   const toggle = (): void => {
@@ -25,7 +28,8 @@ const LoginPage = () => {
     <main>
       <Navbar toggle={toggle} />
       <Sidebar toggle={toggle} isOpen={isOpen} />
-      <LoginForm />
+      <SignupSection />
+      <Footer />
     </main>
   );
 }

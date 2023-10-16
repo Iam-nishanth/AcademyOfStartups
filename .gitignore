@@ -4,6 +4,9 @@ client/public/vendor
 client/public/build
 client/public/compiled
 
+client/out
+client/dist
+
 logs
 *.log
 

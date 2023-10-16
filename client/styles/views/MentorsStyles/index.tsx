@@ -17,12 +17,18 @@ export const MentorsWrapper = styled.div`
   min-height: 500px;
   gap: 30px;
   padding: 30px 10px;
+  text-align: center;
+
+  @media (max-width: 600px){
+    gap: 10px;
+  }
 `;
 export const CardsWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: space-around;
+
   flex-wrap: wrap;
   gap: 30px;
 `;

@@ -76,6 +76,8 @@ export const PricingCard = styled.div`
 
     @media (max-width: 600px){
         padding: 20px 0 20px 20px;
+        min-height: 400px;
+        gap: 20px;
     }
 `
 export const Price = styled.div`
@@ -106,6 +108,10 @@ export const PricingList = styled.ul`
             font-weight: 500;
         }
     }
+
+    @media (max-width: 600px){
+        gap: 20px;
+    }
 `
 
 
@@ -127,6 +133,9 @@ export const PricingButton = styled.button`
     &:active, &:hover{
         outline: none;
         border-bottom: 3px solid #316aff;
+    }
+    @media (max-width: 600px){
+        margin-top: 20px;
     }
 `
 

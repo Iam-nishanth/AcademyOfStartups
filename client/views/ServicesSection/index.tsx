@@ -96,7 +96,7 @@ const ServicesSection = () => {
 
     const SeviceTabs = [
         {
-            label: 'Business Details',
+            label: 'Business Development',
             key: '1',
             children: (
                 <Cards>
@@ -111,7 +111,7 @@ const ServicesSection = () => {
             ),
         },
         {
-            label: 'Startup Details',
+            label: 'Startup Services',
             key: '2',
             children: (
                 <Cards>

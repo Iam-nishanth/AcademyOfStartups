@@ -46,6 +46,11 @@ export const NavLinks = styled.ul`
   height: 100%;
   margin: 0;
   padding: 50px 0 0 0;
+
+  .active{
+    color: #316aff;
+    
+  }
 `;
 export const NavItem = styled.li`
   font-family: inherit;
