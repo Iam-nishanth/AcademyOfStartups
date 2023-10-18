@@ -16,14 +16,14 @@ import { Radio, Select, message } from 'antd';
 import axios from 'axios';
 import { domainOptions, investmentRangeOptions } from './Data';
 
-
+const passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;
 
 
 const InvestorValidationSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup.string().email("Invalid email").required("Email is required"),
     gender: yup.string().required("Gender is required"),
-    phoneNo: yup.string().required("Phone is required"),
+    phoneNo: yup.string().matches(/^[0-9]{10}$/, 'Invalid phone number').required("Phone is required"),
 
     address: yup.string().required("Address is required"),
     investorType: yup.string().required("Investor type is required"),
@@ -32,7 +32,7 @@ const InvestorValidationSchema = yup.object().shape({
         .oneOf(investmentRangeOptions.map((option) => option.value)).required("Investment range is required"),
     domainsOfInterest: yup.array().required("Domains are required"),
     existingInvestments: yup.string(),
-    password: yup.string().required("Password is required"),
+    password: yup.string().matches(passwordRegex, "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters").required("Password is required"),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref("password")], "Passwords must match"),

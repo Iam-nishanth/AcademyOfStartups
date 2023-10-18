@@ -248,12 +248,12 @@ const AccountSection = () => {
     return (
         <AccountSectionContainer>
             <AccountSectionWrapper>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                {/* <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                     <div onClick={handleBack} >
                         <IoCaretBack style={{ cursor: 'pointer', fontSize: '30px' }} />
                     </div>
                     <Heading>Account Details</Heading>
-                </div>
+                </div> */}
                 <Tabs
                     defaultActiveKey="1"
                     centered

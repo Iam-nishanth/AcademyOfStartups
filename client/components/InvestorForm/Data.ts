@@ -58,3 +58,57 @@ export const domainOptions = [
         value: 'Deep Technology',
     },
 ];
+export const domain_Options = [
+    {
+        label: 'None',
+        value: '',
+    },
+    {
+        label: 'Agriculture',
+        value: 'Agriculture',
+    },
+    {
+        label: 'Defence',
+        value: 'Defence',
+    },
+    {
+        label: 'Food',
+        value: 'Food',
+    },
+    {
+        label: 'Retails',
+        value: 'Retails',
+    },
+    {
+        label: 'FinTech',
+        value: 'FinTech',
+    },
+    {
+        label: 'Ed Tech',
+        value: 'Ed Tech',
+    },
+    {
+        label: 'Fashion',
+        value: 'Fashion',
+    },
+    {
+        label: 'Arts & Culture',
+        value: 'Arts & Culture',
+    },
+    {
+        label: 'Information Technology',
+        value: 'Information Technology',
+    },
+    {
+        label: 'Engineering',
+        value: 'Engineering',
+    },
+    {
+        label: 'Green Energy',
+        value: 'Green Energy',
+    },
+    {
+        label: 'Deep Technology',
+        value: 'Deep Technology',
+    },
+];

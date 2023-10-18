@@ -8,26 +8,23 @@ import React, { useEffect, useState } from 'react'
 import InvestorAuth from '@/components/HighOrders/Investor';
 import InvestorDash from '@/views/InvestorDash';
 import Layout from '@/components/Layout';
+import BackButton from '@/components/BackButton';
 
 const InvestorDashboard = () => {
     const router = useRouter();
     const { investorData, loading, dispatch } = useAuthContext();
 
-    const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    const handleLogout = () => {
+        localStorage.removeItem('investor')
+        dispatch({ type: 'INVESTOR_LOGOUT' });
+        message.success('Logged out');
+    }
 
-    // useEffect(() => {
-    //     if (!loading && !investorData) router.push('/investors')
-    // }, [loading, investorData, dispatch])
-
-    const toggle = (): void => {
-        setIsOpen(!isOpen);
-    };
     return (
         <main>
-            <Layout>
-                <InvestorDash />
-            </Layout>
+            <BackButton dropdown={false} handle={handleLogout} />
+            <InvestorDash />
 
         </main>
     )

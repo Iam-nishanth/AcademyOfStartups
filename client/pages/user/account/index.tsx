@@ -6,18 +6,22 @@ const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
 import AccountSection from '@/views/AccountSection';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import withAuth from '@/components/HighOrders/WithAuth';
+import BackButton from '@/components/BackButton';
 
 const MyAccount = () => {
 
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const { user } = useAuthContext();
 
-    const toggle = (): void => {
-        setIsOpen(!isOpen);
-    };
+    const capitalizeFirstLetter = (word: string): string => {
+        return word[0].toUpperCase() + word.slice(1);
+    }
+
+    const DisplayName = user && `${capitalizeFirstLetter(user?.name)}`;
+
+
     return (
         <main>
-            {/* <Navbar toggle={toggle} />
-            <Sidebar toggle={toggle} isOpen={isOpen} /> */}
+            <BackButton dropdown={true} user={DisplayName} />
             <AccountSection />
         </main>
     )

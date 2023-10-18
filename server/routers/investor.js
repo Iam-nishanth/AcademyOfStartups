@@ -10,3 +10,5 @@ InvestorRouter.post('/investor-signup', Investor.InvestorRegisterController)
 InvestorRouter.post('/investor-login', Investor.InvestorLoginController)
 
 InvestorRouter.get('/investors', verifyToken, Investor.GetAllInvestors)
+
+InvestorRouter.get('/investors/get/startups/:id', Investor.GetStartups)

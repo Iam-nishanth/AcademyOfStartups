@@ -1,4 +1,3 @@
-import BusinessSignup from "@/components/BusinessSignup";
 import { CommonButton } from "@/components/Common/Button";
 import { Heading, SubHeading } from "@/styles/Globalstyles";
 import {

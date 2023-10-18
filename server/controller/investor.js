@@ -151,6 +151,35 @@ const Investor = {
       console.log(error);
       res.status(500).json({ message: "Internal server error", error });
     }
+  },
+
+  GetStartups: async (req, res) => {
+    const { id } = req.params
+
+
+    try {
+
+      if (!id) {
+        return res.status(401).json({ message: 'No ID given' })
+      }
+      const investor = await prisma.investor.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      if (!investor) {
+        return res.status(404).json({ message: "Investor not found" });
+      }
+
+      const startups = await prisma.business.findMany();
+
+      res.status(200).json({ startups })
+    }
+    catch (error) {
+      console.log(error)
+      res.status(500).json({ message: "Internal Server error", error: error })
+    }
   }
 
 }

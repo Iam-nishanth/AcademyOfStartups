@@ -10,7 +10,7 @@ export const LoginValidationSchema = yup.object().shape({
 });
 export const RegisterValidationSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
-    password: yup.string().matches(passwordRegex, "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters").required("Password is required"),
+    password: yup.string().matches(passwordRegex, "Password must contain at least 1 number, 1 uppercase and lowercase letter,and not less than 8 characters").required("Password is required"),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref("password")], "Passwords must match").required("Confirm Password is required"),
@@ -37,3 +37,5 @@ export const StartupValidationSchma = yup.object().shape({
     itrPerYear: yup.string().required("Income Tax Return is required"),
     address: yup.string().required("Address of the company is required"),
 });
+
+

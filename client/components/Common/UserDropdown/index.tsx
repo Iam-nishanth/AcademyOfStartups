@@ -82,14 +82,11 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
         localStorage.removeItem('business');
         localStorage.removeItem('token');
         dispatch({ type: 'LOGOUT' });
-        router.push('/');
-    }
 
-    const userDropdownMobileStyles = {
-        '@media (max-width: 575px)': {
-            width: '200px',
-        },
-    };
+        if (router.pathname.match('/user')) {
+            router.push('/');
+        }
+    }
 
     return (
         <div className='dropdown'>
@@ -110,7 +107,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
             >
                 <a >
                     <Space>
-                        <strong>{user}</strong><CaretDownOutlined />
+                        <strong style={{ color: 'black' }}>{user}</strong><CaretDownOutlined />
                     </Space>
                 </a>
             </Dropdown>

@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useEffect } from "react";
-import { AuthContextProviderProps, AuthContextType, Business, State, Action } from '@/types/AuthTypes';
+import { AuthContextProviderProps, AuthContextType, State, Action } from '@/types/AuthTypes';
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

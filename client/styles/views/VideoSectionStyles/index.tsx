@@ -21,9 +21,12 @@ export const VideoSectionWrapper = styled.div`
   min-height: 600px;
   flex-direction: column;
   gap: 30px;
-  @media (min-width: 1600px){
-    max-width: 1500px; 
-  }
+  @media (min-width: 1600px) {
+        max-width: 1400px;
+    }
+    @media (min-width: 1800px) {
+        max-width: 1600px;
+    }
 `;
 export const ContentWrapper = styled.div`
   display: flex;

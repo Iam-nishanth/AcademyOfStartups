@@ -8,21 +8,49 @@ import {
 import { RiTeamFill } from "react-icons/ri";
 import { GoGoal } from "react-icons/go";
 import { HiBadgeCheck } from "react-icons/hi";
+import axios from "axios";
+import { CountUp } from 'use-count-up'
+
+interface Counts {
+    startupCount: string;
+    investorCount: string;
+}
 
 const CountCards = () => {
+
+    const [count, setCount] = React.useState({} as Counts);
+
+    React.useEffect(() => {
+        const fetchCount = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/auth/startups/count');
+                if (response.status === 200) {
+                    setCount(response.data);
+
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchCount();
+    }, [setCount]);
+    console.log(count)
+
     return (
         <FeatureCardsContainer>
             <CardsWrapper >
                 <Card
                     maxWidth="380px"
                     flexDirection="row"
-                    color="#000"
-                    backgroundColor="#f8f8f8"
+                    color="#fff"
+                    backgroundColor="#316aff"
                 >
                     <RiTeamFill />
                     <Content>
                         <p>Startups Enrolled</p>
-                        <h3>10</h3>
+                        <h3>
+                            {count?.startupCount}
+                        </h3>
                     </Content>
                 </Card>
                 <Card
@@ -33,20 +61,20 @@ const CountCards = () => {
                 >
                     <GoGoal />
                     <Content>
-                        <p>Startups Enrolled</p>
-                        <h3>10</h3>
+                        <p>Investors Community</p>
+                        <h3>{count?.investorCount}</h3>
                     </Content>
                 </Card>
                 <Card
                     maxWidth="380px"
                     flexDirection="row"
-                    color="#000"
-                    backgroundColor="#f8f8f8"
+                    color="#fff"
+                    backgroundColor="#316aff"
                 >
                     <HiBadgeCheck />
                     <Content>
-                        <p>Startups Enrolled</p>
-                        <h3>10</h3>
+                        <p>Network Insights</p>
+                        <h3>100</h3>
                     </Content>
                 </Card>
             </CardsWrapper>

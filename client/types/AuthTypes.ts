@@ -18,12 +18,12 @@ export interface State {
     loading: boolean;
     business: Business | null;
     token: string | null;
-    investorData?: Investor | null;
+    investorData?: InvestorInterface | null;
 }
 export interface Business {
     id: string;
     businessEmail: string;
-    name: string;
+    ownerName: string;
     phoneNo: string;
     businessName: string;
     businessCategory: string;
@@ -35,6 +35,7 @@ export interface Business {
     gstNo: string;
     itrPerYear: string;
     address: string;
+    Logo?: string | null;
     isVerified: boolean;
     createdAt: string;
     updatedAt: string;
@@ -51,7 +52,7 @@ export type AuthContextType = {
     loading: boolean;
     business: Business | null | undefined;
     token: string | null | undefined;
-    investorData?: Investor | null | undefined;
+    investorData?: InvestorInterface | null | undefined;
 };
 
 export interface AuthContextProviderProps {
@@ -64,6 +65,11 @@ export interface InvestorResponse {
     investorInfo: InvestorInfo | null;
 }
 
+export interface InvestorInterface {
+    investor: Investor;
+    investorInfo: InvestorInfo;
+}
+
 export interface Investor {
     id: string;
     role: string;
@@ -74,7 +80,6 @@ export interface Investor {
     isVerified: boolean;
     createdAt: Date;
     updatedAt: Date;
-    investorInfo: InvestorInfo | null;
 }
 
 export interface InvestorInfo {

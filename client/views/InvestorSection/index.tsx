@@ -34,7 +34,7 @@ const InvestorSection = () => {
                             )
                                 : (
                                     <Link href='/investors/dashboard'>
-                                        <CommonButton name='Go to Dashboard' width='250px' height='50px' />
+                                        <CommonButton name='Go to Dashboard' width='350px' height='50px' />
                                     </Link>
                                 )
                         }
@@ -46,6 +46,8 @@ const InvestorSection = () => {
                 </InvestorWrapper>
 
             </InvestorContainer>
+
+
             <ContentSection>
                 <ContentWrapper id='scroll'>
                     <Heading>Join our Renowned Investor Network</Heading>
@@ -54,6 +56,7 @@ const InvestorSection = () => {
                 </ContentWrapper>
 
             </ContentSection>
+
         </>
     )
 }

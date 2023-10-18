@@ -41,7 +41,7 @@ const InvestorLogin: React.FC = () => {
     const { dispatch, investorData, loading } = useAuthContext();
     const router = useRouter();
     useEffect(() => {
-        if (!loading && investorData) router.push("/investors/dashboard");
+        if (!loading && investorData) router.push({ pathname: "/investors/dashboard", query: { from: 'investors-redirect' } });
     }, [dispatch, investorData]);
     const togglePasswordVisibility = () => {
         setShowPassword((prevState) => !prevState);

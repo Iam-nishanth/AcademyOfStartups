@@ -6,13 +6,11 @@ import {
   Error,
   Label,
   Required,
-  Text
 } from "@/styles/views/StartupsStyles";
-import React, { useEffect } from "react";
+import React from "react";
 import { Select, Radio, message } from "antd";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { CommonButton } from "../Common/Button";
 import axios from "axios";
 import { StartupValidationSchma } from "@/utils/validation";
@@ -34,7 +32,8 @@ export default function StartupsLogin() {
     resolver: yupResolver(StartupValidationSchma,)
   });
 
-  const { user } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
+  const router = useRouter()
 
 
 
@@ -48,8 +47,17 @@ export default function StartupsLogin() {
       if (response.status === 200) {
         loadingMessage();
 
-        message.success("Form submitted successfully");
+        message.success("Startup Registered successfully");
         reset();
+        setTimeout(() => {
+          message.destroy()
+          loadingMessage();
+
+          localStorage.removeItem('user')
+          dispatch({ type: 'LOGOUT' })
+
+          router.push('/login')
+        }, 2000);
       }
     } catch (error) {
       console.error(error);

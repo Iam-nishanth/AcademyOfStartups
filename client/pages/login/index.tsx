@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Footer from "@/components/Footer";
-import LoginForm from "@/components/LoginForm";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import SignupSection from "@/views/SignupSection";
 import dynamic from "next/dynamic";
@@ -17,7 +16,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (!loading && user?.role === "ADMIN") router.push('/admin/dashboard')
     else if (!loading && user && !business) router.push({ pathname: '/add-business', query: { email: user.userEmail } })
-    else if (!loading && user && business) router.push('/user/dashboard')
+    else if (!loading && user && business) router.push({ pathname: '/user/dashboard', query: { from: 'redirect' } });
   }, [user, loading]);
 
   const toggle = (): void => {

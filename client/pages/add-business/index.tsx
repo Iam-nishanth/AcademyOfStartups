@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import LoginForm from "@/components/LoginForm";
 import StartupsLogin from "@/components/StartupsLogin";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import dynamic from "next/dynamic";
@@ -16,7 +15,15 @@ import { Heading } from "@/styles/Globalstyles";
 
 const SignupPage = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const { user, business, loading } = useAuthContext()
     const router = useRouter();
+
+    useEffect(() => {
+        if (!loading && user && business) {
+            router.push({ pathname: '/user/dashboard', query: { from: 'redirect' } })
+        }
+    }, [loading])
+
 
 
     const toggle = (): void => {

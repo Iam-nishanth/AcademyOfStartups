@@ -16,11 +16,17 @@ export const DashboardWrapper = styled.div`
 
 
     @media (min-width: 1600px) {
-    max-width: 1400px;
-  }
-  @media (max-width: 1230px){
+        max-width: 1400px;
+    }
+    @media (min-width: 1800px) {
+        max-width: 1600px;
+    }
+    @media (max-width: 1230px){
     padding: 20px;
-  }
+    }
+    @media (max-width: 600px){
+        padding: 10px;
+    }
 `
 export const Card = styled.div`
     display: flex;
@@ -119,19 +125,16 @@ export const InvestorCards = styled.div`
     margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
     grid-column-gap: 10px;
     grid-row-gap: 10px;
     width: 100%;
 
     @media (max-width: 800px) {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(6, 1fr);
     }
 
     @media (max-width: 550px) {
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(9, 1fr);
     }
 `;
 export const InvestorCard = styled.div`
