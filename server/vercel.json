@@ -1,7 +1,5 @@
 {
-    "name": "my-api",
     "version": "1.0.0",
-    "description": "My Node.js Express API",
     "build": {
         "commands": [
             "npm run build"
