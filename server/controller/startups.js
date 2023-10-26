@@ -24,29 +24,29 @@ const Startup = {
 
 
 
-        // try {
-        startups.map((startup) => {
+        try {
+            startups.map((startup) => {
 
-            if (startup.incNo === business.incNo) {
-                return res.status(409).json({ message: "Startup already exists with the given INC" });
-            }
-            else if (startup.gstNo === business.gstNo) {
-                return res.status(409).json({ message: "Startup already exists with the given GST" });
-            }
-            else if (startup.panNo === business.panNo) {
-                return res.status(409).json({ message: "Startup already exists with the given PAN" });
-            }
-            else if (startup.phoneNo === business.phoneNo) {
-                return res.status(409).json({ message: "Startup already exists with the given Phone Number" });
-            }
-        })
-        const newStartup = await prisma.business.create({
-            data: business,
-        });
-        res.json(newStartup);
-        // } catch (error) {
-        //     res.status(500).json({ message: "An error occurred while creating the startup.", error: error });
-        // }
+                if (startup.incNo === business.incNo) {
+                    return res.status(409).json({ message: "Startup already exists with the given INC" });
+                }
+                else if (startup.gstNo === business.gstNo) {
+                    return res.status(409).json({ message: "Startup already exists with the given GST" });
+                }
+                else if (startup.panNo === business.panNo) {
+                    return res.status(409).json({ message: "Startup already exists with the given PAN" });
+                }
+                else if (startup.phoneNo === business.phoneNo) {
+                    return res.status(409).json({ message: "Startup already exists with the given Phone Number" });
+                }
+            })
+            const newStartup = await prisma.business.create({
+                data: business,
+            })
+            res.json(newStartup);
+        } catch (error) {
+            res.status(500).json({ message: "An error occurred while creating the startup.", error: error });
+        }
     },
 
     StartupPutController: async (req, res) => {

@@ -98,7 +98,6 @@ const EditBusinessForm = ({ onSubmit }: { onSubmit: (data: BusinessFormData) => 
                     defaultValue={business?.businessCategory}
                     render={({ field }) => (
                         <Select
-                            // style={{ width: 500 }}
                             options={[
                                 { value: undefined, label: "select", disabled: true },
                                 { value: "Life Style", label: "Life Style Startup" },

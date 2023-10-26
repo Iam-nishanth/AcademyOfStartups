@@ -36,6 +36,7 @@ export const StartupValidationSchma = yup.object().shape({
     panNo: yup.string().required("PAN No. of Company is required"),
     itrPerYear: yup.string().required("Income Tax Return is required"),
     address: yup.string().required("Address of the company is required"),
+    Status: yup.string().required("Status is required"),
 });
 
 

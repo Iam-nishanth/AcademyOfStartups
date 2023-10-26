@@ -22,7 +22,7 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 
 
 
-export default function StartupsLogin() {
+const StartupsLogin = () => {
   const {
     control,
     handleSubmit,
@@ -42,7 +42,7 @@ export default function StartupsLogin() {
     try {
       const loadingMessage = message.loading("Submitting form...", 0);
 
-      const response = await axios.post("http://localhost:8080/startups/add", { business: data });
+      const response = await axios.post(`http://localhost:8080/startups/add/${user?.id}`, { business: data });
 
       if (response.status === 200) {
         loadingMessage();
@@ -134,7 +134,6 @@ export default function StartupsLogin() {
           control={control}
           render={({ field }) => (
             <Select
-              // style={{ width: 500 }}
               placeholder="Business Category"
               options={[
                 { value: undefined, label: "select", disabled: true },
@@ -200,14 +199,35 @@ export default function StartupsLogin() {
           control={control}
           defaultValue=""
           render={({ field }) => (
-            <Radio.Group {...field}>
-              <Radio value="Product">Product</Radio>
-              <Radio value="Service">Service</Radio>
+            <Radio.Group className="radio" {...field}>
+              <Radio value="Product">Product-Based</Radio>
+              <Radio value="Service">Service-Based</Radio>
             </Radio.Group>
           )}
         />
         {errors.productOrService && (
           <Error>{errors.productOrService.message}</Error>
+        )}
+      </InputDiv>
+
+      <InputDiv >
+        <Label>
+          Business Status<Required>*</Required>
+        </Label>
+        <Controller
+          name="Status"
+          control={control}
+          render={({ field }) => (
+            <Radio.Group className="radio"  {...field}>
+              <Radio value="Ideation">Ideation</Radio>
+              <Radio value="Bootstrapped">Bootstrapped</Radio>
+              <Radio value="MVP">MVP</Radio>
+              <Radio value="Expansion">Expansion</Radio>
+            </Radio.Group>
+          )}
+        />
+        {errors.Status && (
+          <Error>{errors.Status.message}</Error>
         )}
       </InputDiv>
 
@@ -218,7 +238,6 @@ export default function StartupsLogin() {
         <Controller
           name="incNo"
           control={control}
-          defaultValue=""
           render={({ field }) => (
             <Input placeholder="INC No. of Company" {...field} />
           )}
@@ -247,7 +266,6 @@ export default function StartupsLogin() {
         <Controller
           name="panNo"
           control={control}
-          defaultValue=""
           render={({ field }) => (
             <Input placeholder="PAN No. of Company" {...field} />
           )}
@@ -286,7 +304,6 @@ export default function StartupsLogin() {
         <Controller
           name="address"
           control={control}
-          defaultValue=""
           render={({ field }) => (
             <Input placeholder="Please give complete address" {...field} />
           )}
@@ -298,3 +315,6 @@ export default function StartupsLogin() {
     </InputContainer>
   );
 }
+
+
+export default StartupsLogin

@@ -39,6 +39,7 @@ export interface Business {
     isVerified: boolean;
     createdAt: string;
     updatedAt: string;
+    Status: string;
 }
 
 export interface Action {

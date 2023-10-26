@@ -66,6 +66,21 @@ export const InputContainer = styled.form`
     font-size: 1rem;
     margin: auto 0;
   }
+
+  .ant-radio-wrapper{
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .ant-radio-group{
+    padding: 5px 20px;
+  }
+
+  .radio{
+    flex-direction: column;
+    display: flex;
+    gap: 5px;
+  }
 `;
 
 
