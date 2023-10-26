@@ -1,15 +1,16 @@
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "server.js",
-            "use": "@now/node"
+    "name": "my-api",
+    "version": "1.0.0",
+    "description": "My Node.js Express API",
+    "build": {
+        "commands": [
+            "npm run build"
+        ]
+    },
+    "functions": {
+        "api": {
+            "src": "./server.js",
+            "runtime": "nodejs"
         }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "server.js"
-        }
-    ]
+    }
 }

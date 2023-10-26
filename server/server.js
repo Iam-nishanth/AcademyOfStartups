@@ -11,7 +11,6 @@ import cookieParser from "cookie-parser";
 import { InvestorRouter } from "./routers/investor.js";
 import CountRouter from "./routers/count.js";
 
-
 const app = express();
 const prisma = new PrismaClient();
 
