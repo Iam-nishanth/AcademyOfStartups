@@ -4,14 +4,9 @@ dotenv.config();
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import * as yup from 'yup';
-import cookieParser from "cookie-parser";
+import { registerSchema } from "../utils/Validation/index.js";
 
-const registerSchema = yup.object().shape({
-  email: yup.string().email().matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/).required('Email is required'),
-  password: yup.string().min(8).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#%^&*()<>?]).{8,}$/).required('Password is required'),
-  name: yup.string().required('Name is required'),
-});
+
 
 const prisma = new PrismaClient();
 
@@ -23,14 +18,6 @@ function generateAccessToken(userId) {
     expiresIn: "12h",
   });
 }
-
-
-
-
-
-
-
-
 
 const Auth = {
   // ----------------USER REGISTER----------------

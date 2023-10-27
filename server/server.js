@@ -10,6 +10,7 @@ import { startupRouter } from "./routers/startups.js";
 import cookieParser from "cookie-parser";
 import { InvestorRouter } from "./routers/investor.js";
 import CountRouter from "./routers/count.js";
+import { adminRouter } from "./routers/admin.js";
 
 const app = express();
 const prisma = new PrismaClient();
@@ -34,6 +35,7 @@ app.use('/auth', authRouter);
 app.use(startupRouter);
 app.use('/auth', InvestorRouter);
 app.use(CountRouter);
+app.use('/admin', adminRouter);
 
 
 

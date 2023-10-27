@@ -2,25 +2,10 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 import bcrypt from "bcryptjs";
-import * as yup from 'yup';
+import { InvestorValidationSchema } from "../utils/Validation/index.js";
 
 
 const saltrounds = 10;
-
-
-const InvestorValidationSchema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().min(8).required(),
-  name: yup.string().required(),
-  gender: yup.string().required(),
-  phoneNo: yup.string().min(10).max(10).required(),
-  address: yup.string().required(),
-  image: yup.mixed().optional(), // Yup won't validate this field, but it will be present in the schema
-  investorType: yup.string().required(),
-  investmentRange: yup.string().required(),
-  domainsOfInterest: yup.array().of(yup.string()).required(),
-  existingInvestments: yup.mixed().optional(), // Yup won't validate this field, but it will be present in the schema
-});
 
 
 const Investor = {
