@@ -13,7 +13,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CommonButton } from '../Common/Button';
 import { Radio, Select, message } from 'antd';
-import axios from 'axios';
+import axios from '@/lib/axios';
 import { domainOptions, investmentRangeOptions } from './Data';
 
 const passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;

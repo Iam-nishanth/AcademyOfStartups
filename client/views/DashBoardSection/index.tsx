@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { DashboardContainer, DashboardWrapper } from '@/styles/views/DashBoardstyles'
 import { useAuthContext } from '@/hooks/useAuthContext'
 import { useRouter } from 'next/router'
-import axios from 'axios'
+import axios from '@/lib/axios'
 import { message } from 'antd'
 import { domain_Options } from '@/components/InvestorForm/Data'
 import InvestorsComponent from '@/components/Investors'
@@ -12,7 +12,7 @@ import DashBoardCards from '@/components/DashBoardCards'
 
 
 
-const DashBoardsection = () => {
+const DashBoardsection: React.FC = () => {
     const { user, business, loading, token, dispatch } = useAuthContext();
     const router = useRouter();
     const [investorData, setInvestorData] = useState<Investor[]>([]);
@@ -24,7 +24,7 @@ const DashBoardsection = () => {
 
         const fetchData = async () => {
             try {
-                const response = await axios.get<GetInvestors>('https://pglgl7pl-8080.inc1.devtunnels.ms/auth/investors', {
+                const response = await axios.get<GetInvestors>('/auth/investors', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

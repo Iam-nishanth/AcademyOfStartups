@@ -116,11 +116,9 @@ const Admin = {
             .status(409)
             .json({ message: "Startup already exists with the given PAN" });
         } else if (startup.phoneNo === business.phoneNo) {
-          return res
-            .status(409)
-            .json({
-              message: "Startup already exists with the given Phone Number",
-            });
+          return res.status(409).json({
+            message: "Startup already exists with the given Phone Number",
+          });
         }
       });
       const newStartup = await prisma.business.create({
@@ -128,12 +126,10 @@ const Admin = {
       });
       res.json(newStartup);
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          message: "An error occurred while creating the startup.",
-          error: error,
-        });
+      res.status(500).json({
+        message: "An error occurred while creating the startup.",
+        error: error,
+      });
     }
   },
 
@@ -207,7 +203,7 @@ const Admin = {
           InvestorInfo: true,
         },
       });
-      res.status(200).json({ investors, length: investors.length });
+      res.status(200).json({ investors });
     } catch (error) {
       res.status(500).json({ message: "Internal server error", error });
     }
@@ -280,13 +276,11 @@ const Admin = {
         },
       });
 
-      return res
-        .status(201)
-        .json({
-          message: "Investor created successfully",
-          newInvestor: newInvestor,
-          newInvestorInfo: newInvestorInfo,
-        });
+      return res.status(201).json({
+        message: "Investor created successfully",
+        newInvestor: newInvestor,
+        newInvestorInfo: newInvestorInfo,
+      });
     } catch (error) {
       if (error.name === "ValidationError") {
         // --------Handle validation errors--------
@@ -370,13 +364,11 @@ const Admin = {
         },
       });
 
-      res
-        .status(200)
-        .json({
-          message: "Investor Deleted",
-          investor: deletedInvestor,
-          investorInfo: deletedInvestorInfo,
-        });
+      res.status(200).json({
+        message: "Investor Deleted",
+        investor: deletedInvestor,
+        investorInfo: deletedInvestorInfo,
+      });
     } catch (error) {
       res
         .status(500)

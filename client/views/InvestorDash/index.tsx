@@ -4,7 +4,7 @@ import { DashboardContainer, DashboardWrapper } from '@/styles/views/DashBoardst
 import { useAuthContext } from '@/hooks/useAuthContext'
 import { message } from 'antd'
 import { Heading } from '@/styles/Globalstyles'
-import axios from 'axios'
+import axios from '@/lib/axios'
 import { Business } from '@/types/AuthTypes'
 import Image from 'next/image'
 import { BiLinkAlt } from 'react-icons/bi'
@@ -24,7 +24,7 @@ const InvestorDash = () => {
         }
         const fetchData = async () => {
             try {
-                const response = await axios.get<any>(`https://pglgl7pl-8080.inc1.devtunnels.ms/auth/investors/get/startups/${investorData?.investor.id}`)
+                const response = await axios.get<any>(`/auth/investors/get/startups/${investorData?.investor.id}`)
 
                 if (response.status == 200) {
                     setBusinesses(response.data.startups)

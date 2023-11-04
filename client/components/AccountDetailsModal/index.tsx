@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, message } from 'antd';
 import EditBusinessForm, { BusinessFormData } from '@/components/EditAccount'
 import { useAuthContext } from '@/hooks/useAuthContext';
-import axios from 'axios';
+import axios from '@/lib/axios';
 import { Business } from '@/types/AuthTypes';
 import { useRouter } from 'next/router';
 interface ModalComponentProps {
@@ -47,7 +47,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ showModal, setOpen, ope
         const loadingMessage = message.loading("Loading...", 0);
         try {
             const response = await axios.put<response>(
-                `https://pglgl7pl-8080.inc1.devtunnels.ms/startup/update/${business?.id}`, { startup: data }, {
+                `/startup/update/${business?.id}`, { startup: data }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

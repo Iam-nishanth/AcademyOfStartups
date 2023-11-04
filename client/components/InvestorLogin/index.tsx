@@ -13,12 +13,12 @@ import {
     PasswordInput,
 } from "@/styles/components/LoginStyles";
 import { CommonButton } from "../Common/Button";
-import axios from "axios";
 import { message } from "antd";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { LoginValidationSchema } from "@/utils/validation";
 import { InvestorResponse } from "@/types/AuthTypes";
 import { useRouter } from "next/router";
+import axios from '@/lib/axios';
 
 type FormData = {
     email: string;
@@ -52,7 +52,7 @@ const InvestorLogin: React.FC = () => {
             try {
                 const loadingMessage = message.loading("Loading...", 0);
                 const response = await axios.post<InvestorResponse>(
-                    "https://pglgl7pl-8080.inc1.devtunnels.ms/auth/investor-login",
+                    "/auth/investor-login",
                     data
                 );
                 console.log(response);

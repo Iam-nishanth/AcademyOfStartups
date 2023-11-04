@@ -143,19 +143,6 @@ const ServicesSection = () => {
                     centered
                     items={SeviceTabs}
                 />
-
-                {/* <Cards>
-                    {StartupData.map((card, index) => (
-                        <Card key={index}>
-                            {card.icon}
-                            <CardHeading>{card.heading}</CardHeading>
-                            <CardText>{card.text}</CardText>
-                        </Card>
-                    ))}
-                </Cards> */}
-
-
-
             </ServicesSectionWrapper>
 
         </ServicesSectionContainer>

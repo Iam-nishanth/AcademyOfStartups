@@ -13,7 +13,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
-import axios from 'axios';
+import axios from '@/lib/axios';
 
 
 const PasswordSchema = yup.object().shape({

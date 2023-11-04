@@ -58,10 +58,7 @@ const UserSignup: React.FC = () => {
         const signIn = async () => {
             try {
                 const loadingMessage = message.loading("Loading...", 0);
-                const response = await axios.post<RegisterResponse>(
-                    "https://pglgl7pl-8080.inc1.devtunnels.ms/auth/register",
-                    data
-                );
+                const response = await axios.post<RegisterResponse>("/auth/register", data);
                 console.log(response.data);
 
                 if (response.status === 201) {

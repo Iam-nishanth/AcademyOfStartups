@@ -1,11 +1,9 @@
 import BackButton from '@/components/BackButton';
-import AdminAuth from '@/components/HighOrders/AdminAuth';
+import AdminAuth from '@/components/HighOrders/AdminAuth'
 import { useAuthContext } from '@/hooks/useAuthContext';
-import { Heading, MainHeading } from '@/styles/Globalstyles';
 import React from 'react'
-import AdminDashSection from '@/views/AdminDashSection';
 
-const AdminDashboard = () => {
+const ManageEvents = () => {
     const { user } = useAuthContext();
 
 
@@ -17,10 +15,9 @@ const AdminDashboard = () => {
 
     return (
         <main>
-            <BackButton color='#fff' backgroundColor='#001336' dropdown={true} user={DisplayName} />
-            <AdminDashSection />
+            <BackButton dropdown={true} user={DisplayName} />
         </main>
     )
 }
 
-export default AdminAuth(AdminDashboard)
+export default AdminAuth(ManageEvents)

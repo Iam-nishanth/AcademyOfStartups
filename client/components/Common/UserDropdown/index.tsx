@@ -11,9 +11,10 @@ const { useToken } = theme;
 
 interface userProps {
     user: string | null | undefined;
+    color?: string;
 }
 
-const UserDropdown: React.FC<userProps> = ({ user }) => {
+const UserDropdown: React.FC<userProps> = ({ user, color }) => {
     const { token } = useToken();
     const router = useRouter();
     const { dispatch, user: authUser } = useAuthContext()
@@ -47,14 +48,6 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
         },
         {
             key: '2',
-            label: (
-                <Link style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px' }} href="/user/dashboard">
-                    User-Dashboard
-                </Link>
-            )
-        },
-        {
-            key: '3',
             label: (
                 <Link style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px' }} href="/admin/account">
                     My Account
@@ -107,7 +100,7 @@ const UserDropdown: React.FC<userProps> = ({ user }) => {
             >
                 <a >
                     <Space>
-                        <strong style={{ color: 'black' }}>{user}</strong><CaretDownOutlined />
+                        <strong style={{ color: color }}>{user}</strong><CaretDownOutlined />
                     </Space>
                 </a>
             </Dropdown>

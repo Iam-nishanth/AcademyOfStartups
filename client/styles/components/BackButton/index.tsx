@@ -1,11 +1,20 @@
 import styled from "styled-components";
 
-export const BackContainer = styled.nav`
+interface BackContainerProps {
+  color?: string;
+  backgroundColor?: string;
+}
+
+export const BackContainer = styled.nav<BackContainerProps>`
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: center;
   transition: 300ms ease;
+  color: ${(props) => props.color || "#000"};
+  background-color: ${(props) => props.backgroundColor || "#fff"};
+
+  
 `;
 export const BackWrapper = styled.div`
   display: flex;
@@ -34,7 +43,7 @@ export const BackWrapper = styled.div`
     
 `;
 
-export const BackDiv = styled.div`
+export const BackDiv = styled.div<BackContainerProps>`
     display: flex;
     align-items: center;
     gap: 10px;
@@ -45,7 +54,7 @@ export const BackDiv = styled.div`
     }
     svg{
         font-size: 25px;
-        color: #000;
+        color: ${(props) => props.color || "#000"};
     }
 `
 

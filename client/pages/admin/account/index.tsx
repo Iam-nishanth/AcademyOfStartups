@@ -1,23 +1,26 @@
-import { Heading } from '@/styles/Globalstyles';
-import dynamic from 'next/dynamic';
-import React, { useState } from 'react'
-const Navbar = dynamic(() => import("@/components/Header/Navbar"));
-const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
+import React from 'react'
+import AccountSection from '@/views/AccountSection';
+import { useAuthContext } from '@/hooks/useAuthContext';
+import BackButton from '@/components/BackButton';
+import AdminAuth from '@/components/HighOrders/AdminAuth';
 
-const MyAccount = () => {
+const AdminAccount = () => {
 
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const { user } = useAuthContext();
 
-    const toggle = (): void => {
-        setIsOpen(!isOpen);
-    };
+    const capitalizeFirstLetter = (word: string): string => {
+        return word[0].toUpperCase() + word.slice(1);
+    }
+
+    const DisplayName = user && `${capitalizeFirstLetter(user?.name)}`;
+
+
     return (
         <main>
-            <Navbar toggle={toggle} />
-            <Sidebar toggle={toggle} isOpen={isOpen} />
-            <Heading>My Account</Heading>
+            <BackButton dropdown={true} user={DisplayName} />
+            <AccountSection />
         </main>
     )
 }
 
-export default MyAccount
+export default AdminAuth(AdminAccount);

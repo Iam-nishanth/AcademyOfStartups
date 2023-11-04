@@ -1,9 +1,7 @@
 import React from 'react'
 import { BackContainer, BackDiv, BackWrapper, LogoutButton } from '../../styles/components/BackButton'
 import { useRouter } from 'next/router';
-import { BiSolidLeftArrow } from 'react-icons/bi'
 import { IoArrowBackSharp } from 'react-icons/io5'
-import { CommonButton } from '../Common/Button';
 import UserDropdown from '../Common/UserDropdown';
 
 
@@ -11,9 +9,11 @@ type BackButtonProps = {
     user?: any;
     dropdown: boolean;
     handle?: () => void;
+    color?: string;
+    backgroundColor?: string;
 }
 
-const BackButton = ({ user, dropdown, handle }: BackButtonProps) => {
+const BackButton = ({ user, dropdown, handle, color, backgroundColor }: BackButtonProps) => {
 
     const router = useRouter();
 
@@ -34,15 +34,15 @@ const BackButton = ({ user, dropdown, handle }: BackButtonProps) => {
 
 
     return (
-        <BackContainer>
+        <BackContainer color={color} backgroundColor={backgroundColor}>
             <BackWrapper>
-                <BackDiv onClick={handleBack} >
+                <BackDiv onClick={handleBack} color={color} >
                     <IoArrowBackSharp />
                     <span>Go Back</span>
                 </BackDiv>
                 {
                     dropdown ? (
-                        <UserDropdown user={user} />
+                        <UserDropdown color={color} user={user} />
                     )
                         : (
                             <LogoutButton onClick={handle}>Log out</LogoutButton>

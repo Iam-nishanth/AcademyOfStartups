@@ -12,7 +12,7 @@ import {
   PasswordInput,
 } from "@/styles/components/LoginStyles";
 import { CommonButton } from "../Common/Button";
-import axios from "axios";
+import axios from "@/lib/axios";
 import { message } from "antd";
 import { useRouter } from "next/router";
 import { LoginResponse } from "@/types/Logintypes";
@@ -54,10 +54,7 @@ const LoginForm: React.FC = () => {
     const signIn = async () => {
       try {
         const loadingMessage = message.loading("Loading...", 0);
-        const response = await axios.post<LoginResponse>(
-          "https://pglgl7pl-8080.inc1.devtunnels.ms/auth/login",
-          data
-        );
+        const response = await axios.post<LoginResponse>("/auth/login", data);
         console.log(response);
 
         if (response.status === 200) {
