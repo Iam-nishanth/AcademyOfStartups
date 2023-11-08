@@ -34,7 +34,6 @@ const CountCards = () => {
         }
         fetchCount();
     }, [setCount]);
-    console.log(count)
 
     return (
         <FeatureCardsContainer>

@@ -19,9 +19,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "http://192.168.55.104:3000",
+      "http://192.168.55.105:3000",
       "http://192.168.0.103:3000",
-      "http://192.168.0.180:3001",
       "https://academy-of-startups.vercel.app",
       "https://dev.academyofstartups.com",
     ],

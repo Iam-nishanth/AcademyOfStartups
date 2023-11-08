@@ -69,7 +69,6 @@ const UserDropdown: React.FC<userProps> = ({ user, color }) => {
 
     const LogoutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        console.log('clicked logout');
 
         localStorage.removeItem('user');
         localStorage.removeItem('business');

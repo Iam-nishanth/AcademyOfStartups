@@ -2,7 +2,7 @@ import React from 'react'
 import * as yup from 'yup'
 import { Investors } from '@/types/Logintypes'
 import {
-    InputContainer,
+    AdminBusiness,
     InputDiv,
     Input,
     Error,
@@ -11,10 +11,10 @@ import {
 } from "@/styles/views/StartupsStyles";
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { CommonButton } from '../Common/Button';
+import { CommonButton } from '../../Common/Button';
 import { Radio, Select, message } from 'antd';
 import axios from '@/lib/axios';
-import { domainOptions, investmentRangeOptions } from './Data';
+import { domainOptions, investmentRangeOptions } from '../../InvestorForm/Data';
 
 const passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;
 
@@ -40,7 +40,7 @@ const InvestorValidationSchema = yup.object().shape({
 
 
 
-const InvestorForm = () => {
+const AddInvestor = () => {
     const {
         control,
         handleSubmit,
@@ -52,16 +52,12 @@ const InvestorForm = () => {
     const onSubmit = async (data: Investors) => {
         try {
             const loadingMessage = message.loading("Submitting form...", 0);
-
-            const response = await axios.post("http://localhost:8080/auth/investor-signup", data);
-
+            const response = await axios.post("/admin/add-investor", data);
             if (response.status === 201) {
                 loadingMessage();
-
                 message.success("Form submitted successfully");
                 reset();
             }
-
         } catch (error) {
             console.error(error);
             message.destroy();
@@ -72,7 +68,7 @@ const InvestorForm = () => {
 
 
     return (
-        <InputContainer onSubmit={handleSubmit(onSubmit)}>
+        <AdminBusiness onSubmit={handleSubmit(onSubmit)}>
             <InputDiv>
                 <Label>
                     Name<Required>*</Required>
@@ -236,8 +232,8 @@ const InvestorForm = () => {
 
 
             <CommonButton name="Submit" width="30%" height="40px" />
-        </InputContainer>
+        </AdminBusiness>
     )
 }
 
-export default InvestorForm
+export default AddInvestor

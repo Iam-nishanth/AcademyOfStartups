@@ -1,10 +1,58 @@
 import BackButton from '@/components/BackButton';
+import { CommonButton } from '@/components/Common/Button';
 import AdminAuth from '@/components/HighOrders/AdminAuth'
 import { useAuthContext } from '@/hooks/useAuthContext';
-import React from 'react'
+import { Heading } from '@/styles/Globalstyles';
+import { CardButton, DashboardContainer, DashboardWrapper, Pair, UserCard, UserCards } from '@/styles/views/DashBoardstyles';
+import { Modal, message } from 'antd';
+import React, { useEffect } from 'react'
+import axios from '@/lib/axios';
+import AddEvent from '@/components/AdminComponents/AddEvent';
+import * as yup from 'yup'
+
+interface EventType {
+    id: string
+    name: string
+    date: string
+    time: string
+    location: string
+    createdAt: string
+}
+
 
 const ManageEvents = () => {
     const { user } = useAuthContext();
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [events, setEvents] = React.useState<EventType[]>([]);
+
+    useEffect(() => {
+        const getEvents = async () => {
+            try {
+                const response = await axios.get<any>('/admin/all-events')
+                if (response.status === 200) {
+                    setEvents(response.data.events)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getEvents()
+    }, [])
+    console.log(events)
+
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+        window.location.reload();
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
 
     const capitalizeFirstLetter = (word: string): string => {
@@ -13,9 +61,77 @@ const ManageEvents = () => {
 
     const DisplayName = user && `${capitalizeFirstLetter(user?.name)}`;
 
+
+    const deleteEvent = async (id: string) => {
+        Modal.confirm({
+            title: 'Confirm Deletion',
+            okText: 'Confirm',
+            cancelText: 'Cancel',
+            content: 'Are you sure you want to delete this Event?',
+            onOk: async () => {
+                try {
+                    const response = await axios.delete<any>(`/admin/delete-event/${id}`);
+                    if (response.status === 200) {
+                        setEvents(events.filter((event) => event.id !== id));
+                        message.success('User deleted successfully');
+                    }
+                } catch (error) {
+                    console.log(error);
+                    message.error('Some error Occured')
+                }
+            },
+            onCancel: () => { },
+        });
+    }
+
     return (
         <main>
             <BackButton dropdown={true} user={DisplayName} />
+            <DashboardContainer>
+                <DashboardWrapper>
+                    <Modal title="Add Event" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='Done' >
+                        <AddEvent />
+                    </Modal>
+                    <Pair style={{ justifyContent: 'space-between', padding: '0 10px' }}>
+                        <Heading>Manage Events</Heading>
+                        <CommonButton name='Add Event' width='150px' height='40px' onClick={showModal} />
+                    </Pair>
+                    {
+                        events.length > 0 ? (
+                            <UserCards>
+                                {
+                                    events.map((event) => (
+                                        <UserCard key={event.id}>
+                                            <Pair>
+                                                <strong className='title'>ID <b>:</b></strong><span>{event.id}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Name  <b>:</b></strong><span>{event.name}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Date  <b>:</b></strong><span>{event.date}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Time  <b>:</b></strong><span>{event.time}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Location  <b>:</b></strong><span>{event.location}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Created At <b>:</b></strong>
+                                                <span>{new Date(event.createdAt).toLocaleString()}</span>
+                                            </Pair>
+                                            <Pair style={{ justifyContent: 'center' }}>
+                                                <CardButton onClick={() => deleteEvent(event.id)} background='#fd3838'>Delete</CardButton>
+                                            </Pair>
+                                        </UserCard>
+                                    ))
+                                }
+                            </UserCards>
+                        ) : <h3 style={{ textAlign: 'center' }}>Loading...</h3>
+                    }
+                </DashboardWrapper>
+            </DashboardContainer>
         </main>
     )
 }

@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-    Error,
+    AdminRegister,
     Input,
     InputDiv,
     Label,
     LoginContainer,
-    LoginFORM,
-    Password,
-    PasswordInput,
-} from "../../styles/components/LoginStyles";
-import { CommonButton } from "../Common/Button";
+} from "@/styles/components/LoginStyles";
+import { CommonButton } from "@/components/Common/Button";
 import axios from "@/lib/axios";
 import { message } from "antd";
-import { useRouter } from "next/router";
-import { LoginResponse, RegisterResponse } from "../../types/Logintypes";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import { LoginValidationSchema, RegisterValidationSchema } from "../../utils/validation";
-import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import { RegisterResponse } from "@/types/Logintypes";
+import { RegisterValidationSchema } from "@/utils/validation";
 
 type FormData = {
     email: string;
@@ -27,11 +21,7 @@ type FormData = {
     confirmPassword: string;
 };
 
-
-
-
-
-const UserSignup: React.FC = () => {
+const AddUser: React.FC = () => {
     const {
         handleSubmit,
         control,
@@ -41,39 +31,17 @@ const UserSignup: React.FC = () => {
         resolver: yupResolver(RegisterValidationSchema),
     });
 
-    axios.defaults.withCredentials = true;
-
-
-    const [showPassword, setShowPassword] = useState(false);
-    const { dispatch } = useAuthContext()
-    const router = useRouter();
-
-    const togglePasswordVisibility = () => {
-        setShowPassword((prevState) => !prevState);
-    };
-
     const onSubmit = (data: FormData) => {
 
         const signIn = async () => {
             try {
                 const loadingMessage = message.loading("Loading...", 0);
-                const response = await axios.post<RegisterResponse>("/auth/register", data);
+                const response = await axios.post<RegisterResponse>("/admin/add-user", data);
 
                 if (response.status === 201) {
                     loadingMessage();
                     message.success("User Created");
-                    reset();
-                    localStorage.setItem('user', JSON.stringify(response.data))
-                    dispatch({
-                        type: 'LOGIN', payload: {
-                            user: response.data,
-                        }
-                    })
-
-                    router.push({
-                        pathname: '/add-business',
-                        query: { email: data.email },
-                    });
+                    reset()
                 }
             } catch (error: any) {
                 message.destroy();
@@ -93,7 +61,7 @@ const UserSignup: React.FC = () => {
 
     return (
         <LoginContainer>
-            <LoginFORM onSubmit={handleSubmit(onSubmit)}>
+            <AdminRegister onSubmit={handleSubmit(onSubmit)}>
                 <InputDiv>
                     <Label>Name</Label>
                     <Controller
@@ -124,7 +92,7 @@ const UserSignup: React.FC = () => {
                         name="password"
                         control={control}
                         defaultValue=""
-                        render={({ field }) => <Input type="password" {...field} />}
+                        render={({ field }) => <Input type="text" {...field} />}
                     />
                     {errors.password && (
                         <p style={{ color: "red" }}>{errors.password.message}</p>
@@ -136,32 +104,20 @@ const UserSignup: React.FC = () => {
                         name="confirmPassword"
                         control={control}
                         defaultValue=""
-                        render={({ field }) => (
-                            <Password>
-                                <PasswordInput
-                                    type={showPassword ? "text" : "password"}
-                                    {...field}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={togglePasswordVisibility}
-                                    style={{ marginLeft: "8px" }}
-                                >
-                                    {showPassword ? <BsEyeSlashFill /> : <BsEyeFill />}
-                                </button>
-                            </Password>
-                        )}
+                        render={({ field }) => <Input type="text" {...field} />}
                     />
                     {errors.confirmPassword && (
-                        <Error style={{ color: "red" }}>{errors.confirmPassword.message}</Error>
+                        <p style={{ color: "red" }}>{errors.confirmPassword.message}</p>
                     )}
                 </InputDiv>
+
+
                 <InputDiv>
                     <CommonButton name="Submit" width="30%" height="40px" />
                 </InputDiv>
-            </LoginFORM>
+            </AdminRegister>
         </LoginContainer>
     );
 };
 
-export default UserSignup;
+export default AddUser;

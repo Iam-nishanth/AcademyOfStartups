@@ -30,6 +30,30 @@ export const LoginFORM = styled.form`
     }
   }
 `;
+export const AdminRegister = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  width: 100%;
+  padding: 30px;
+  gap: 10px;
+  @media (max-width: 800px) {
+    gap: 10px;
+    padding: 30px 15px;
+  }
+  button {
+    align-self: center;
+  }
+  @media (max-width: 600px) {
+    input,
+    textarea,
+    label {
+      font-size: 0.9rem;
+    }
+  }
+`;
 export const Input = styled.input`
   width: 100%;
   padding: 10px 20px;

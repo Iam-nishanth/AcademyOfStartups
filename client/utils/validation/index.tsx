@@ -30,7 +30,7 @@ export const StartupValidationSchma = yup.object().shape({
         .string()
         .required("Business Registration Type is required"),
     productOrService: yup.string().required("Business Type is required"),
-    companyWebsite: yup.string().url("Invalid URL"),
+    companyWebsite: yup.string().url("Invalid URL").typeError("Invalid URL"),
     gstNo: yup.string(),
     incNo: yup.string().required("INC No. of Company is required"),
     panNo: yup.string().required("PAN No. of Company is required"),

@@ -52,7 +52,6 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ showModal, setOpen, ope
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log(response);
             loadingMessage();
             if (response.status === 200) {
                 message.success("Business Details Updated");

@@ -375,6 +375,52 @@ const Admin = {
         .json({ message: "Error while deleting the investor.", error: error });
     }
   },
+
+  // -------------------------Events-------------------------
+
+  allEvents: async (req, res) => {
+    try {
+      const events = await prisma.event.findMany();
+
+      res.status(200).json({ events });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error", error });
+    }
+  },
+
+  addEvent: async (req, res) => {
+    const { event } = req.body;
+
+    try {
+      const newEvent = await prisma.event.create({
+        data: {
+          name: event.name,
+          date: event.date,
+          time: event.time,
+          location: event.location,
+        },
+      });
+
+      res.status(201).json({ message: "Event created successfully", newEvent });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error", error });
+    }
+  },
+  deleteEvent: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const deletedEvent = await prisma.event.delete({
+        where: {
+          id: id,
+        },
+      });
+
+      res.status(200).json({ message: "Event deleted", deletedEvent });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error", error });
+    }
+  },
 };
 
 export default Admin;

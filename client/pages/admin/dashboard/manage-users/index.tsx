@@ -2,17 +2,34 @@ import BackButton from '@/components/BackButton';
 import AdminAuth from '@/components/HighOrders/AdminAuth'
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { CardButton, DashboardContainer, DashboardWrapper, Pair, UserCard, UserCards } from '@/styles/views/DashBoardstyles';
-import { Tabs } from 'antd';
+import { message } from 'antd';
 import React, { useEffect } from 'react'
 import axios from '@/lib/axios'
 import { User } from '@/types/AuthTypes';
 import { Heading } from '@/styles/Globalstyles';
+import { Modal } from 'antd';
+import { CommonButton } from '@/components/Common/Button';
+import AddUser from '@/components/AdminComponents/AddUser'
 
 
 
 const ManageUsers = () => {
     const { user } = useAuthContext();
     const [users, setUsers] = React.useState<User[]>([]);
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+        window.location.reload();
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     useEffect(() => {
         const getUsers = async () => {
@@ -27,7 +44,32 @@ const ManageUsers = () => {
         }
         getUsers()
     }, [])
-    console.log(users)
+
+
+    const DeleteUser = async (id: string) => {
+        Modal.confirm({
+            title: 'Confirm Deletion',
+            okText: 'Confirm',
+            cancelText: 'Cancel',
+            content: 'Are you sure you want to delete this user?',
+            okButtonProps: {
+                color: 'red',
+            },
+            onOk: async () => {
+                try {
+                    const response = await axios.delete<any>(`/admin/delete-user/${id}`);
+                    if (response.status === 200) {
+                        setUsers(users.filter((user) => user.id !== id));
+                        message.success('User deleted successfully');
+                    }
+                } catch (error) {
+                    console.log(error);
+                    message.error('Some error Occured')
+                }
+            },
+            onCancel: () => { },
+        });
+    };
 
 
     const capitalizeFirstLetter = (word: string): string => {
@@ -42,7 +84,13 @@ const ManageUsers = () => {
             <BackButton dropdown={true} user={DisplayName} />
             <DashboardContainer>
                 <DashboardWrapper>
-                    <Heading style={{ textAlign: 'center' }}>Manage Users</Heading>
+                    <Modal title="Add User" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='Done' >
+                        <AddUser />
+                    </Modal>
+                    <Pair style={{ justifyContent: 'space-between', padding: '0 10px' }}>
+                        <Heading>Manage Users</Heading>
+                        <CommonButton name='Add User' width='150px' height='40px' onClick={showModal} />
+                    </Pair>
                     {users.length > 0 ? (
                         <UserCards>
                             {users.map((user) => {
@@ -68,7 +116,7 @@ const ManageUsers = () => {
                                             <span>{new Date(user.createdAt).toLocaleString()}</span>
                                         </Pair>
                                         <Pair style={{ justifyContent: 'center' }}>
-                                            <CardButton background='#fd3838'>Delete</CardButton>
+                                            <CardButton onClick={() => DeleteUser(user.id)} background='#fd3838'>Delete</CardButton>
                                         </Pair>
                                     </UserCard>
                                 );

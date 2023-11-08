@@ -36,7 +36,6 @@ const InvestorDash = () => {
         fetchData();
     }, [])
 
-    console.log(businesses)
 
 
     const Greet = () => {

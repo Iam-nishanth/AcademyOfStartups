@@ -38,14 +38,12 @@ const AccountSection = () => {
 
     const showModal = () => {
         setOpen(true);
-        console.log('Clicked open modal');
     }
     const handleBack = () => {
         router.back();
     }
 
     const ChangePassword = async (data: any) => {
-        console.log(data)
         try {
             const loadingMessage = message.loading("Loading...", 0);
             const response = await axios.put(`http://localhost:8080/auth/user/change-password/${user?.id}`, data, {
@@ -53,7 +51,6 @@ const AccountSection = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log(response);
             if (response.status === 200) {
                 loadingMessage();
                 message.success("Password Changed Successfully");

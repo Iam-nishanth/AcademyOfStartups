@@ -3,14 +3,30 @@ import AdminAuth from '@/components/HighOrders/AdminAuth'
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { CardButton, DashboardContainer, DashboardWrapper, Pair, UserCard, UserCards } from '@/styles/views/DashBoardstyles';
 import { Investor } from '@/types/Investors';
-import { Tabs } from 'antd';
 import React from 'react'
 import axios from '@/lib/axios';
+import { Heading } from '@/styles/Globalstyles';
+import { Modal, message } from 'antd';
 import { CommonButton } from '@/components/Common/Button';
+import AddInvestor from '@/components/AdminComponents/AddInvestor';
 
 const ManageInvestors = () => {
     const { user } = useAuthContext();
     const [investors, setInvestors] = React.useState<Investor[]>([]);
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+        window.location.reload();
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     React.useEffect(() => {
         const getUsers = async () => {
@@ -25,7 +41,6 @@ const ManageInvestors = () => {
         }
         getUsers()
     }, [])
-    console.log(investors)
 
 
     const capitalizeFirstLetter = (word: string): string => {
@@ -34,38 +49,42 @@ const ManageInvestors = () => {
 
     const DisplayName = user && `${capitalizeFirstLetter(user?.name)}`;
 
-    // const investorsTabs = [
-    //     {
-    //         label: 'All Users',
-    //         key: '1',
-    //         children: (
+    const deleteInvestor = async (id: string) => {
+        Modal.confirm({
+            title: 'Confirm Deletion',
+            okText: 'Confirm',
+            cancelText: 'Cancel',
+            content: 'Are you sure you want to delete this investor?',
+            onOk: async () => {
+                try {
+                    const response = await axios.delete<any>(`/admin/delete-investor/${id}`);
+                    if (response.status === 200) {
+                        setInvestors(investors.filter((investor) => investor.id !== id));
+                        message.success('Investor deleted successfully');
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+            onCancel: () => {
+                // Do nothing if user cancels the deletion
+            }
+        });
+    }
 
-
-
-    //         ),
-    //     },
-    //     {
-    //         label: 'Add Investor',
-    //         key: '2',
-    //         children: 'Content of Tab Pane 2',
-    //     },
-    //     {
-    //         label: 'Update Investor',
-    //         key: '2',
-    //         children: 'Content of Tab Pane 2',
-    //     },
-    //     {
-    //         label: 'Delete Investor',
-    //         key: '3',
-    //         children: 'Content of Tab Pane 3',
-    //     }
-    // ]
 
     return (
         <main>
             <BackButton dropdown={true} user={DisplayName} />
             <DashboardContainer>
                 <DashboardWrapper>
+                    <Modal title="Add Investor" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='Done'>
+                        <AddInvestor />
+                    </Modal>
+                    <Pair style={{ justifyContent: 'space-between', padding: '0 10px' }}>
+                        <Heading>Manage Investors</Heading>
+                        <CommonButton name='Add Investor' width='150px' height='40px' onClick={showModal} />
+                    </Pair>
                     {investors.length > 0 ? (
                         <UserCards>
                             {investors.map((investor) => {
@@ -105,7 +124,7 @@ const ManageInvestors = () => {
                                             <span>{new Date(investor.createdAt).toLocaleString()}</span>
                                         </Pair>
                                         <Pair style={{ justifyContent: 'center' }}>
-                                            <CardButton background='red'>Delete</CardButton>
+                                            <CardButton onClick={() => deleteInvestor(investor.id)} background='red'>Delete</CardButton>
                                         </Pair>
                                     </UserCard>
                                 );

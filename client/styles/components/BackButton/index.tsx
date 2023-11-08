@@ -23,7 +23,7 @@ export const BackWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   min-height: 70px;
-  padding:0 20px;
+  padding:0 10px;
 
   @media (min-width: 1600px) {
         max-width: 1400px;

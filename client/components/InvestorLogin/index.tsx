@@ -55,7 +55,6 @@ const InvestorLogin: React.FC = () => {
                     "/auth/investor-login",
                     data
                 );
-                console.log(response);
 
                 if (response.status === 200) {
                     loadingMessage();

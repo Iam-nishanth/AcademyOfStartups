@@ -82,6 +82,45 @@ export const InputContainer = styled.form`
     gap: 5px;
   }
 `;
+export const AdminBusiness = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  /* max-width: 85%; */
+  border-radius: 20px;
+  padding: 10px;
+  background-color: #fff;
+  .ant-select {
+    width: 100%;
+    min-height: 40px;
+    .ant-select-selection-placeholder{
+      font-size: 1rem;
+      color: #757575;
+    }
+  }
+
+  .ant-select-selection-item {
+    font-size: 1rem;
+    margin: auto 0;
+  }
+
+  .ant-radio-wrapper{
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .ant-radio-group{
+    padding: 5px 20px;
+  }
+
+  .radio{
+    flex-direction: column;
+    display: flex;
+    gap: 5px;
+  }
+`;
 
 
 export const ModalInputContainer = styled.form`

@@ -49,13 +49,11 @@ const LoginForm: React.FC = () => {
   };
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
 
     const signIn = async () => {
       try {
         const loadingMessage = message.loading("Loading...", 0);
         const response = await axios.post<LoginResponse>("/auth/login", data);
-        console.log(response);
 
         if (response.status === 200) {
           loadingMessage();

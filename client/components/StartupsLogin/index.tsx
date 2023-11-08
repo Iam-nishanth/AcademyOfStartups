@@ -12,7 +12,7 @@ import { Select, Radio, message } from "antd";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CommonButton } from "../Common/Button";
-import axios from "axios";
+import axios from "@/lib/axios";
 import { StartupValidationSchma } from "@/utils/validation";
 import { Datamodel } from "@/types/Startup";
 import { useRouter } from "next/router";
@@ -42,7 +42,7 @@ const StartupsLogin = () => {
     try {
       const loadingMessage = message.loading("Submitting form...", 0);
 
-      const response = await axios.post(`http://localhost:8080/startups/add/${user?.id}`, { business: data });
+      const response = await axios.post(`/startups/add/`, { business: data });
 
       if (response.status === 200) {
         loadingMessage();
@@ -65,7 +65,6 @@ const StartupsLogin = () => {
 
       message.error("Some error occurred");
     }
-    console.log(data);
   };
 
   return (
