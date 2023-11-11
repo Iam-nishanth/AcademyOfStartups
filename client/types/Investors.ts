@@ -23,7 +23,7 @@ export interface InvestorInfo {
     id: string;
     PhoneNo: string;
     Address: string;
-    Image: null;
+    Image: String | null;
     InvestorType: string;
     InvestmentRange: string;
     DomainsOfInterest: string[];

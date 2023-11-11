@@ -19,7 +19,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "http://192.168.55.105:3000",
+      "http://192.168.55.104:3000",
       "http://192.168.0.103:3000",
       "https://academy-of-startups.vercel.app",
       "https://dev.academyofstartups.com",
@@ -31,11 +31,13 @@ app.use(
       "Authorization",
       "x-access-token",
       "x-csrf-token",
+      "Location",
     ],
     exposedHeaders: ["*", "authorization"],
     AccessControlAllowOrigin: "*",
   })
 );
+// app.use(cors());
 app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -1,14 +1,18 @@
 import express from "express";
 import Investor from "../controller/investor.js";
-import verifyToken from '../middleware/index.js';
-
+import verifyToken from "../middleware/index.js";
+import upload from "../middleware/storage/index.js";
 
 export const InvestorRouter = express.Router();
 
-InvestorRouter.post('/investor-signup', Investor.InvestorRegisterController)
+InvestorRouter.post(
+  "/investor-signup",
+  upload.none(),
+  Investor.InvestorRegisterController
+);
 
-InvestorRouter.post('/investor-login', Investor.InvestorLoginController)
+InvestorRouter.post("/investor-login", Investor.InvestorLoginController);
 
-InvestorRouter.get('/investors', verifyToken, Investor.GetAllInvestors)
+InvestorRouter.get("/investors", verifyToken, Investor.GetAllInvestors);
 
-InvestorRouter.get('/investors/get/startups/:id', Investor.GetStartups)
+InvestorRouter.get("/investors/get/startups/:id", Investor.GetStartups);

@@ -19,6 +19,7 @@ model User {
     updatedAt  DateTime @updatedAt @map("updated_at")
 
     businesses Business[]
+    OTP        String?    @map("otp")
 }
 
 model Business {
@@ -56,6 +57,8 @@ model Investor {
     createdAt    DateTime       @default(now()) @map("created_at")
     updatedAt    DateTime       @updatedAt @map("updated_at")
     InvestorInfo InvestorInfo[]
+
+    OTP String? @map("otp")
 }
 
 model InvestorInfo {

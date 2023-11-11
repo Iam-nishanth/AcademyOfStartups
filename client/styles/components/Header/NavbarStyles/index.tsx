@@ -19,16 +19,16 @@ export const NavWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 1200px;
+  z-index: 10;
   min-height: 90px;
 
-  z-index: 10;
+  max-width: 1200px;
   @media (min-width: 1600px) {
-        max-width: 1400px;
-    }
-    @media (min-width: 1800px) {
-        max-width: 1600px;
-    }
+    max-width: 1400px;
+  }
+  @media (min-width: 1800px) {
+    max-width: 1600px;
+  }
   a {
     text-decoration: none;
     font: inherit;
@@ -64,7 +64,7 @@ export const NavLinks = styled.ul`
   @media (max-width: 1000px) {
     display: none;
   }
-  .active{
+  .active {
     color: #316aff;
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -95,9 +95,8 @@ export const ButtonWrapper = styled.div`
 `;
 export const SidebarIcon = styled.div`
   display: none;
-  strong{
+  strong {
     color: #316aff;
-    
   }
 
   @media (max-width: 1000px) {
@@ -106,7 +105,7 @@ export const SidebarIcon = styled.div`
     gap: 15px;
     max-width: 200px;
     padding-right: 10px;
-    strong{
+    strong {
       display: none;
     }
     svg {
@@ -117,14 +116,13 @@ export const SidebarIcon = styled.div`
     }
 
     @media (max-width: 450px) {
-      button{
+      button {
         display: none;
       }
-      strong{
+      strong {
         display: block;
       }
     }
-    
   }
 `;
 export const Button = styled.button`
@@ -155,19 +153,18 @@ export const UserWrapper = styled.div`
   max-width: 200px;
 
   @media (max-width: 600px) {
-      max-width: 150px;
-      justify-content: flex-end;
+    max-width: 150px;
+    justify-content: flex-end;
 
-      .ant-dropdown-menu-title-content{
-        a{
-          font-size: 14px;
-          padding: 5px !important;
-        }
+    .ant-dropdown-menu-title-content {
+      a {
+        font-size: 14px;
+        padding: 5px !important;
       }
-  
+    }
   }
   @media (max-width: 350px) {
     font-size: 14px;
     gap: 5px;
   }
-`
+`;

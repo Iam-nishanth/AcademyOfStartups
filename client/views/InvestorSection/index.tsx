@@ -24,7 +24,7 @@ const InvestorSection = () => {
                         {
                             !investorData ? (
                                 <Buttons>
-                                    <Link href='#scroll'>
+                                    <Link href={{ pathname: '/investors/login', query: { redirect: 'Register' } }}>
                                         <CommonButton name='Register' width='150px' height='50px' />
                                     </Link>
                                     <Link href='/investors/login'>
@@ -48,14 +48,14 @@ const InvestorSection = () => {
             </InvestorContainer>
 
 
-            <ContentSection>
+            {/* <ContentSection>
                 <ContentWrapper id='scroll'>
                     <Heading>Join our Renowned Investor Network</Heading>
                     <SubHeading>Please fill up this form to join our network</SubHeading>
                     <InvestorForm />
                 </ContentWrapper>
 
-            </ContentSection>
+            </ContentSection> */}
 
         </>
     )

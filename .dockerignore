@@ -1,0 +1,15 @@
+# Ignore files and directories for the client (Next.js)
+client/node_modules
+client/.next
+client/out
+client/.env
+
+# Ignore files and directories for the server (Node.js/Express)
+server/node_modules
+# server/.env
+
+# Ignore common files and directories
+node_modules
+npm-debug.log
+yarn-error.log
+.DS_Store

@@ -4,12 +4,9 @@ const prisma = new PrismaClient();
 import bcrypt from "bcryptjs";
 import { InvestorValidationSchema } from "../utils/Validation/index.js";
 
-
 const saltrounds = 10;
 
-
 const Investor = {
-
   InvestorRegisterController: async (req, res) => {
     const {
       email,
@@ -21,20 +18,30 @@ const Investor = {
       image,
       investorType,
       investmentRange,
-      domainsOfInterest,
-      existingInvestments
+      existingInvestments,
     } = req.body;
+    const domainsOfInterest = JSON.parse(req.body.domainsOfInterest);
 
     try {
-
-      await InvestorValidationSchema.validate({ email, password, name, phoneNo, gender, address, image, investorType, investmentRange, domainsOfInterest, existingInvestments });
-
+      await InvestorValidationSchema.validate({
+        email,
+        password,
+        name,
+        gender,
+        phoneNo,
+        address,
+        image,
+        investorType,
+        investmentRange,
+        domainsOfInterest,
+        existingInvestments,
+      });
 
       const existingInvestor = await prisma.investor.findUnique({
         where: {
           email,
         },
-      })
+      });
 
       if (existingInvestor) {
         return res.status(409).json({ error: "Investor already exists" });
@@ -44,9 +51,12 @@ const Investor = {
 
       const newInvestor = await prisma.investor.create({
         data: {
-          email, password: hashedPassword, name, gender
-        }
-      })
+          email,
+          password: hashedPassword,
+          name,
+          gender,
+        },
+      });
       const newInvestorInfo = await prisma.investorInfo.create({
         data: {
           PhoneNo: phoneNo,
@@ -58,40 +68,40 @@ const Investor = {
           ExistingInvestments: existingInvestments,
           investor: {
             connect: {
-              id: newInvestor.id
-            }
-          }
-        }
-      })
+              id: newInvestor.id,
+            },
+          },
+        },
+      });
 
-      return res.status(201).json({ message: "Investor created successfully", newInvestor: newInvestor, newInvestorInfo: newInvestorInfo });
-
+      return res.status(201).json({
+        message: "Investor created successfully",
+        newInvestor: newInvestor,
+        newInvestorInfo: newInvestorInfo,
+      });
     } catch (error) {
-      if (error.name === 'ValidationError') {
+      if (error.name === "ValidationError") {
         // --------Handle validation errors--------
         const validationErrors = error.errors;
         res.status(400).json({ error: validationErrors });
       } else {
-        res.status(500).json({ message: "Internal server error", error: error });
+        res
+          .status(500)
+          .json({ message: "Internal server error", error: error });
       }
     }
-
   },
 
   InvestorLoginController: async (req, res) => {
     const email = req.body.email.toLowerCase();
     const password = req.body.password;
 
-
-
     try {
-
       const investor = await prisma.investor.findUnique({
         where: {
           email,
         },
       });
-
 
       if (!investor) {
         return res.status(404).json({ message: "Investor not found" });
@@ -103,21 +113,17 @@ const Investor = {
             where: {
               id: investor.id,
             },
-          })
+          });
 
-          res
-            .status(200)
-            .json({
-              auth: true,
-              investor: investor,
-              investorInfo: investorInfo
-
-            });
+          res.status(200).json({
+            auth: true,
+            investor: investor,
+            investorInfo: investorInfo,
+          });
         } else {
           res.status(401).json({ message: "Incorrect password", error: err });
         }
       });
-
     } catch (error) {
       res.status(500).json({ message: "Internal server error", error: error });
     }
@@ -127,8 +133,8 @@ const Investor = {
     try {
       const investors = await prisma.investor.findMany({
         include: {
-          InvestorInfo: true
-        }
+          InvestorInfo: true,
+        },
       });
       // console.log(investors);
       res.status(200).json({ investors });
@@ -139,13 +145,11 @@ const Investor = {
   },
 
   GetStartups: async (req, res) => {
-    const { id } = req.params
-
+    const { id } = req.params;
 
     try {
-
       if (!id) {
-        return res.status(401).json({ message: 'No ID given' })
+        return res.status(401).json({ message: "No ID given" });
       }
       const investor = await prisma.investor.findUnique({
         where: {
@@ -159,14 +163,12 @@ const Investor = {
 
       const startups = await prisma.business.findMany();
 
-      res.status(200).json({ startups })
+      res.status(200).json({ startups });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Internal Server error", error: error });
     }
-    catch (error) {
-      console.log(error)
-      res.status(500).json({ message: "Internal Server error", error: error })
-    }
-  }
+  },
+};
 
-}
-
-export default Investor
+export default Investor;

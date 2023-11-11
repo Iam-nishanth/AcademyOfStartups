@@ -1,5 +1,6 @@
 import express from "express";
 import Admin from "../controller/admin.js";
+import EmailVerification from "../middleware/mailOTP/index.js";
 
 export const adminRouter = express.Router();
 
@@ -21,3 +22,5 @@ adminRouter.get("/all-events", Admin.allEvents);
 adminRouter.post("/add-event", Admin.addEvent);
 // adminRouter.put("/update-event/:id", Admin.updateEvent);
 adminRouter.delete("/delete-event/:id", Admin.deleteEvent);
+
+adminRouter.post("/verify-user", EmailVerification.generateAndSendOTP);

@@ -13,7 +13,7 @@ interface BreadcumbProps {
   link: string;
 }
 
-export default function Breadcumb(props: BreadcumbProps): JSX.Element {
+const Breadcumb = (props: BreadcumbProps): JSX.Element => {
   return (
     <BreadcrumbContainer>
       <BreadcrumbWrapper>
@@ -35,3 +35,5 @@ export default function Breadcumb(props: BreadcumbProps): JSX.Element {
     </BreadcrumbContainer>
   );
 }
+
+export default Breadcumb

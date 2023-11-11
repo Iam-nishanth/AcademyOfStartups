@@ -37,7 +37,7 @@ export default function HeroSection() {
               Only course you’re going to need to see visible changes in your
               business
             </p>
-            <CommonButton name="Submit" width="150px" height="40px" />
+            <CommonButton name="Buy Now" width="150px" height="40px" />
           </CardText>
         </CardWrapper>
       </HeroWrapper>

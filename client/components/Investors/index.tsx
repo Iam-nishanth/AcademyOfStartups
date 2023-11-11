@@ -51,36 +51,52 @@ const InvestorsComponent: React.FC<InvestorComponentProps> = ({ investorData, do
                 {filteredInvestors.length > 0 ? (
                     filteredInvestors.map((investor) => (
                         <InvestorCard key={investor.id}>
-                            <Image
-                                src={
-                                    investor.gender === "Male"
-                                        ? "/images/Male.jpg"
-                                        : "/images/Female.webp"
-                                }
-                                width={80}
-                                height={80}
-                                alt="Investor"
-                            />
+
                             {investor.InvestorInfo.map((info) => (
-                                <div key={info.id}>
-                                    <h3>{investor.name}</h3>
-                                    <h4 style={{ color: "blue" }}>
-                                        {info.InvestorType == "Angel"
-                                            ? "Angel Investor"
-                                            : info.InvestorType}
-                                    </h4>
-                                    <br />
-                                    <p>
-                                        <span style={{ fontWeight: "bold" }}>Range: </span>
-                                        {info.InvestmentRange}
-                                    </p>
-                                    <br />
-                                    <p style={{ fontWeight: "bold" }}>Interested Fields: </p>
-                                    <p>{info.DomainsOfInterest.join(", ")}</p>
-                                    <br />
-                                    <br />
-                                    <CommonButton name="connect" width="100px" height="40px" />
-                                </div>
+                                <>
+                                    {
+                                        info.Image ? (
+                                            <Image
+                                                src={info.Image.toString()}
+                                                alt="Profile Image"
+                                                width={80}
+                                                height={80}
+                                            />
+                                        ) :
+                                            (
+                                                <Image
+                                                    src={
+                                                        investor.gender === "Male"
+                                                            ? "/images/Male.jpg"
+                                                            : "/images/Female.webp"
+                                                    }
+                                                    width={80}
+                                                    height={80}
+                                                    alt="Investor"
+                                                />
+                                            )
+                                    }
+                                    <div key={info.id}>
+                                        <h3>{investor.name}</h3>
+                                        <h4 style={{ color: "blue" }}>
+                                            {info.InvestorType == "Angel"
+                                                ? "Angel Investor"
+                                                : info.InvestorType}
+                                        </h4>
+                                        <br />
+                                        <p>
+                                            <span style={{ fontWeight: "bold" }}>Range: </span>
+                                            {info.InvestmentRange}
+                                        </p>
+                                        <br />
+                                        <p style={{ fontWeight: "bold" }}>Interested Fields: </p>
+                                        <p>{info.DomainsOfInterest.join(", ")}</p>
+                                        <br />
+                                        <br />
+                                        <CommonButton name="connect" width="100px" height="40px" />
+                                    </div>
+                                </>
+
                             ))}
                         </InvestorCard>
                     ))

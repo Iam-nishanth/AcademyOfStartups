@@ -58,4 +58,5 @@ export interface Investors {
   investmentRange: string;
   domainsOfInterest: string[];
   existingInvestments?: string;
+  Image?: string | Blob;
 }

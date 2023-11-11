@@ -1,6 +1,5 @@
 import React from 'react'
 import * as yup from 'yup'
-import { Investors } from '@/types/Logintypes'
 import {
     InputContainer,
     InputDiv,
@@ -15,6 +14,7 @@ import { CommonButton } from '../Common/Button';
 import { Radio, Select, message } from 'antd';
 import axios from '@/lib/axios';
 import { domainOptions, investmentRangeOptions } from './Data';
+import ImageUpload from '@/components/Common/ImageUpload';
 
 const passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;
 
@@ -38,6 +38,20 @@ const InvestorValidationSchema = yup.object().shape({
         .oneOf([yup.ref("password")], "Passwords must match"),
 });
 
+export interface Investors {
+    name: string;
+    email: string;
+    phoneNo: string;
+    password: string;
+    confirmPassword: string | undefined | null;
+    address: string;
+    investorType: string;
+    investmentRange: string;
+    domainsOfInterest: string[];
+    existingInvestments?: string;
+    image?: string | Blob;
+}
+
 
 
 const InvestorForm = () => {
@@ -49,19 +63,53 @@ const InvestorForm = () => {
     } = useForm({
         resolver: yupResolver(InvestorValidationSchema),
     });
-    const onSubmit = async (data: Investors) => {
+
+    const [base64Image, setBase64Image] = React.useState<string>("");
+
+    const handleImageUpload = (image: string) => {
+        setBase64Image(image);
+    };
+
+
+    const onSubmit = async (data: any) => {
+        console.log(data);
+
+        const formData = new FormData();
+
+        // Add all of the regular data to the form data.
+        formData.append("name", data.name);
+        formData.append("email", data.email);
+        formData.append("phoneNo", data.phoneNo);
+        formData.append("password", data.password);
+        formData.append("confirmPassword", data.confirmPassword);
+        formData.append("address", data.address);
+        formData.append("investorType", data.investorType);
+        formData.append("investmentRange", data.investmentRange);
+        formData.append("domainsOfInterest", JSON.stringify(data.domainsOfInterest));
+        formData.append("existingInvestments", data.existingInvestments);
+        formData.append("image", base64Image);
+        formData.append("gender", data.gender);
+
         try {
             const loadingMessage = message.loading("Submitting form...", 0);
 
-            const response = await axios.post("http://localhost:8080/auth/investor-signup", data);
+            const response = await axios.post("/auth/investor-signup", formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    }
+                }
+            );
 
             if (response.status === 201) {
                 loadingMessage();
-
                 message.success("Form submitted successfully");
-                reset();
-            }
 
+                setTimeout(() => {
+                    reset();
+                    window.location.reload();
+                }, 1500);
+            }
         } catch (error) {
             console.error(error);
             message.destroy();
@@ -69,6 +117,8 @@ const InvestorForm = () => {
             message.error("Some error occurred");
         }
     };
+
+
 
 
     return (
@@ -94,7 +144,7 @@ const InvestorForm = () => {
                     name="email"
                     control={control}
                     defaultValue=""
-                    render={({ field }) => <Input placeholder="Email" {...field} />}
+                    render={({ field }) => <Input type='email' placeholder="Email" {...field} />}
                 />
                 {errors.email && <Error>{errors.email.message}</Error>}
             </InputDiv>
@@ -233,7 +283,12 @@ const InvestorForm = () => {
                 />
                 {errors.confirmPassword && <Error>{errors.confirmPassword.message}</Error>}
             </InputDiv>
-
+            <InputDiv>
+                <Label>Profile Image :</Label>
+                <div style={{ padding: "10px 40px" }}>
+                    <ImageUpload onImageUpload={handleImageUpload} />
+                </div>
+            </InputDiv>
 
             <CommonButton name="Submit" width="30%" height="40px" />
         </InputContainer>
