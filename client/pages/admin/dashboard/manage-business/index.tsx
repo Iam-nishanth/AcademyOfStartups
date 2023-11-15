@@ -3,12 +3,14 @@ import AdminAuth from '@/components/HighOrders/AdminAuth'
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { CardButton, DashboardContainer, DashboardWrapper, Pair, UserCard, UserCards } from '@/styles/views/DashBoardstyles';
 import { Business } from '@/types/AuthTypes';
-import { Modal, message } from 'antd';
+import { Modal, Skeleton, message } from 'antd';
 import React from 'react'
 import axios from '@/lib/axios';
 import { Heading } from '@/styles/Globalstyles';
 import { CommonButton } from '@/components/Common/Button';
 import AddBusiness from '@/components/AdminComponents/AddBusiness'
+import { decryptResponse } from '@/lib/encryption';
+import Image from 'next/image';
 
 const ManageBusiness = () => {
     const { user } = useAuthContext();
@@ -33,7 +35,8 @@ const ManageBusiness = () => {
             try {
                 const response = await axios.get<any>('/admin/all-businesses')
                 if (response.status === 200) {
-                    setBusinesses(response.data)
+                    const decryptedBusinesses = decryptResponse(response.data.businesses, process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string)
+                    setBusinesses(decryptedBusinesses)
                 }
             } catch (error) {
                 console.log(error)
@@ -92,6 +95,16 @@ const ManageBusiness = () => {
                             {businesses.map((business: Business) => {
                                 return (
                                     <UserCard key={business.id}>
+                                        <Pair style={{ height: '80px', alignItems: 'center' }}>
+                                            <strong className='title'>Logo <b>:</b></strong>
+                                            <span >{
+                                                business.Logo ? (
+                                                    <Image src={business.Logo.toString()} alt={business.businessName + ' Image'} width={150} height={80} />
+                                                ) : (
+                                                    'No Image'
+                                                )
+                                            }</span>
+                                        </Pair>
                                         <Pair>
                                             <strong className='title'>ID <b>:</b></strong><span>{business.id}</span>
                                         </Pair>
@@ -126,20 +139,20 @@ const ManageBusiness = () => {
                                             <strong className='title'>Website  <b>:</b></strong><span><a href={business.companyWebsite} target="_blank">🌐Open</a></span>
                                         </Pair>
                                         <Pair>
-                                            <strong className='title'>Is Verified  <b>:</b></strong>{business.isVerified === true ? <span style={{ color: 'green', textDecoration: 'underline' }}>Verified</span> : <span style={{ color: 'red', textDecoration: 'underline' }}>Not Verified</span>}
+                                            <strong className='title'>Is Verified  <b>:</b></strong>{business.isVerified === true ? <span style={{ background: 'green', color: 'white', padding: '0 5px' }}>Verified</span> : <span style={{ background: 'red', color: 'white', padding: '0 5px' }}> Not Verified</span>}
                                         </Pair>
                                         <Pair>
                                             <strong className='title'>Created At <b>:</b></strong>
                                             <span>{new Date(business.createdAt).toLocaleString()}</span>
                                         </Pair>
-                                        <Pair style={{ justifyContent: 'center' }}>
+                                        <Pair style={{ justifyContent: 'center', alignSelf: 'flex-end' }}>
                                             <CardButton background='red' onClick={() => deleteBusiness(business.id)}>Delete</CardButton>
                                         </Pair>
                                     </UserCard>
                                 );
                             })}
                         </UserCards>
-                    ) : <h3 style={{ textAlign: 'center' }}>Loading...</h3>}
+                    ) : <Skeleton active paragraph={{ rows: 15, width: '100%' }} />}
                 </DashboardWrapper>
 
             </DashboardContainer>

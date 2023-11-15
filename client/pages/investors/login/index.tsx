@@ -1,14 +1,10 @@
 import React from 'react'
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Header/Navbar'
-import Sidebar from '@/components/Header/Sidebar'
-import InvestorLogin from '@/components/InvestorLogin'
 import { useRouter } from 'next/router'
+import Layout from '@/components/Layout/NavOnly'
+import InvestorLogin from '@/components/InvestorLogin'
 import InvestorForm from '@/components/InvestorForm'
 
 const InvestorsLogin = () => {
-
-    const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const [isLogin, setIsLogin] = React.useState<boolean>(true);
     const router = useRouter();
 
@@ -16,16 +12,11 @@ const InvestorsLogin = () => {
         router.query.redirect == 'Register' ? setIsLogin(false) : setIsLogin(true);
     })
 
-    const toggle = (): void => {
-        setIsOpen(!isOpen);
-    };
 
     return (
-        <main>
-            <Navbar toggle={toggle} />
-            <Sidebar toggle={toggle} isOpen={isOpen} />
+        <Layout>
             {isLogin ? <InvestorLogin /> : <InvestorForm />}
-        </main>
+        </Layout>
     )
 }
 

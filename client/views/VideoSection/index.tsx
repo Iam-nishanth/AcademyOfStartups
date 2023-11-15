@@ -15,7 +15,7 @@ import React from "react";
 import { TiTick } from "react-icons/ti";
 import { TfiBarChart } from "react-icons/tfi";
 
-export default function VideoSection() {
+const VideoSection = () => {
   const image = "/images/Videobg.svg";
   const videoId = "lAJYFmAcKrA";
   return (
@@ -88,3 +88,5 @@ export default function VideoSection() {
     </VideoSectionContainer>
   );
 }
+
+export default VideoSection

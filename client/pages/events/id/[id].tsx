@@ -1,27 +1,17 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import { Timings } from "@/views/EventsSection";
-import {
-  EventDetailsContainer,
-  EventDetailsWrapper,
-  Span,
-} from "@/styles/views/EventsStyles";
-import { Heading, SubHeading } from "@/styles/Globalstyles";
+import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import Layout from "@/components/Layout/NavOnly";
+import Breadcumb from "@/components/Breadcumb";
+import { Timings } from "@/views/EventsSection";
 import { CommonButton } from "@/components/Common/Button";
-const Navbar = dynamic(() => import("@/components/Header/Navbar"));
-const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
-const Breadcumb = dynamic(() => import("@/components/Breadcumb"));
+import { Heading, SubHeading } from "@/styles/Globalstyles";
+import { EventDetailsContainer, EventDetailsWrapper, Span } from "@/styles/views/EventsStyles";
 
-export default function EventPage() {
+
+const EventPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const toggle = (): void => {
-    setIsOpen(!isOpen);
-  };
 
   const ItemDetails = Timings.map((item) => {
     if (item && item.id === Number(id)) {
@@ -44,9 +34,7 @@ export default function EventPage() {
     }
   });
   return (
-    <main>
-      <Navbar toggle={toggle} />
-      <Sidebar toggle={toggle} isOpen={isOpen} />
+    <Layout>
       <Breadcumb name="Events" link="events" />
       <EventDetailsContainer>
         {ItemDetails}
@@ -57,6 +45,8 @@ export default function EventPage() {
           height={500}
         />
       </EventDetailsContainer>
-    </main>
+    </Layout>
   );
 }
+
+export default EventPage

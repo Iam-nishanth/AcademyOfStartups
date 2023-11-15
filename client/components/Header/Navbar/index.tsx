@@ -24,7 +24,7 @@ type NavbarProps = {
   NavBackground?: boolean;
 };
 
-export default function Navbar({ toggle, NavBackground }: NavbarProps): JSX.Element {
+const Navbar = ({ toggle, NavBackground }: NavbarProps): JSX.Element => {
   const { user, business } = useAuthContext();
 
   const router = useRouter();
@@ -104,3 +104,5 @@ export default function Navbar({ toggle, NavBackground }: NavbarProps): JSX.Elem
     </>
   );
 }
+
+export default Navbar

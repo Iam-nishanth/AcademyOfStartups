@@ -14,7 +14,7 @@ import React from "react";
 import { FaBuilding, FaLocationDot, FaPhoneVolume } from "react-icons/fa6";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 
-export default function ContactSection() {
+const ContactSection = () => {
   return (
     <ContactContainer>
       <ContactWrapper>
@@ -69,3 +69,5 @@ export default function ContactSection() {
     </ContactContainer>
   );
 }
+
+export default ContactSection

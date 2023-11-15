@@ -1,9 +1,13 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import {
   InvestorValidationSchema,
   registerSchema,
 } from "../utils/Validation/index.js";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { encryptResponse } from "../utils/encryption/index.js";
 
 const prisma = new PrismaClient();
 
@@ -13,14 +17,15 @@ const Admin = {
   // -------------------------User Controllers-------------------------
 
   allUsers: async (req, res) => {
-    try {
-      const users = await prisma.user.findMany();
-      res.status(200).json(users);
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Error while getting the users.", error: error });
-    }
+    // try {
+    const users = await prisma.user.findMany();
+    const response = encryptResponse(users, process.env.ENCRYPTION_KEY);
+    res.status(200).json({ users: response });
+    // } catch (error) {
+    //   res
+    //     .status(500)
+    //     .json({ message: "Error while getting the users.", error: error });
+    // }
   },
 
   addUser: async (req, res) => {
@@ -36,9 +41,7 @@ const Admin = {
         },
       });
       if (existingUser) {
-        return res
-          .status(409)
-          .json({ message: "User already exists", error: existingUser });
+        return res.status(409).json({ message: "User already exists" });
       }
 
       const newUser = await prisma.user.create({
@@ -46,6 +49,11 @@ const Admin = {
           userEmail: email,
           password: hashedPassword,
           name,
+        },
+        select: {
+          id: true,
+          name: true,
+          userEmail: true,
         },
       });
       res.status(201).json(newUser);
@@ -74,6 +82,11 @@ const Admin = {
 
       const deletedUser = await prisma.user.delete({
         where: { id: id },
+        select: {
+          id: true,
+          name: true,
+          userEmail: true,
+        },
       });
       res
         .status(200)
@@ -90,7 +103,10 @@ const Admin = {
   allBusiness: async (req, res) => {
     try {
       const businesses = await prisma.business.findMany();
-      res.status(200).json(businesses);
+
+      const response = encryptResponse(businesses, process.env.ENCRYPTION_KEY);
+
+      res.status(200).json({ businesses: response });
     } catch (error) {
       res
         .status(500)
@@ -123,6 +139,10 @@ const Admin = {
       });
       const newStartup = await prisma.business.create({
         data: business,
+        select: {
+          businessName: true,
+          businessEmail: true,
+        },
       });
       res.json(newStartup);
     } catch (error) {
@@ -154,9 +174,7 @@ const Admin = {
         data: req.body.startup,
       });
 
-      res
-        .status(200)
-        .json({ message: "Startup updated", startup: updatedStartup });
+      res.status(200).json({ message: "Startup updated" });
     } catch (error) {
       res
         .status(500)
@@ -182,6 +200,10 @@ const Admin = {
           id: id,
         },
         data: req.body.startup,
+        select: {
+          businessName: true,
+          businessEmail: true,
+        },
       });
 
       res
@@ -203,7 +225,13 @@ const Admin = {
           InvestorInfo: true,
         },
       });
-      res.status(200).json({ investors });
+
+      const response = encryptResponse(
+        investors,
+        process.env.ENCRYPTION_KEY
+      );
+
+      res.status(200).json(response);
     } catch (error) {
       res.status(500).json({ message: "Internal server error", error });
     }
@@ -220,9 +248,9 @@ const Admin = {
       image,
       investorType,
       investmentRange,
-      domainsOfInterest,
       existingInvestments,
     } = req.body;
+    const domainsOfInterest = JSON.parse(req.body.domainsOfInterest);
 
     try {
       await InvestorValidationSchema.validate({
@@ -278,8 +306,6 @@ const Admin = {
 
       return res.status(201).json({
         message: "Investor created successfully",
-        newInvestor: newInvestor,
-        newInvestorInfo: newInvestorInfo,
       });
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -358,16 +384,20 @@ const Admin = {
           id: id,
         },
       });
+
       const deletedInvestor = await prisma.investor.delete({
         where: {
           id: id,
+        },
+        select: {
+          name,
+          email,
         },
       });
 
       res.status(200).json({
         message: "Investor Deleted",
-        investor: deletedInvestor,
-        investorInfo: deletedInvestorInfo,
+        deletedInvestor,
       });
     } catch (error) {
       res
@@ -382,7 +412,9 @@ const Admin = {
     try {
       const events = await prisma.event.findMany();
 
-      res.status(200).json({ events });
+      const response = encryptResponse(events, process.env.ENCRYPTION_KEY);
+
+      res.status(200).json({ events: response });
     } catch (error) {
       res.status(500).json({ message: "Internal server error", error });
     }

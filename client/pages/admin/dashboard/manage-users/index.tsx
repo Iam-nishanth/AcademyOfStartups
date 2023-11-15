@@ -2,7 +2,7 @@ import BackButton from '@/components/BackButton';
 import AdminAuth from '@/components/HighOrders/AdminAuth'
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { CardButton, DashboardContainer, DashboardWrapper, Pair, UserCard, UserCards } from '@/styles/views/DashBoardstyles';
-import { message } from 'antd';
+import { Skeleton, message } from 'antd';
 import React, { useEffect } from 'react'
 import axios from '@/lib/axios'
 import { User } from '@/types/AuthTypes';
@@ -10,6 +10,9 @@ import { Heading } from '@/styles/Globalstyles';
 import { Modal } from 'antd';
 import { CommonButton } from '@/components/Common/Button';
 import AddUser from '@/components/AdminComponents/AddUser'
+import { decryptResponse } from '@/lib/encryption';
+
+
 
 
 
@@ -34,16 +37,17 @@ const ManageUsers = () => {
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const response = await axios.get<any>('/admin/all-users')
+                const response = await axios.get<any>('/admin/all-users');
                 if (response.status === 200) {
-                    setUsers(response.data)
+                    const decryptedUsers = decryptResponse(response.data.users, process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string);
+                    setUsers(decryptedUsers);
                 }
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
-        }
-        getUsers()
-    }, [])
+        };
+        getUsers();
+    }, []);
 
 
     const DeleteUser = async (id: string) => {
@@ -109,7 +113,7 @@ const ManageUsers = () => {
                                             <strong className='title'>Role  <b>:</b></strong><span>{user.role}</span>
                                         </Pair>
                                         <Pair>
-                                            <strong className='title'>Is Verified  <b>:</b></strong>{user.isVerified === true ? <span style={{ color: 'green', textDecoration: 'underline' }}>Verified</span> : <span style={{ color: 'red', textDecoration: 'underline' }}>Not Verified</span>}
+                                            <strong className='title'>Is Verified  <b>:</b></strong>{user.isVerified === true ? <span style={{ background: 'green', color: 'white', padding: '0 5px' }}>Verified</span> : <span style={{ background: 'red', color: 'white', padding: '0 5px' }}> Not Verified</span>}
                                         </Pair>
                                         <Pair>
                                             <strong className='title'>Created At <b>:</b></strong>
@@ -122,7 +126,7 @@ const ManageUsers = () => {
                                 );
                             })}
                         </UserCards>
-                    ) : <h3 style={{ textAlign: 'center' }}>Loading...</h3>
+                    ) : <Skeleton active paragraph={{ rows: 15, width: '100%' }} />
                     }
                 </DashboardWrapper>
 

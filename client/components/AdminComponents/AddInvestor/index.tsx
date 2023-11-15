@@ -15,6 +15,7 @@ import { CommonButton } from '../../Common/Button';
 import { Radio, Select, message } from 'antd';
 import axios from '@/lib/axios';
 import { domainOptions, investmentRangeOptions } from '../../InvestorForm/Data';
+import ImageUpload from '@/components/Common/ImageUpload';
 
 const passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;
 
@@ -49,19 +50,52 @@ const AddInvestor = () => {
     } = useForm({
         resolver: yupResolver(InvestorValidationSchema),
     });
-    const onSubmit = async (data: Investors) => {
+
+    const [base64Image, setBase64Image] = React.useState<string>("");
+
+    const handleImageUpload = (image: string) => {
+        setBase64Image(image);
+    };
+
+
+    const onSubmit = async (data: any) => {
+
+        const formData = new FormData();
+        formData.append("name", data.name);
+        formData.append("email", data.email);
+        formData.append("phoneNo", data.phoneNo);
+        formData.append("password", data.password);
+        formData.append("confirmPassword", data.confirmPassword);
+        formData.append("address", data.address);
+        formData.append("investorType", data.investorType);
+        formData.append("investmentRange", data.investmentRange);
+        formData.append("domainsOfInterest", JSON.stringify(data.domainsOfInterest));
+        formData.append("existingInvestments", data.existingInvestments);
+        formData.append("image", base64Image);
+        formData.append("gender", data.gender);
+
         try {
             const loadingMessage = message.loading("Submitting form...", 0);
-            const response = await axios.post("/admin/add-investor", data);
+            const response = await axios.post("/admin/add-investor", formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    }
+                }
+            );
+            console.log(response);
             if (response.status === 201) {
                 loadingMessage();
                 message.success("Form submitted successfully");
-                reset();
+
+                setTimeout(() => {
+                    reset();
+                    window.location.reload();
+                }, 1500);
             }
         } catch (error) {
             console.error(error);
             message.destroy();
-
             message.error("Some error occurred");
         }
     };
@@ -228,6 +262,12 @@ const AddInvestor = () => {
                     )}
                 />
                 {errors.confirmPassword && <Error>{errors.confirmPassword.message}</Error>}
+            </InputDiv>
+            <InputDiv>
+                <Label>Profile Image :</Label>
+                <div style={{ padding: "10px 40px" }}>
+                    <ImageUpload onImageUpload={handleImageUpload} />
+                </div>
             </InputDiv>
 
 

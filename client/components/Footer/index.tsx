@@ -16,7 +16,7 @@ import { FooterAnchor } from "../Common/Button";
 import { HiClock, HiLocationMarker, HiMail, HiPhone } from "react-icons/hi";
 import Link from "next/link";
 
-export default function Footer() {
+const Footer = (): JSX.Element => {
   return (
     <FooterContainer>
       <FooterWrapper>
@@ -122,3 +122,5 @@ export default function Footer() {
     </FooterContainer>
   );
 }
+
+export default Footer

@@ -11,15 +11,17 @@ const generateOTP = () => {
 // Send email with OTP
 const sendEmailWithOTP = async (email, otp) => {
   const transporter = nodemailer.createTransport({
-    service: "outlook",
+    host: "smtp.hostinger.com",
+    port: 465,
+    secure: true,
     auth: {
-      user: "nishanth_alapati@outlook.com",
-      pass: "Nishanth@21",
+      user: "support@sudheervarma.com",
+      pass: "Thinkpad@2023",
     },
   });
 
   const mailOptions = {
-    from: "nishanth_alapati@outlook.com",
+    from: "Academy of Startups <support@sudheervarma.com>",
     to: email,
     subject: "OTP Verification",
     html: `<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
@@ -67,7 +69,7 @@ const EmailVerification = {
       res.status(200).json({ message: "OTP sent successfully" });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "Failed to send OTP" });
+      res.status(500).json({ message: "Failed to send OTP", error: error });
     }
   },
 
@@ -94,27 +96,11 @@ const EmailVerification = {
 
       await sendEmailWithOTP(email, otp);
 
-      res.status(200).json({ message: "OTP sent successfully" });
+      res.status(200).json({ message: "OTP Re-sent successfully" });
     } catch (error) {
       res.status(500).json({ message: "Failed to send OTP" });
     }
-  },
-
-  // Verify OTP
-  verifyOTP: async (req, res) => {
-    const { email, otp } = req.body;
-
-    // Retrieve the OTP from the database or cache
-    // and compare it with the OTP provided by the user
-    // You can use a library like Redis or MongoDB for this purpose
-
-    // For the sake of this example, we'll compare the OTP directly
-    if (otp === "123456") {
-      res.status(200).json({ message: "OTP verified successfully" });
-    } else {
-      res.status(400).json({ message: "Invalid OTP" });
-    }
-  },
+  }
 };
 
 export default EmailVerification;

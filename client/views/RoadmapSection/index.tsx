@@ -18,7 +18,7 @@ import { MdRocketLaunch } from "react-icons/md";
 import { HiBadgeCheck } from "react-icons/hi";
 import { FaRepeat } from "react-icons/fa6";
 
-export default function RoadmapSection() {
+const RoadmapSection = () => {
   const RoadMapData = [
     {
       Title: "Understanding",
@@ -92,3 +92,5 @@ export default function RoadmapSection() {
     </RoadmapContainer>
   );
 }
+
+export default RoadmapSection

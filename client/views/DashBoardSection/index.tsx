@@ -4,11 +4,12 @@ import { DashboardContainer, DashboardWrapper } from '@/styles/views/DashBoardst
 import { useAuthContext } from '@/hooks/useAuthContext'
 import { useRouter } from 'next/router'
 import axios from '@/lib/axios'
-import { message } from 'antd'
+import { Skeleton, message } from 'antd'
 import { domain_Options } from '@/components/InvestorForm/Data'
 import InvestorsComponent from '@/components/Investors'
 import { GetInvestors, Investor } from '@/types/Investors'
 import DashBoardCards from '@/components/DashBoardCards'
+import { Heading, SubHeading } from '@/styles/Globalstyles'
 
 
 
@@ -62,7 +63,13 @@ const DashBoardsection: React.FC = () => {
         <DashboardContainer>
             <DashboardWrapper>
                 <DashBoardCards />
-                <InvestorsComponent investorData={investorData} domainOptions={domain_Options} />
+                <Heading>Investor Opportunity Hub</Heading>
+                <SubHeading>
+                    Discover Investors Aligned with Your Startup's Vision and Ambitions
+                </SubHeading>
+                {
+                    investorData.length > 0 ? <InvestorsComponent investorData={investorData} domainOptions={domain_Options} /> : <Skeleton active paragraph={{ rows: 10, width: '100%' }} />
+                }
             </DashboardWrapper>
         </DashboardContainer>
     );

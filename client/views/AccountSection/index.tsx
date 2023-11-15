@@ -1,19 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Heading } from '@/styles/Globalstyles'
-import { AccountSectionContainer, AccountSectionWrapper, DetailsWrapper, PairHolder, ValueHolder } from '@/styles/views/AccountSectionStyles';
-import { Tabs, message } from 'antd';
 import { useAuthContext } from '@/hooks/useAuthContext';
-import { IoCaretBack } from 'react-icons/io5';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import axios from '@/lib/axios';
+import { Tabs, message } from 'antd';
 import ModalComponent from '@/components/AccountDetailsModal';
 import { CommonButton } from '@/components/Common/Button';
 import { Error, FORM, Input, InputContainer, Label, Required } from '@/styles/components/FormStyles';
 import { Password, PasswordInput } from '@/styles/components/LoginStyles';
-import { Controller, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { AccountSectionContainer, AccountSectionWrapper, DetailsWrapper, PairHolder, ValueHolder } from '@/styles/views/AccountSectionStyles';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
-import axios from '@/lib/axios';
 
 
 const PasswordSchema = yup.object().shape({
@@ -46,7 +44,7 @@ const AccountSection = () => {
     const ChangePassword = async (data: any) => {
         try {
             const loadingMessage = message.loading("Loading...", 0);
-            const response = await axios.put(`http://localhost:8080/auth/user/change-password/${user?.id}`, data, {
+            const response = await axios.put(`/auth/user/change-password/${user?.id}`, data, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -245,12 +243,6 @@ const AccountSection = () => {
     return (
         <AccountSectionContainer>
             <AccountSectionWrapper>
-                {/* <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                    <div onClick={handleBack} >
-                        <IoCaretBack style={{ cursor: 'pointer', fontSize: '30px' }} />
-                    </div>
-                    <Heading>Account Details</Heading>
-                </div> */}
                 <Tabs
                     defaultActiveKey="1"
                     centered

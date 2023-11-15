@@ -6,8 +6,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { registerSchema } from "../utils/Validation/index.js";
 
-
-
 const prisma = new PrismaClient();
 
 const saltrounds = 10;
@@ -31,28 +29,30 @@ const Auth = {
         where: {
           userEmail: email,
         },
-      })
+      });
       if (existingUser) {
-        return res.status(409).json({ message: "User already exists", error: existingUser });
+        return res
+          .status(409)
+          .json({ message: "User already exists", error: existingUser });
       }
 
       const newUser = await prisma.user.create({
         data: {
           userEmail: email,
           password: hashedPassword,
-          name
+          name,
         },
-      })
+      });
       res.status(201).json(newUser);
-
-    }
-    catch (error) {
-      if (error.name === 'ValidationError') {
+    } catch (error) {
+      if (error.name === "ValidationError") {
         // --------Handle validation errors--------
         const validationErrors = error.errors;
         res.status(400).json({ error: validationErrors });
       } else {
-        res.status(500).json({ message: "Internal server error", error: error });
+        res
+          .status(500)
+          .json({ message: "Internal server error", error: error });
       }
     }
   },
@@ -65,7 +65,7 @@ const Auth = {
       const user = await prisma.user.findUnique({
         where: {
           userEmail: Email,
-        }
+        },
       });
 
       if (!user) {
@@ -79,23 +79,21 @@ const Auth = {
             where: {
               businessEmail: user.userEmail,
             },
-          })
+          });
 
-          res.cookie('jwt', accessToken, {
+          res.cookie("jwt", accessToken, {
             httpOnly: true,
             secure: true,
-            sameSite: 'Strict',
-            maxAge: 24 * 60 * 60 * 100
-          })
+            sameSite: "Strict",
+            maxAge: 24 * 60 * 60 * 100,
+          });
 
-          res
-            .status(200)
-            .json({
-              auth: true,
-              token: accessToken,
-              user: user,
-              business: business
-            });
+          res.status(200).json({
+            auth: true,
+            token: accessToken,
+            user: user,
+            business: business,
+          });
         } else {
           res.status(401).json({ message: "Incorrect password", error: err });
         }
@@ -109,7 +107,6 @@ const Auth = {
     const { id } = req.params;
 
     try {
-
       const user = await prisma.user.findUnique({
         where: {
           id,
@@ -134,21 +131,71 @@ const Auth = {
             data: {
               password: hashedPassword,
             },
-          })
+          });
 
-          return res.status(200).json({ message: "Password updated successfully" });
+          return res
+            .status(200)
+            .json({ message: "Password updated successfully" });
         } else {
           return res.status(401).json({ message: "Incorrect password" });
-
         }
-      })
+      });
     } catch (error) {
-      return res.status(500).json({ message: "Internal server error", error: error });
+      return res
+        .status(500)
+        .json({ message: "Internal server error", error: error });
+    }
+  },
+
+  verifyOTP: async (req, res) => {
+    const { email, otp } = req.body;
+
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          userEmail: email,
+        },
+      });
+      const business = await prisma.business.findUnique({
+        where: {
+          businessEmail: email,
+        },
+      });
+
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      if (user.OTP == otp) {
+        await prisma.user.update({
+          where: {
+            userEmail: email,
+          },
+
+          data: {
+            isVerified: true
+          },
+        });
+        if (business) {
+          await prisma.business.update({
+            where: {
+              businessEmail: email,
+            },
+            data: {
+              isVerified: true
+            },
+          });
+        }
+        return res.status(200).json({ message: "OTP verified successfully" });
+      } else {
+        return res.status(400).json({ message: "Invalid OTP" });
+      }
+    } catch (error) {
+      return res.status(500).json({ message: "Internal server error", error });
     }
   },
 
 
+};
 
-}
-
-export default Auth
+export default Auth;

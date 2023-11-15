@@ -37,10 +37,7 @@ const InvestorsComponent: React.FC<InvestorComponentProps> = ({ investorData, do
 
     return (
         <Investors>
-            <Heading>Investor Opportunity Hub</Heading>
-            <SubHeading>
-                Discover Investors Aligned with Your Startup's Vision and Ambitions
-            </SubHeading>
+
             <Select
                 options={domainOptions}
                 style={{ width: "200px" }}

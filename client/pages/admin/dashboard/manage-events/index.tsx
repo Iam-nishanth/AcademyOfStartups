@@ -4,11 +4,11 @@ import AdminAuth from '@/components/HighOrders/AdminAuth'
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { Heading } from '@/styles/Globalstyles';
 import { CardButton, DashboardContainer, DashboardWrapper, Pair, UserCard, UserCards } from '@/styles/views/DashBoardstyles';
-import { Modal, message } from 'antd';
+import { Modal, Skeleton, message } from 'antd';
 import React, { useEffect } from 'react'
 import axios from '@/lib/axios';
 import AddEvent from '@/components/AdminComponents/AddEvent';
-import * as yup from 'yup'
+import { decryptResponse } from '@/lib/encryption';
 
 interface EventType {
     id: string
@@ -20,7 +20,8 @@ interface EventType {
 }
 
 
-const ManageEvents = () => {
+
+const ManageEvents = (props: any) => {
     const { user } = useAuthContext();
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [events, setEvents] = React.useState<EventType[]>([]);
@@ -30,7 +31,8 @@ const ManageEvents = () => {
             try {
                 const response = await axios.get<any>('/admin/all-events')
                 if (response.status === 200) {
-                    setEvents(response.data.events)
+                    const decryptedEvents = decryptResponse(response.data.events, process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string)
+                    setEvents(decryptedEvents)
                 }
             } catch (error) {
                 console.log(error)
@@ -38,7 +40,9 @@ const ManageEvents = () => {
         }
         getEvents()
     }, [])
-    console.log(events)
+
+
+
 
 
     const showModal = () => {
@@ -128,7 +132,7 @@ const ManageEvents = () => {
                                     ))
                                 }
                             </UserCards>
-                        ) : <h3 style={{ textAlign: 'center' }}>Loading...</h3>
+                        ) : <Skeleton active paragraph={{ rows: 15, width: '100%' }} />
                     }
                 </DashboardWrapper>
             </DashboardContainer>

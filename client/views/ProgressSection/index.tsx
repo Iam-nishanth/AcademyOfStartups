@@ -36,7 +36,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (props) => {
   );
 };
 
-export default function ProgressSection() {
+const ProgressSection = () => {
   return (
     <ProgressSectionContainer>
       <ProgressSectionWrapper>
@@ -81,3 +81,5 @@ export default function ProgressSection() {
     </ProgressSectionContainer>
   );
 }
+
+export default ProgressSection

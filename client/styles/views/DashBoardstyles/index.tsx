@@ -255,6 +255,9 @@ export const UserCards = styled.div`
     @media (max-width: 740px){
         grid-template-columns: 1fr
     }
+    img{
+        object-fit: contain;
+    }
 `
 
 export const Pair = styled.div`

@@ -1,30 +1,19 @@
-import StartupsView from "@/views/StartupsView";
-import dynamic from "next/dynamic";
-import React, { useState } from "react";
-const Navbar = dynamic(() => import("@/components/Header/Navbar"));
-const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
-const Footer = dynamic(() => import("@/components/Footer"));
+import React from 'react'
+import Layout from "@/components/Layout/Full";
+import CountCards from "@/components/CountCards";
 import ServicesSection from '@/views/ServicesSection'
 import MissionSection from "@/views/MissionSection";
 import PricingSection from "@/views/PricingSection";
-import CountCards from "@/components/CountCards";
 
-export default function StartupsPage() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const toggle = (): void => {
-    setIsOpen(!isOpen);
-  };
-
+const StartupsPage = () => {
   return (
-    <main>
-      <Navbar toggle={toggle} />
-      <Sidebar toggle={toggle} isOpen={isOpen} />
+    <Layout>
       <CountCards />
       <ServicesSection />
       <MissionSection />
       <PricingSection />
-      <Footer />
-    </main>
+    </Layout>
   );
 }
+
+export default StartupsPage

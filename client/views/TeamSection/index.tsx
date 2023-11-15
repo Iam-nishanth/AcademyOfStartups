@@ -16,7 +16,105 @@ import React from "react";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { HiOutlineArrowLongRight } from "react-icons/hi2";
 
-export default function TeamSection() {
+const TeamSection = () => {
+  const data = [
+    {
+      title: 'Former Lt. Commander (Indian Navy)',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Alumni of IIT Kharagpur',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Alumni of ISB Hyderabad',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Business Strategic Expert (Swathi Infra Pvt. Ltd.)',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Former Business Head (Aster Pvt. Ltd. Hyderabad)',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Former Business COO (BS Ltd. Hyderabad)',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Business Consultant',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Growth Expert',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'International Clientele',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: '20+ years of Experience',
+      icon: <HiOutlineArrowLongRight />,
+    },
+  ];
+  const data2 = [
+    {
+      title: 'Former Lt. Commander (Indian Navy)',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Alumni of IIT Kharagpur',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Alumni of ISB Hyderabad',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Business Strategic Expert (Swathi Infra Pvt. Ltd.)',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Former Business Head (Aster Pvt. Ltd. Hyderabad)',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Former Business COO (BS Ltd. Hyderabad)',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Business Consultant',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'Growth Expert',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: 'International Clientele',
+      icon: <HiOutlineArrowLongRight />,
+    },
+    {
+      title: '20+ years of Experience',
+      icon: <HiOutlineArrowLongRight />,
+    },
+  ];
+
+  const renderList2 = data2.map((item, index) => (
+    <li key={index}>
+      <span>{item.icon}</span>
+      <span>{item.title}</span>
+    </li>
+  ));
+
+  const renderList = data.map((item, index) => (
+    <li key={index}>
+      <span>{item.icon}</span>
+      <span>{item.title}</span>
+    </li>
+  ));
   return (
     <TeamContainer>
       <TeamWrapper>
@@ -73,68 +171,7 @@ export default function TeamSection() {
               results.
             </Paragraph>
             <h5>Skills</h5>
-            <ul>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Former SAP Consultant</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Business Consultant</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Startup Mentor</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Trainer (BNI, JCI, NSE Academy)</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Author (108 Startups )</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Effective Public Speaker</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Content Creator ( Suman TV & E TV )</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Article Writer (Quora Digest)</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Sales & Branding Expert</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>8+ years of IT Business Experience</span>
-              </li>
-            </ul>
+            <ul>{renderList}</ul>
           </ContentSide>
         </TeamCard>
         <TeamCard>
@@ -180,71 +217,12 @@ export default function TeamSection() {
               his formula.
             </Paragraph>
             <h5>Skills</h5>
-            <ul>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Former Lt. Commander (Indian Navy)</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Alumni of IIT Kharagpur</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Alumni of ISB Hyderabad</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Business Strategic Expert (Swathi Infra Pvt. Ltd.)</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Former Business Head (Aster Pvt. Ltd. Hyderabad)</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Former Business COO (BS Ltd. Hyderabad)</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Business Consultant</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>Growth Expert</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>International Clientele</span>
-              </li>
-              <li>
-                <span>
-                  <HiOutlineArrowLongRight />
-                </span>
-                <span>20+ years of Experience</span>
-              </li>
-            </ul>
+            <ul>{renderList2}</ul>
           </ContentSide>
         </TeamCard>
       </TeamWrapper>
     </TeamContainer>
   );
 }
+
+export default TeamSection

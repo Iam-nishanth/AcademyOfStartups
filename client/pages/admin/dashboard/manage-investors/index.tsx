@@ -6,14 +6,36 @@ import { Investor } from '@/types/Investors';
 import React from 'react'
 import axios from '@/lib/axios';
 import { Heading } from '@/styles/Globalstyles';
-import { Modal, message } from 'antd';
+import { Modal, Skeleton, message } from 'antd';
 import { CommonButton } from '@/components/Common/Button';
 import AddInvestor from '@/components/AdminComponents/AddInvestor';
+import Image from 'next/image';
+import { decryptResponse } from '@/lib/encryption';
+
+
+
+
 
 const ManageInvestors = () => {
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
     const { user } = useAuthContext();
     const [investors, setInvestors] = React.useState<Investor[]>([]);
-    const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+    React.useEffect(() => {
+        const getInvestors = async () => {
+            try {
+                const response = await axios.get<any>('/admin/all-investors')
+                if (response.status === 200) {
+                    const decryptedInvestors = decryptResponse(response.data, process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string)
+                    setInvestors(decryptedInvestors)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getInvestors()
+
+    }, [])
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -27,21 +49,6 @@ const ManageInvestors = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-    React.useEffect(() => {
-        const getUsers = async () => {
-            try {
-                const response = await axios.get<any>('/admin/all-investors')
-                if (response.status === 200) {
-                    setInvestors(response.data.investors)
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getUsers()
-    }, [])
-
 
     const capitalizeFirstLetter = (word: string): string => {
         return word[0].toUpperCase() + word.slice(1);
@@ -59,19 +66,16 @@ const ManageInvestors = () => {
                 try {
                     const response = await axios.delete<any>(`/admin/delete-investor/${id}`);
                     if (response.status === 200) {
-                        setInvestors(investors.filter((investor) => investor.id !== id));
                         message.success('Investor deleted successfully');
+                        setInvestors(investors.filter((investor) => investor.id !== id));
                     }
                 } catch (error) {
                     console.log(error);
                 }
             },
-            onCancel: () => {
-                // Do nothing if user cancels the deletion
-            }
+            onCancel: () => { }
         });
     }
-
 
     return (
         <main>
@@ -85,52 +89,75 @@ const ManageInvestors = () => {
                         <Heading>Manage Investors</Heading>
                         <CommonButton name='Add Investor' width='150px' height='40px' onClick={showModal} />
                     </Pair>
-                    {investors.length > 0 ? (
+                    {investors && investors.length > 0 ? (
                         <UserCards>
-                            {investors.map((investor) => {
+                            {investors.map(({ id, name, email, gender, isVerified, createdAt, InvestorInfo }) => {
+                                if (!InvestorInfo) return null;
+
+                                const { Image: imageUri, InvestmentRange, DomainsOfInterest, PhoneNo, Address } = InvestorInfo[0] ?? {};
+
                                 return (
-                                    <UserCard key={investor.id}>
+                                    <UserCard key={id}>
                                         <Pair>
-                                            <strong className='title'>ID <b>:</b></strong><span>{investor.id}</span>
+                                            <strong className='title'>Image <b>:</b></strong>
+                                            <span>{
+                                                imageUri ? (
+                                                    <Image src={imageUri.toString()} alt={name + ' Image'} width={80} height={80} />
+                                                ) : (
+                                                    'No Image'
+                                                )
+                                            }</span>
                                         </Pair>
                                         <Pair>
-                                            <strong className='title'>Name  <b>:</b></strong><span>{investor.name}</span>
+                                            <strong className='title'>ID <b>:</b></strong>
+                                            <span>{id}</span>
                                         </Pair>
                                         <Pair>
-                                            <strong className='title'>Email  <b>:</b></strong><span>{investor.email}</span>
+                                            <strong className='title'>Name  <b>:</b></strong>
+                                            <span>{name}</span>
                                         </Pair>
                                         <Pair>
-                                            <strong className='title'>Gender  <b>:</b></strong><span>{investor.gender}</span>
+                                            <strong className='title'>Email  <b>:</b></strong>
+                                            <span>{email}</span>
                                         </Pair>
                                         <Pair>
-                                            <strong className='title'>Is Verified  <b>:</b></strong>{investor.isVerified === true ? <span style={{ color: 'green', textDecoration: 'underline' }}>Verified</span> : <span style={{ color: 'red', textDecoration: 'underline' }}>Not Verified</span>}
+                                            <strong className='title'>Gender  <b>:</b></strong>
+                                            <span>{gender}</span>
                                         </Pair>
                                         <Pair>
-                                            <strong className='title'>Range  <b>:</b></strong><span>{investor.InvestorInfo[0].InvestmentRange}</span>
+                                            <strong className='title'>Is Verified  <b>:</b></strong>
+                                            {isVerified === true ? <span style={{ background: 'green', color: 'white', padding: '0 5px' }}>Verified</span> : <span style={{ background: 'red', color: 'white', padding: '0 5px' }}> Not Verified</span>}
                                         </Pair>
                                         <Pair>
-                                            <strong className='title'>Domains  <b>:</b></strong><span>{investor.InvestorInfo[0].DomainsOfInterest.join(", ")}</span>
+
+                                            <strong className='title'>Range  <b>:</b></strong>
+                                            <span>{InvestmentRange}</span>
+                                        </Pair>
+                                        <Pair>
+                                            <strong className='title'>Domains  <b>:</b></strong>
+                                            <span>{DomainsOfInterest?.join(", ")}</span>
                                         </Pair>
                                         <Pair>
                                             <strong className='title'>Phone No <b>:</b></strong>
-                                            <span>{investor.InvestorInfo[0].PhoneNo}</span>
+                                            <span>{PhoneNo}</span>
                                         </Pair>
                                         <Pair>
                                             <strong className='title'>Address <b>:</b></strong>
-                                            <span>{investor.InvestorInfo[0].Address}</span>
+                                            <span>{Address}</span>
                                         </Pair>
                                         <Pair>
                                             <strong className='title'>Created At <b>:</b></strong>
-                                            <span>{new Date(investor.createdAt).toLocaleString()}</span>
+                                            <span>{new Date(createdAt).toLocaleString()}</span>
                                         </Pair>
                                         <Pair style={{ justifyContent: 'center' }}>
-                                            <CardButton onClick={() => deleteInvestor(investor.id)} background='red'>Delete</CardButton>
+                                            <CardButton onClick={() => deleteInvestor(id)} background='red'>Delete</CardButton>
                                         </Pair>
                                     </UserCard>
                                 );
                             })}
                         </UserCards>
-                    ) : <h3 style={{ textAlign: 'center' }}>Loading...</h3>}
+                    ) : <Skeleton active paragraph={{ rows: 15, width: '100%' }} />
+                    }
                 </DashboardWrapper>
 
             </DashboardContainer>

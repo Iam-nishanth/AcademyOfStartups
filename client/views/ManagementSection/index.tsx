@@ -11,7 +11,7 @@ import { ProgressBar } from "../ProgressSection";
 import { CommonButton } from "@/components/Common/Button";
 import Image from "next/image";
 
-export default function ManagementSection() {
+const ManagementSection = () => {
   return (
     <SectionContainer>
       <SectionWrapper>
@@ -54,3 +54,5 @@ export default function ManagementSection() {
     </SectionContainer>
   );
 }
+
+export default ManagementSection

@@ -1,39 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import StartupsLogin from "@/components/StartupsLogin";
-import { useAuthContext } from "@/hooks/useAuthContext";
-import dynamic from "next/dynamic";
+import React from "react";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-const Navbar = dynamic(() => import("@/components/Header/Navbar"));
-const Sidebar = dynamic(() => import("@/components/Header/Sidebar"));
-const Footer = dynamic(() => import("@/components/Footer"));
-import { FormContainer, ImageContainer, SignupSectionContainer, SignupSectionWrapper } from "@/styles/views/SignupSection";
 import Image from "next/image";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import Layout from "@/components/Layout/Full";
+import StartupsLogin from "@/components/StartupsLogin";
 import { Heading } from "@/styles/Globalstyles";
+import { FormContainer, ImageContainer, SignupSectionContainer, SignupSectionWrapper } from "@/styles/views/SignupSection";
 
 
 
 const SignupPage = () => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
     const { user, business, loading } = useAuthContext()
     const router = useRouter();
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (!loading && user && business) {
             router.push({ pathname: '/user/dashboard', query: { from: 'redirect' } })
         }
     }, [loading])
 
 
-
-    const toggle = (): void => {
-        setIsOpen(!isOpen);
-    };
-
     return (
-        <main>
-            <Navbar toggle={toggle} />
-            <Sidebar toggle={toggle} isOpen={isOpen} />
+        <Layout>
             <SignupSectionContainer>
                 <SignupSectionWrapper>
                     <ImageContainer>
@@ -45,8 +34,7 @@ const SignupPage = () => {
                     </FormContainer>
                 </SignupSectionWrapper>
             </SignupSectionContainer>
-            <Footer />
-        </main>
+        </Layout>
     );
 }
 

@@ -10,7 +10,7 @@ import {
 } from "@/styles/views/HeroSectionStyles";
 import { CommonButton, CommonButton2 } from "@/components/Common/Button";
 
-export default function HeroSection() {
+const HeroSection = () => {
   return (
     <HeroContainer>
       <HeroWrapper>
@@ -44,3 +44,5 @@ export default function HeroSection() {
     </HeroContainer>
   );
 }
+
+export default HeroSection

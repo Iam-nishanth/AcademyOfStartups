@@ -3,12 +3,12 @@ import { MainHeading, Paragraph } from "@/styles/Globalstyles";
 import { Container, MainContainer } from "@/styles/views/QuoteSectionStyles";
 import React from "react";
 
-export default function QuoteSection() {
+const QuoteSection = () => {
   return (
     <MainContainer>
       <Container>
         <MainHeading color="#fff">
-          Get the Best answers for your Worst Challenges​
+          Get the Best answers for your Worst Challenges
         </MainHeading>
         <Paragraph>
           Challenges are situations in business. Many will consider it as
@@ -21,3 +21,5 @@ export default function QuoteSection() {
     </MainContainer>
   );
 }
+
+export default QuoteSection

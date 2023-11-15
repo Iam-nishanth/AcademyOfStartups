@@ -9,7 +9,7 @@ import { RiTeamFill } from "react-icons/ri";
 import { GoGoal } from "react-icons/go";
 import { HiBadgeCheck } from "react-icons/hi";
 
-export default function FeatureCards() {
+const FeatureCards = () => {
   return (
     <FeatureCardsContainer>
       <CardsWrapper>
@@ -53,3 +53,5 @@ export default function FeatureCards() {
     </FeatureCardsContainer>
   );
 }
+
+export default FeatureCards

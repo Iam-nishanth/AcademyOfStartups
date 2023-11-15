@@ -15,7 +15,7 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { Paragraph, WhiteHeading } from "@/styles/Globalstyles";
 import { CountUp } from "use-count-up";
 
-export default function MissionSection() {
+const MissionSection = () => {
   return (
     <SectionContainer>
       <SectionWrapper>
@@ -66,3 +66,5 @@ export default function MissionSection() {
     </SectionContainer>
   );
 }
+
+export default MissionSection
