@@ -10,7 +10,7 @@ adminRouter.post("/add-user", Admin.addUser);
 adminRouter.delete("/delete-user/:id", Admin.deleteUser);
 
 adminRouter.get("/all-businesses", Admin.allBusiness);
-adminRouter.post("/add-business", Admin.addBusiness);
+adminRouter.post("/add-business", upload.none(), Admin.addBusiness);
 adminRouter.put("/update-business/:id", Admin.updateBusiness);
 adminRouter.delete("/delete-business/:id", Admin.deleteBusiness);
 

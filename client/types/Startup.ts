@@ -7,9 +7,10 @@ export interface Datamodel {
   registrationType: string;
   productOrService: string;
   incNo: string;
-  companyWebsite: string | undefined;
+  companyWebsite: string;
   panNo: string;
-  gstNo: string | undefined;
+  gstNo?: string;
   itrPerYear: string;
   address: string;
+  Status: string;
 }

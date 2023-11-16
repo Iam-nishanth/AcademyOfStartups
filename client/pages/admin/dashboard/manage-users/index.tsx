@@ -49,13 +49,27 @@ const ManageUsers = () => {
         getUsers();
     }, []);
 
+    const checkBusiness = async (id: string) => {
+        try {
+            const response = await axios.get<any>(`/admin/user-business/${id}`);
+            if (response.status === 200) {
+                return true
+            } else if (response.status === 404) {
+                return false
+            }
+        }
+        catch (error) {
+            console.log(error);
+            message.error('Some error Occured')
+        }
+    }
 
     const DeleteUser = async (id: string) => {
         Modal.confirm({
             title: 'Confirm Deletion',
             okText: 'Confirm',
             cancelText: 'Cancel',
-            content: 'Are you sure you want to delete this user?',
+            content: <p style={{ fontWeight: '500' }}>Deleting User will also delete the corresponding <b style={{ color: 'red' }}>Business</b>. Are you sure you want to delete this user?</p>,
             okButtonProps: {
                 color: 'red',
             },

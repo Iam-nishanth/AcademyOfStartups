@@ -12,7 +12,7 @@ const AdminAuth = <P extends AuthProps>(
     WrappedComponent: React.ComponentType<P>
 ) => {
     const AuthHOC = (props: Omit<P, keyof AuthProps>) => {
-        const { user, loading, business } = useAuthContext();
+        const { user, loading } = useAuthContext();
         const router = useRouter();
 
         React.useEffect(() => {

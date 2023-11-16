@@ -77,6 +77,7 @@ const InvestorForm = () => {
         const formData = new FormData();
 
         // Add all of the regular data to the form data.
+        base64Image && formData.append("image", base64Image);
         formData.append("name", data.name);
         formData.append("email", data.email);
         formData.append("phoneNo", data.phoneNo);
@@ -87,7 +88,6 @@ const InvestorForm = () => {
         formData.append("investmentRange", data.investmentRange);
         formData.append("domainsOfInterest", JSON.stringify(data.domainsOfInterest));
         formData.append("existingInvestments", data.existingInvestments);
-        formData.append("image", base64Image);
         formData.append("gender", data.gender);
 
         try {

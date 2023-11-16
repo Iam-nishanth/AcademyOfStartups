@@ -17,6 +17,9 @@ import { StartupValidationSchma } from "@/utils/validation";
 import { Datamodel } from "@/types/Startup";
 import { useRouter } from "next/router";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { AxiosError } from "axios";
+import ImageConvert from "../Common/ImageConvert";
+import Image from "next/image";
 
 
 
@@ -34,36 +37,63 @@ const StartupsLogin = () => {
 
   const { user, dispatch } = useAuthContext();
   const router = useRouter()
+  const [base64Image, setBase64Image] = React.useState<string>("");
 
-
+  const handleImageUpload = (image: string) => {
+    setBase64Image(image);
+  };
 
 
   const onSubmit = async (data: Datamodel) => {
     try {
       const loadingMessage = message.loading("Submitting form...", 0);
 
-      const response = await axios.post(`/startups/add/`, { business: data });
+      const formData = new FormData();
+
+      base64Image && formData.append("image", base64Image);
+      formData.append("ownerName", data.ownerName);
+      formData.append("businessName", data.businessName);
+      formData.append("businessEmail", data.businessEmail);
+      formData.append("phoneNo", data.phoneNo);
+      formData.append("companyWebsite", data.companyWebsite);
+      formData.append("incNo", data.incNo);
+      formData.append("panNo", data.panNo);
+      formData.append("itrPerYear", data.itrPerYear);
+      formData.append("address", data.address);
+      formData.append("registrationType", data.registrationType);
+      formData.append("businessCategory", data.businessCategory);
+      formData.append("productOrService", data.productOrService);
+      formData.append('Status', data.Status)
+      data.gstNo && formData.append("gstNo", data.gstNo);
+
+
+      const response = await axios.post("/startups/add", formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          }
+        }
+      );
 
       if (response.status === 200) {
         loadingMessage();
 
         message.success("Startup Registered successfully");
         reset();
+        message.loading("Redirecting...", 0);
         setTimeout(() => {
           message.destroy()
-          loadingMessage();
 
-          localStorage.removeItem('user')
-          dispatch({ type: 'LOGOUT' })
-
-          router.push('/login')
+          router.push('/user/account/verify')
         }, 2000);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       message.destroy();
-
-      message.error("Some error occurred");
+      if (error.response.status === 409) {
+        message.error(error.response.data.message);
+      }
+      message.error("Some error occurred. Please try again later");
     }
   };
 
@@ -251,11 +281,13 @@ const StartupsLogin = () => {
         <Controller
           name="companyWebsite"
           control={control}
-          defaultValue=""
+          defaultValue="https://"
           render={({ field }) => (
             <Input placeholder="Company Website" {...field} />
           )}
         />
+        <span style={{ marginLeft: "10px", fontSize: "13px" }}>ex: https://website.com</span>
+        {errors.companyWebsite && <Error>{errors.companyWebsite.message}</Error>}
       </InputDiv>
 
       <InputDiv>
@@ -308,6 +340,12 @@ const StartupsLogin = () => {
           )}
         />
         {errors.address && <Error>{errors.address.message}</Error>}
+      </InputDiv>
+      <InputDiv>
+        <Label>Business Logo :</Label>
+        <div style={{ padding: "10px 40px", display: "flex", flexDirection: "column" }}>
+          <ImageConvert onImageUpload={handleImageUpload} />
+        </div>
       </InputDiv>
 
       <CommonButton name="Submit" width="30%" height="40px" />

@@ -19,30 +19,31 @@ const Startup = {
         res.json(startupNames);
     },
     StartupPostController: async (req, res) => {
-        const { business } = req.body;
+        const { ownerName, businessEmail, phoneNo, businessName, businessCategory, registrationType, productOrService, incNo, companyWebsite, panNo, gstNo, itrPerYear, address, image, Status } = req.body;
+        const businessData = {
+            ownerName, businessEmail, phoneNo, businessName, businessCategory, registrationType, productOrService, incNo, companyWebsite, panNo, gstNo, itrPerYear, address, Logo: image, Status
+        };
         const startups = await prisma.business.findMany();
 
+        const startupExists = startups.some(startup => {
+            return (
+                startup.incNo === incNo ||
+                startup.gstNo === gstNo ||
+                startup.panNo === panNo ||
+                startup.phoneNo === phoneNo
+            );
+        });
 
+        if (startupExists) {
+            return res.status(409).json({ message: "Startup already exists with the given details" });
+        }
 
         try {
-            startups.map((startup) => {
-
-                if (startup.incNo === business.incNo) {
-                    return res.status(409).json({ message: "Startup already exists with the given INC" });
-                }
-                else if (startup.gstNo === business.gstNo) {
-                    return res.status(409).json({ message: "Startup already exists with the given GST" });
-                }
-                else if (startup.panNo === business.panNo) {
-                    return res.status(409).json({ message: "Startup already exists with the given PAN" });
-                }
-                else if (startup.phoneNo === business.phoneNo) {
-                    return res.status(409).json({ message: "Startup already exists with the given Phone Number" });
-                }
-            })
             const newStartup = await prisma.business.create({
-                data: business,
-            })
+                data: {
+                    ...businessData,
+                }
+            });
             res.json(newStartup);
         } catch (error) {
             res.status(500).json({ message: "An error occurred while creating the startup.", error: error });

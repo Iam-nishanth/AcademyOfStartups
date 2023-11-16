@@ -7,6 +7,7 @@ import Layout from "@/components/Layout/Full";
 import StartupsLogin from "@/components/StartupsLogin";
 import { Heading } from "@/styles/Globalstyles";
 import { FormContainer, ImageContainer, SignupSectionContainer, SignupSectionWrapper } from "@/styles/views/SignupSection";
+import withAuth from "@/components/HighOrders/WithAuth";
 
 
 

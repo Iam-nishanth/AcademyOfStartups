@@ -13,20 +13,31 @@ const prisma = new PrismaClient();
 
 const saltrounds = 10;
 
+function checkBusinessPresence(users) {
+  return users.some(user => user.business != null);
+}
+
 const Admin = {
   // -------------------------User Controllers-------------------------
 
   allUsers: async (req, res) => {
-    // try {
-    const users = await prisma.user.findMany();
-    const response = encryptResponse(users, process.env.ENCRYPTION_KEY);
-    res.status(200).json({ users: response });
-    // } catch (error) {
-    //   res
-    //     .status(500)
-    //     .json({ message: "Error while getting the users.", error: error });
-    // }
+    try {
+      const users = await prisma.user.findMany({
+        include: {
+          businesses: {
+            select: {
+              id: true
+            }
+          }
+        }
+      });
+      const response = encryptResponse(users, process.env.ENCRYPTION_KEY);
+      res.status(200).json({ users: response });
+    } catch (error) {
+      res.status(500).json({ message: "Error while getting the users.", error });
+    }
   },
+
 
   addUser: async (req, res) => {
     const { email, password, name } = req.body;
@@ -76,9 +87,21 @@ const Admin = {
       const existingUser = await prisma.user.findUnique({
         where: { id: id },
       });
+      const hasBusiness = await prisma.business.findUnique({
+        where: { businessEmail: existingUser.userEmail },
+      })
 
-      if (!existingUser)
+      if (!existingUser) {
         return res.status(404).json({ message: "User not found" });
+      }
+
+      if (hasBusiness) {
+        const deleteBusiness = await prisma.business.delete({
+          where: {
+            businessEmail: existingUser.userEmail
+          }
+        })
+      }
 
       const deletedUser = await prisma.user.delete({
         where: { id: id },
@@ -88,6 +111,9 @@ const Admin = {
           userEmail: true,
         },
       });
+
+
+
       res
         .status(200)
         .json({ message: "User deleted", deletedUser: deletedUser });
@@ -114,42 +140,34 @@ const Admin = {
     }
   },
   addBusiness: async (req, res) => {
-    const { business } = req.body;
+    const { ownerName, businessEmail, phoneNo, businessName, businessCategory, registrationType, productOrService, incNo, companyWebsite, panNo, gstNo, itrPerYear, address, image, Status } = req.body;
+    const businessData = {
+      ownerName, businessEmail, phoneNo, businessName, businessCategory, registrationType, productOrService, incNo, companyWebsite, panNo, gstNo, itrPerYear, address, Logo: image, Status
+    };
     const startups = await prisma.business.findMany();
 
+    const startupExists = startups.some(startup => {
+      return (
+        startup.incNo === incNo ||
+        startup.gstNo === gstNo ||
+        startup.panNo === panNo ||
+        startup.phoneNo === phoneNo
+      );
+    });
+
+    if (startupExists) {
+      return res.status(409).json({ message: "Startup already exists with the given details" });
+    }
+
     try {
-      startups.map((startup) => {
-        if (startup.incNo === business.incNo) {
-          return res
-            .status(409)
-            .json({ message: "Startup already exists with the given INC" });
-        } else if (startup.gstNo === business.gstNo) {
-          return res
-            .status(409)
-            .json({ message: "Startup already exists with the given GST" });
-        } else if (startup.panNo === business.panNo) {
-          return res
-            .status(409)
-            .json({ message: "Startup already exists with the given PAN" });
-        } else if (startup.phoneNo === business.phoneNo) {
-          return res.status(409).json({
-            message: "Startup already exists with the given Phone Number",
-          });
-        }
-      });
       const newStartup = await prisma.business.create({
-        data: business,
-        select: {
-          businessName: true,
-          businessEmail: true,
-        },
+        data: {
+          ...businessData,
+        }
       });
       res.json(newStartup);
     } catch (error) {
-      res.status(500).json({
-        message: "An error occurred while creating the startup.",
-        error: error,
-      });
+      res.status(500).json({ message: "An error occurred while creating the startup.", error: error });
     }
   },
 
@@ -376,22 +394,27 @@ const Admin = {
         },
       });
 
-      if (!existingInvestor)
-        return res.status(404).json({ message: "Investor not found" });
-
-      const deletedInvestorInfo = await prisma.investorInfo.delete({
+      const investorInfo = await prisma.investorInfo.findUnique({
         where: {
           id: id,
         },
       });
 
+      if (!existingInvestor) {
+        return res.status(404).json({ message: "Investor not found" });
+      }
+
+      if (investorInfo) {
+        await prisma.investorInfo.delete({
+          where: {
+            id: id,
+          },
+        });
+      }
+
       const deletedInvestor = await prisma.investor.delete({
         where: {
           id: id,
-        },
-        select: {
-          name,
-          email,
         },
       });
 

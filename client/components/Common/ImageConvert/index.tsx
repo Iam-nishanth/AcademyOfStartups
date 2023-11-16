@@ -9,7 +9,7 @@ interface ImgCropUploadProps {
     cropShape?: 'round' | 'rect';
 }
 
-const ImageUpload: React.FC<ImgCropUploadProps> = ({ onImageUpload, onClear, cropShape }) => {
+const ImageConvert: React.FC<ImgCropUploadProps> = ({ onImageUpload, onClear, cropShape }) => {
     const [file, setFile] = useState<UploadFile | null>(null);
 
     const onChange: UploadProps['onChange'] = ({ fileList }) => {
@@ -49,19 +49,17 @@ const ImageUpload: React.FC<ImgCropUploadProps> = ({ onImageUpload, onClear, cro
     }
 
     return (
-        <ImgCrop rotationSlider cropShape={cropShape}>
-            <Upload
-                action=""
-                listType="picture-card"
-                fileList={file ? [file] : []}
-                onChange={onChange}
-                onPreview={onPreview}
-                customRequest={customRequest}
-            >
-                {file ? null : <strong>+ Upload</strong>}
-            </Upload>
-        </ImgCrop>
+        <Upload
+            action=""
+            listType="picture-card"
+            fileList={file ? [file] : []}
+            onChange={onChange}
+            onPreview={onPreview}
+            customRequest={customRequest}
+        >
+            {file ? null : <strong>+ Upload</strong>}
+        </Upload>
     );
 };
 
-export default ImageUpload;
+export default ImageConvert;

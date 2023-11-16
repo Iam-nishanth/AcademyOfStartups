@@ -1,27 +1,26 @@
 import { useAuthContext } from '@/hooks/useAuthContext';
-import { AccountSectionContainer, AccountSectionWrapper } from '@/styles/views/AccountSectionStyles'
 import React, { useEffect } from 'react'
 import axios from '@/lib/axios';
 import { message } from 'antd';
 import { Heading, SubHeading } from '@/styles/Globalstyles';
 import { useRouter } from 'next/router';
-import { CommonButton } from '@/components/Common/Button';
 import { Input } from '@/styles/components/FormStyles';
+import styled from 'styled-components';
 
 
 
 const VerifyEmail = () => {
 
-    const { user, token } = useAuthContext();
+    const { user, token, dispatch } = useAuthContext();
     const otpInput = React.useRef<HTMLInputElement>(null);
     const [emailSent, setEmailSent] = React.useState(false);
     const [resendDisabled, setResendDisabled] = React.useState(false);
-    const [countdown, setCountdown] = React.useState(20);
+    const [countdown, setCountdown] = React.useState(40);
 
     const router = useRouter();
 
     const countDown = () => {
-        let seconds = 20;
+        let seconds = 40;
         (seconds)
 
         const countdownInterval = setInterval(() => {
@@ -106,7 +105,19 @@ const VerifyEmail = () => {
             loadingMessage();
             if (response.status === 200) {
                 message.success("Email Verified")
-                window.location.replace('/user/account')
+
+
+                setTimeout(() => {
+                    message.loading("Redirecting...", 0);
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('business');
+                    localStorage.removeItem('token');
+                    dispatch({ type: 'LOGOUT' });
+                    message.destroy();
+                    router.replace('/login');
+                }, 2000);
+
+
             }
         } catch (error) {
             console.log(error)
@@ -116,35 +127,91 @@ const VerifyEmail = () => {
     }
 
     return (
-        <AccountSectionContainer>
+        <AccountSectionContainer style={{ background: 'linear-gradient(to right, #1A2980, #001336)' }} >
             {
                 user?.isVerified === true ? (
-                    <AccountSectionWrapper>
-                        <Heading>Account Verified</Heading>
+                    <AccountSectionWrapper style={{ textAlign: 'center', height: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', gap: '20px' }}>
+                        <Heading style={{ color: 'white' }}>Account Verified</Heading>
                         <SubHeading>You can now login to your account</SubHeading>
-                        <CommonButton name='Go Back' onClick={() => router.push('/user/account')} />
+                        <CommonButton onClick={() => router.push('/user/account')} >Go Back</CommonButton>
                     </AccountSectionWrapper>
                 ) : (
-                    <AccountSectionWrapper>
-                        <Heading>Verify Email</Heading>
-                        <strong>Email will be sent to {user?.userEmail}</strong>
-                        {!emailSent && <CommonButton name='Send Email' onClick={sendEmail} width='120px' height='40px' />}
+                    <AccountSectionWrapper style={{ textAlign: 'center', height: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', gap: '20px' }}>
+                        <Heading style={{ color: 'white' }}>Verify Email</Heading>
+                        <SubHeading>Email will be sent to {user?.userEmail}</SubHeading>
+                        {!emailSent && <CommonButton onClick={sendEmail} >Send OTP</CommonButton>}
 
                         {emailSent && (
                             <>
-                                <input type="text" ref={otpInput} />
-                                <button onClick={verifyEmail}>Verify</button>
-                                <button onClick={resendEmail} disabled={resendDisabled}>
-                                    {resendDisabled ? `Resend in ${countdown} seconds` : 'Resend'}
-                                </button>
+                                <Input type="text" ref={otpInput} style={{ textAlign: 'center' }} />
+                                <CommonButton onClick={verifyEmail}>Verify Email</CommonButton>
+                                <ResendButton disabled={resendDisabled} onClick={resendEmail}>{resendDisabled ? `Resend in ${countdown} seconds` : 'Resend'}</ResendButton>
+
                             </>
                         )}
 
                     </AccountSectionWrapper>
                 )
             }
-        </AccountSectionContainer>
+        </AccountSectionContainer >
     )
 }
+
+const AccountSectionContainer = styled.div`
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`
+const AccountSectionWrapper = styled.div`
+    display: flex;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px 15px;
+  flex-direction: column;
+
+  @media (min-width: 1600px) {
+    max-width: 1400px;
+  }
+`
+const CommonButton = styled.button`
+    font-size: 14px;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  background-color: #316aff;
+  width:  250px;
+  height: 40px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #001439;
+    transform: translateY(-5px);
+  }
+`
+
+const ResendButton = styled.button`
+    font-size: 14px;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.3s ease;
+  background: transparent;
+
+  &:hover {
+    color: #316aff;
+  }
+  &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+  }
+`
 
 export default VerifyEmail
