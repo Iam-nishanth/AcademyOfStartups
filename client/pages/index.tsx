@@ -9,11 +9,10 @@ import TestimonialSection from "@/components/Testimonials"
 import FAQSection from "@/views/FAQSection"
 
 
-
 const Home = (): JSX.Element => {
 
   return (
-    <Layout>
+    <Layout title="Academy of Startups | Home" description="Webpage for Academy of Startups">
       <HeroSection />
       <FeatureCards />
       <VideoSection />
@@ -21,7 +20,6 @@ const Home = (): JSX.Element => {
       <ProgressSection />
       <TestimonialSection />
       <FAQSection />
-
     </Layout>
   );
 }

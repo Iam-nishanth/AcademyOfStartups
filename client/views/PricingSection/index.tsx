@@ -70,7 +70,7 @@ const PricingSection = () => {
                             </Link>
                         </PricingCard>
                         <PricingCard>
-                            <h3>Basic Plan</h3>
+                            <h3>Elite Plan</h3>
                             <Price><INR>₹</INR><h4>1,00,000</h4> <h5>/Monthly</h5></Price>
                             <PricingList>
                                 <li><GiCheckMark /><p>20 Hours Session</p></li>
