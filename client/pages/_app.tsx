@@ -27,6 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <meta charSet="utf-8" />
               <meta name="viewport" content="initial-scale=1.0, width=device-width" />
               <meta httpEquiv="X-UA-Compatible" content="IE=EmulateIE8" />
+              <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
             </Head>
             <Component {...pageProps} />
           </motion.div>

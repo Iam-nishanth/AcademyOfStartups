@@ -6,7 +6,7 @@ import ContactSection from '@/views/ContactSection'
 
 const ContactPage = (): JSX.Element => {
   return (
-    <Layout>
+    <Layout title="Contact | Academy of Startups" description="Academy of Startups , where we empower businesses to achieve 10X growth through expert consulting. Ignite success and unlock exponential potential with us." >
       <Breadcumb name="Contact us" link="contact" />
       <Map />
       <ContactSection />
@@ -15,3 +15,4 @@ const ContactPage = (): JSX.Element => {
 }
 
 export default ContactPage
+

@@ -1,6 +1,5 @@
 import express from "express";
 import Investor from "../controller/investor.js";
-import verifyToken from "../middleware/index.js";
 import upload from "../middleware/storage/index.js";
 
 export const InvestorRouter = express.Router();

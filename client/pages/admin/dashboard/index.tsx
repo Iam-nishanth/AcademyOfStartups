@@ -4,6 +4,7 @@ import { useAuthContext } from '@/hooks/useAuthContext';
 import { Heading, MainHeading } from '@/styles/Globalstyles';
 import React from 'react'
 import AdminDashSection from '@/views/AdminDashSection';
+import Head from 'next/head';
 
 const AdminDashboard = () => {
     const { user } = useAuthContext();
@@ -16,10 +17,16 @@ const AdminDashboard = () => {
     const DisplayName = user && `${capitalizeFirstLetter(user?.name)}`;
 
     return (
-        <main>
-            <BackButton color='#fff' backgroundColor='#001336' dropdown={true} user={DisplayName} />
-            <AdminDashSection />
-        </main>
+        <>
+            <Head>
+                <title>Dashboard | Admin</title>
+                <meta name='robots' content='noindex,nofollow' />
+            </Head>
+            <main>
+                <BackButton color='#fff' backgroundColor='#001336' dropdown={true} user={DisplayName} />
+                <AdminDashSection />
+            </main>
+        </>
     )
 }
 

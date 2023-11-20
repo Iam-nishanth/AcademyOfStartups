@@ -1,7 +1,7 @@
 import express from 'express'
 
 import Startup from '../controller/startups.js';
-import verifyToken from '../middleware/index.js';
+import verifyToken from '../middleware/verifyToken/index.js';
 import upload from '../middleware/storage/index.js';
 
 export const startupRouter = express.Router();

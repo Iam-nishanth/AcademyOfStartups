@@ -14,7 +14,7 @@ const InvestorsLogin = () => {
 
 
     return (
-        <Layout>
+        <Layout title="Login | Investors" secure={true}>
             {isLogin ? <InvestorLogin /> : <InvestorForm />}
         </Layout>
     )

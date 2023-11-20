@@ -7,6 +7,7 @@ import AccountSection from '@/views/AccountSection';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import withAuth from '@/components/HighOrders/WithAuth';
 import BackButton from '@/components/BackButton';
+import Head from 'next/head';
 
 const MyAccount = () => {
 
@@ -20,10 +21,16 @@ const MyAccount = () => {
 
 
     return (
-        <main>
-            <BackButton dropdown={true} user={DisplayName} />
-            <AccountSection />
-        </main>
+        <>
+            <Head>
+                <title>User Account</title>
+                <meta name='robots' content='noindex,nofollow' />
+            </Head>
+            <main>
+                <BackButton dropdown={true} user={DisplayName} />
+                <AccountSection />
+            </main>
+        </>
     )
 }
 

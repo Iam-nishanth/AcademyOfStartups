@@ -9,7 +9,7 @@ import MentorsSection from "@/views/MentorsSection";
 const AboutPage = (): JSX.Element => {
 
   return (
-    <Layout>
+    <Layout title="About | Academy of Startups" description="Academy of Startups , where we empower businesses to achieve 10X growth through expert consulting. Ignite success and unlock exponential potential with us.">
       <Breadcumb name="About us" link="about" />
       <ManagementSection />
       <MissionSection />

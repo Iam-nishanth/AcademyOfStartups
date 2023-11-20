@@ -8,7 +8,7 @@ import EventsSection from "@/views/EventsSection";
 const EventsPage = () => {
 
   return (
-    <Layout>
+    <Layout title="Events | Academy of Startups" description="Academy of Startups , where we empower businesses to achieve 10X growth through expert consulting. Ignite success and unlock exponential potential with us.">
       <Breadcumb name="Events" link="events" />
       <EventsSection />
     </Layout>

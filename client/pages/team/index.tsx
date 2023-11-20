@@ -9,7 +9,7 @@ import ManagementSection from '@/views/ManagementSection';
 const TeamPage = (): JSX.Element => {
 
   return (
-    <Layout>
+    <Layout title="Team | Academy of Startups" description="Academy of Startups , where we empower businesses to achieve 10X growth through expert consulting. Ignite success and unlock exponential potential with us. ">
       <Breadcumb name="Team" link="team" />
       <TeamSection />
       <ProgressSection />

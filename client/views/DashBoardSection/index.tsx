@@ -19,8 +19,8 @@ const DashBoardsection: React.FC = () => {
     const [investorData, setInvestorData] = useState<Investor[]>([]);
 
     useEffect(() => {
-        if (!loading && !user && !business) {
-            router.push('/add-business');
+        if (!loading && user && !business) {
+            router.push('/user/add-business');
         }
 
         const fetchData = async () => {

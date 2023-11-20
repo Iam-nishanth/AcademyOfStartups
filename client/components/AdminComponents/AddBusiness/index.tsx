@@ -34,6 +34,8 @@ const AddBusiness = () => {
     });
 
     const [base64Image, setBase64Image] = React.useState<string>("");
+    const { token, dispatch } = useAuthContext();
+    const router = useRouter();
 
     const handleImageUpload = (image: string) => {
         setBase64Image(image);
@@ -66,6 +68,7 @@ const AddBusiness = () => {
                 {
                     headers: {
                         "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${token}`,
                     }
                 }
             );
@@ -74,10 +77,21 @@ const AddBusiness = () => {
                 message.success("Startup Registered successfully");
                 reset();
             }
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
             message.destroy();
-            message.error("Some error occurred");
+            console.log(error);
+            if (error.response.status === 401) {
+                message.error('Token Expired, Please Login Again');
+                localStorage.removeItem('user');
+                localStorage.removeItem('business');
+                localStorage.removeItem('token');
+                dispatch({ type: 'LOGOUT' });
+
+                router.replace('/login');
+            }
+            else if (error.response.status === 500) {
+                message.error('Internal Server Error')
+            }
         }
     };
 

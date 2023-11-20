@@ -13,6 +13,8 @@ import axios from "@/lib/axios";
 import { message } from "antd";
 import { RegisterResponse } from "@/types/Logintypes";
 import { RegisterValidationSchema } from "@/utils/validation";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useRouter } from "next/router";
 
 type FormData = {
     email: string;
@@ -30,33 +32,50 @@ const AddUser: React.FC = () => {
     } = useForm<FormData>({
         resolver: yupResolver(RegisterValidationSchema),
     });
+    const { token, dispatch } = useAuthContext();
+    const router = useRouter();
 
     const onSubmit = (data: FormData) => {
-
-        const signIn = async () => {
+        const addUser = async () => {
             try {
                 const loadingMessage = message.loading("Loading...", 0);
-                const response = await axios.post<RegisterResponse>("/admin/add-user", data);
+                const response = await axios.post<RegisterResponse>(
+                    "/admin/add-user",
+                    data,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
 
                 if (response.status === 201) {
                     loadingMessage();
                     message.success("User Created");
-                    reset()
+                    reset();
                 }
-            } catch (error: any) {
+            }
+            catch (error: any) {
                 message.destroy();
                 if (error.response && error.response.status === 409) {
                     message.error("User already exists");
                 }
-                else {
-                    message.error("Some error occurred, please try again");
-                }
 
-                console.error(error);
+                if (error.response.status === 401) {
+                    message.error("Token Expired, Please Login Again");
+                    localStorage.removeItem("user");
+                    localStorage.removeItem("business");
+                    localStorage.removeItem("token");
+                    dispatch({ type: "LOGOUT" });
+
+                    router.replace("/login");
+                } else if (error.response.status === 500) {
+                    message.error("Internal Server Error");
+                }
             }
         };
 
-        signIn();
+        addUser();
     };
 
     return (
@@ -70,9 +89,7 @@ const AddUser: React.FC = () => {
                         defaultValue=""
                         render={({ field }) => <Input type="text" {...field} />}
                     />
-                    {errors.name && (
-                        <p style={{ color: "red" }}>{errors.name.message}</p>
-                    )}
+                    {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
                 </InputDiv>
                 <InputDiv>
                     <Label>Email</Label>
@@ -110,7 +127,6 @@ const AddUser: React.FC = () => {
                         <p style={{ color: "red" }}>{errors.confirmPassword.message}</p>
                     )}
                 </InputDiv>
-
 
                 <InputDiv>
                     <CommonButton name="Submit" width="30%" height="40px" />

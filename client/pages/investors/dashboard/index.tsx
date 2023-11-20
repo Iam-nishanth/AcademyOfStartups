@@ -1,15 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { message } from 'antd';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import InvestorAuth from '@/components/HighOrders/Investor';
 import InvestorDash from '@/views/InvestorDash';
 import BackButton from '@/components/BackButton';
+import Head from 'next/head';
 
 const InvestorDashboard = () => {
-    const router = useRouter();
-    const { investorData, loading, dispatch } = useAuthContext();
+    const { dispatch } = useAuthContext();
 
 
     const handleLogout = () => {
@@ -19,11 +18,18 @@ const InvestorDashboard = () => {
     }
 
     return (
-        <main>
-            <BackButton dropdown={false} handle={handleLogout} />
-            <InvestorDash />
+        <>
+            <Head>
+                <title>Investors | Dashboard</title>
+                <meta name='robots' content='noindex,nofollow' />
+            </Head>
+            <main>
+                <BackButton dropdown={false} handle={handleLogout} />
+                <InvestorDash />
 
-        </main>
+            </main>
+        </>
+
     )
 }
 

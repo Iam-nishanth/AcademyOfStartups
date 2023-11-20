@@ -1,6 +1,5 @@
 import express from "express";
 import Auth from "../controller/auth.js";
-import verifyToken from "../middleware/index.js";
 import EmailVerification from "../middleware/mailOTP/index.js";
 
 export const authRouter = express.Router();

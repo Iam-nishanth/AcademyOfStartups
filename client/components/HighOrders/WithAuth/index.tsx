@@ -22,7 +22,7 @@ const withAuth = <P extends AuthProps>(
             }
             else if (!loading && user?.role === "ADMIN") router.push({ pathname: '/admin/dashboard', query: { from: 'redirect' } })
             else if (!loading && user && !business) {
-                router.push({ pathname: '/add-business', query: { email: user.userEmail } });
+                router.push({ pathname: '/user/add-business', query: { email: user.userEmail } });
             }
         }, [user, loading]);
 

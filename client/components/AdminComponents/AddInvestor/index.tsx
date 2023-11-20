@@ -16,6 +16,8 @@ import { Radio, Select, message } from 'antd';
 import axios from '@/lib/axios';
 import { domainOptions, investmentRangeOptions } from '../../InvestorForm/Data';
 import ImageUpload from '@/components/Common/ImageUpload';
+import { useAuthContext } from '@/hooks/useAuthContext';
+import { useRouter } from 'next/router';
 
 const passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;
 
@@ -52,6 +54,8 @@ const AddInvestor = () => {
     });
 
     const [base64Image, setBase64Image] = React.useState<string>("");
+    const { token, dispatch } = useAuthContext();
+    const router = useRouter();
 
     const handleImageUpload = (image: string) => {
         setBase64Image(image);
@@ -93,10 +97,21 @@ const AddInvestor = () => {
                     window.location.reload();
                 }, 1500);
             }
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
             message.destroy();
-            message.error("Some error occurred");
+            console.log(error);
+            if (error.response.status === 401) {
+                message.error('Token Expired, Please Login Again');
+                localStorage.removeItem('user');
+                localStorage.removeItem('business');
+                localStorage.removeItem('token');
+                dispatch({ type: 'LOGOUT' });
+
+                router.replace('/login');
+            }
+            else if (error.response.status === 500) {
+                message.error('Internal Server Error')
+            }
         }
     };
 

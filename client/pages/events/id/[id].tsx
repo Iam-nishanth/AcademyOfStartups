@@ -34,7 +34,7 @@ const EventPage = () => {
     }
   });
   return (
-    <Layout>
+    <Layout title="Event Details" description="Academy of Startups , where we empower businesses to achieve 10X growth through expert consulting. Ignite success and unlock exponential potential with us. ">
       <Breadcumb name="Events" link="events" />
       <EventDetailsContainer>
         {ItemDetails}

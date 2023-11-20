@@ -12,13 +12,13 @@ const LoginPage = () => {
   const { user, business, loading } = useAuthContext();
   React.useEffect(() => {
     if (!loading && user?.role === "ADMIN") router.push({ pathname: '/admin/dashboard', query: { from: 'redirect' } })
-    else if (!loading && user && !business) router.push({ pathname: '/add-business', query: { email: user.userEmail } })
+    else if (!loading && user && !business) router.push({ pathname: '/user/add-business', query: { email: user.userEmail } })
     else if (!loading && user && business) router.push({ pathname: '/user/dashboard', query: { from: 'redirect' } });
   }, [user, loading]);
 
 
   return (
-    <Layout>
+    <Layout title="Login | Academy of Startups" secure={true}>
       <SignupSection />
     </Layout>
   );

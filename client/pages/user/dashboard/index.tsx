@@ -4,6 +4,7 @@ const DashBoardSection = dynamic(() => import("@/views/DashBoardSection"));
 import WithAuth from '@/components/HighOrders/WithAuth'
 import BackButton from '@/components/BackButton'
 import { useAuthContext } from "@/hooks/useAuthContext";
+import Head from "next/head";
 
 
 
@@ -18,10 +19,16 @@ const DashBoard = () => {
   const DisplayName = user && `${capitalizeFirstLetter(user?.name)}`;
 
   return (
-    <main>
-      <BackButton dropdown={true} user={DisplayName} />
-      <DashBoardSection />
-    </main>
+    <>
+      <Head>
+        <title>DashBoard</title>
+        <meta name='robots' content='noindex,nofollow' />
+      </Head>
+      <main>
+        <BackButton dropdown={true} user={DisplayName} />
+        <DashBoardSection />
+      </main>
+    </>
   );
 };
 

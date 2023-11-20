@@ -11,11 +11,14 @@ import { CommonButton } from '@/components/Common/Button';
 import AddBusiness from '@/components/AdminComponents/AddBusiness'
 import { decryptResponse } from '@/lib/encryption';
 import Image from 'next/image';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 const ManageBusiness = () => {
-    const { user } = useAuthContext();
+    const { user, token, dispatch } = useAuthContext();
     const [businesses, setBusinesses] = React.useState<Business[]>([]);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const router = useRouter();
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -31,18 +34,34 @@ const ManageBusiness = () => {
     };
 
     React.useEffect(() => {
-        const getUsers = async () => {
+        const getBusiness = async () => {
             try {
-                const response = await axios.get<any>('/admin/all-businesses')
+                const response = await axios.get<any>('/admin/all-businesses', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 if (response.status === 200) {
                     const decryptedBusinesses = decryptResponse(response.data.businesses, process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string)
                     setBusinesses(decryptedBusinesses)
                 }
-            } catch (error) {
-                console.log(error)
+            } catch (error: any) {
+                console.log(error);
+                if (error.response.status === 401) {
+                    message.error('Token Expired, Please Login Again');
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('business');
+                    localStorage.removeItem('token');
+                    dispatch({ type: 'LOGOUT' });
+
+                    router.replace('/login');
+                }
+                else if (error.response.status === 500) {
+                    message.error('Some error occurred, please try again later');
+                }
             }
         }
-        getUsers()
+        getBusiness()
     }, [])
 
 
@@ -63,7 +82,11 @@ const ManageBusiness = () => {
             },
             onOk: async () => {
                 try {
-                    const response = await axios.delete<any>(`/admin/delete-business/${id}`);
+                    const response = await axios.delete<any>(`/admin/delete-business/${id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
                     if (response.status === 200) {
                         setBusinesses(businesses.filter((business) => business.id !== id));
                         message.success('Business deleted successfully');
@@ -79,84 +102,90 @@ const ManageBusiness = () => {
     }
 
     return (
-        <main>
-            <BackButton dropdown={true} user={DisplayName} />
-            <DashboardContainer>
-                <DashboardWrapper>
-                    <Modal title="Add Business" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='Done' >
-                        <AddBusiness />
-                    </Modal>
-                    <Pair style={{ justifyContent: 'space-between', padding: '0 10px' }}>
-                        <Heading>Manage Businesses</Heading>
-                        <CommonButton name='Add Business' width='150px' height='40px' onClick={showModal} />
-                    </Pair>
-                    {businesses.length > 0 ? (
-                        <UserCards>
-                            {businesses.map((business: Business) => {
-                                return (
-                                    <UserCard key={business.id}>
-                                        <Pair style={{ height: '80px', alignItems: 'center' }}>
-                                            <strong className='title'>Logo <b>:</b></strong>
-                                            <span >{
-                                                business.Logo ? (
-                                                    <Image src={business.Logo.toString()} alt={business.businessName + ' Image'} width={150} height={80} />
-                                                ) : (
-                                                    'No Image'
-                                                )
-                                            }</span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>ID <b>:</b></strong><span>{business.id}</span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>Name  <b>:</b></strong><span>{business.businessName}</span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>Owner Name  <b>:</b></strong><span>{business.ownerName}</span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>Email  <b>:</b></strong><span>{business.businessEmail}</span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>Registation  <b>:</b></strong><span>{business.registrationType}</span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>Category  <b>:</b></strong><span>{business.businessCategory}</span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>Type  <b>:</b></strong><span>{business.productOrService}</span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>Status  <b>:</b></strong><span>{business.Status}</span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>ITR / year  <b>:</b></strong><span>{business.itrPerYear}</span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>Address  <b>:</b></strong><span>{business.address}</span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>Website  <b>:</b></strong><span><a href={business.companyWebsite} target="_blank">🌐Open</a></span>
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>Is Verified  <b>:</b></strong>{business.isVerified === true ? <span style={{ background: 'green', color: 'white', padding: '0 5px' }}>Verified</span> : <span style={{ background: 'red', color: 'white', padding: '0 5px' }}> Not Verified</span>}
-                                        </Pair>
-                                        <Pair>
-                                            <strong className='title'>Created At <b>:</b></strong>
-                                            <span>{new Date(business.createdAt).toLocaleString()}</span>
-                                        </Pair>
-                                        <Pair style={{ justifyContent: 'center', alignSelf: 'flex-end' }}>
-                                            <CardButton background='red' onClick={() => deleteBusiness(business.id)}>Delete</CardButton>
-                                        </Pair>
-                                    </UserCard>
-                                );
-                            })}
-                        </UserCards>
-                    ) : <Skeleton active paragraph={{ rows: 15, width: '100%' }} />}
-                </DashboardWrapper>
+        <>
+            <Head>
+                <title>Manage-Business | Admin</title>
+                <meta name='robots' content='noindex,nofollow' />
+            </Head>
+            <main>
+                <BackButton dropdown={true} user={DisplayName} />
+                <DashboardContainer>
+                    <DashboardWrapper>
+                        <Modal title="Add Business" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='Done' >
+                            <AddBusiness />
+                        </Modal>
+                        <Pair style={{ justifyContent: 'space-between', padding: '0 10px' }}>
+                            <Heading>Manage Businesses</Heading>
+                            <CommonButton name='Add Business' width='150px' height='40px' onClick={showModal} />
+                        </Pair>
+                        {businesses.length > 0 ? (
+                            <UserCards>
+                                {businesses.map((business: Business) => {
+                                    return (
+                                        <UserCard key={business.id}>
+                                            <Pair style={{ height: '80px', alignItems: 'center' }}>
+                                                <strong className='title'>Logo <b>:</b></strong>
+                                                <span >{
+                                                    business.Logo ? (
+                                                        <Image src={business.Logo.toString()} alt={business.businessName + ' Image'} width={150} height={80} />
+                                                    ) : (
+                                                        'No Image'
+                                                    )
+                                                }</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>ID <b>:</b></strong><span>{business.id}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Name  <b>:</b></strong><span>{business.businessName}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Owner Name  <b>:</b></strong><span>{business.ownerName}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Email  <b>:</b></strong><span>{business.businessEmail}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Registation  <b>:</b></strong><span>{business.registrationType}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Category  <b>:</b></strong><span>{business.businessCategory}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Type  <b>:</b></strong><span>{business.productOrService}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Status  <b>:</b></strong><span>{business.Status}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>ITR / year  <b>:</b></strong><span>{business.itrPerYear}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Address  <b>:</b></strong><span>{business.address}</span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Website  <b>:</b></strong><span><a href={business.companyWebsite} target="_blank">🌐Open</a></span>
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Is Verified  <b>:</b></strong>{business.isVerified === true ? <span style={{ background: 'green', color: 'white', padding: '0 5px' }}>Verified</span> : <span style={{ background: 'red', color: 'white', padding: '0 5px' }}> Not Verified</span>}
+                                            </Pair>
+                                            <Pair>
+                                                <strong className='title'>Created At <b>:</b></strong>
+                                                <span>{new Date(business.createdAt).toLocaleString()}</span>
+                                            </Pair>
+                                            <Pair style={{ justifyContent: 'center', alignSelf: 'flex-end' }}>
+                                                <CardButton background='red' onClick={() => deleteBusiness(business.id)}>Delete</CardButton>
+                                            </Pair>
+                                        </UserCard>
+                                    );
+                                })}
+                            </UserCards>
+                        ) : <Skeleton active paragraph={{ rows: 15, width: '100%' }} />}
+                    </DashboardWrapper>
 
-            </DashboardContainer>
-        </main>
+                </DashboardContainer>
+            </main>
+        </>
     )
 }
 

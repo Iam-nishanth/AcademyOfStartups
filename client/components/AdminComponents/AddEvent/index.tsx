@@ -13,6 +13,8 @@ import { CommonButton } from "@/components/Common/Button";
 import axios from "@/lib/axios";
 import { message } from "antd";
 import * as yup from "yup";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useRouter } from "next/router";
 
 interface EventType {
     name: string
@@ -37,12 +39,19 @@ const AddEvent: React.FC = () => {
         resolver: yupResolver(EventValidation),
     });
 
+    const { token, dispatch } = useAuthContext();
+    const router = useRouter();
+
     const onSubmit = (data: EventType) => {
 
         const signIn = async () => {
             try {
                 const loadingMessage = message.loading("Loading...", 0);
-                const response = await axios.post<any>("/admin/add-event", { event: data });
+                const response = await axios.post<any>("/admin/add-event", { event: data }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
 
                 if (response.status === 201) {
                     loadingMessage();
@@ -51,14 +60,19 @@ const AddEvent: React.FC = () => {
                 }
             } catch (error: any) {
                 message.destroy();
-                if (error.response && error.response.status === 409) {
-                    message.error("User already exists");
-                }
-                else {
-                    message.error("Some error occurred, please try again");
-                }
+                console.log(error);
+                if (error.response.status === 401) {
+                    message.error('Token Expired, Please Login Again');
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('business');
+                    localStorage.removeItem('token');
+                    dispatch({ type: 'LOGOUT' });
 
-                console.error(error);
+                    router.replace('/login');
+                }
+                else if (error.response.status === 500) {
+                    message.error('Internal Server Error')
+                }
             }
         };
 

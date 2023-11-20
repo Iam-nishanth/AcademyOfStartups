@@ -23,7 +23,7 @@ const SignupPage = () => {
 
 
     return (
-        <Layout>
+        <Layout title="Add your Business" secure={true} >
             <SignupSectionContainer>
                 <SignupSectionWrapper>
                     <ImageContainer>
@@ -39,4 +39,4 @@ const SignupPage = () => {
     );
 }
 
-export default SignupPage
+export default withAuth(SignupPage)
