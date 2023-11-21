@@ -15,13 +15,14 @@ import { Progress, ConfigProvider } from "antd";
 
 const theme = {
   token: {
-    colorText: "#8e92a4",
+    colorText: "#3f3f3f",
     motionDurationSlow: "0.6s",
   },
 };
 interface ProgressBarProps {
   percent: number;
   trail: string;
+  label: string;
 }
 
 export const ProgressBar: React.FC<ProgressBarProps> = (props) => {
@@ -31,6 +32,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (props) => {
         percent={props.percent}
         status="active"
         trailColor={props.trail}
+        aria-label={props.label}
       />
     </ConfigProvider>
   );
@@ -51,18 +53,18 @@ const ProgressSection = () => {
           </Headings>
           <Percentages>
             <p>Startups</p>
-            <ProgressBar percent={90} trail="#fff" />
+            <ProgressBar percent={90} trail="#fff" label="Startups Progress" />
             <p>Manufacturing</p>
-            <ProgressBar percent={94} trail="#fff" />
+            <ProgressBar percent={94} trail="#fff" label="Manufacturing Progress" />
             <p>Import & Export</p>
-            <ProgressBar percent={93} trail="#fff" />
+            <ProgressBar percent={93} trail="#fff" label="Import & Export Progress" />
             <p>High Network Individuals</p>
-            <ProgressBar percent={85} trail="#fff" />
+            <ProgressBar percent={85} trail="#fff" label="High Network Individuals Progress" />
           </Percentages>
         </PercentageWrapper>
         <JoinUs>
           <JoinHeadings>
-            <MainHeading color="#000000">
+            <MainHeading color="#333333">
               Get the Best answers for your <br /> Worst Challenges
             </MainHeading>
             <JoinUsPara>
@@ -74,7 +76,7 @@ const ProgressSection = () => {
           </JoinHeadings>
           <Buttons>
             <CommonButton width="160px" height="50px" name="Join Us" />
-            <AnchorButton name="Learn More →" />
+            <AnchorButton href="/services" name="Learn More →" />
           </Buttons>
         </JoinUs>
       </ProgressSectionWrapper>

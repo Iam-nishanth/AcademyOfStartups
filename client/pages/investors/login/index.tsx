@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import Layout from '@/components/Layout/NavOnly'
 import InvestorLogin from '@/components/InvestorLogin'
 import InvestorForm from '@/components/InvestorForm'
+import Head from 'next/head'
 
 const InvestorsLogin = () => {
     const [isLogin, setIsLogin] = React.useState<boolean>(true);
@@ -14,9 +15,14 @@ const InvestorsLogin = () => {
 
 
     return (
-        <Layout title="Login | Investors" secure={true}>
-            {isLogin ? <InvestorLogin /> : <InvestorForm />}
-        </Layout>
+        <>
+            <Head>
+                <meta name='robots' content='noindex,nofollow' />
+            </Head>
+            <Layout title="Login | Investors">
+                {isLogin ? <InvestorLogin /> : <InvestorForm />}
+            </Layout>
+        </>
     )
 }
 

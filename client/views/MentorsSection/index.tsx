@@ -21,17 +21,17 @@ const MentorsSection = () => {
           <Card image="/images/SudheerSir.jpg">
             <Overlay>
               <Icons>
-                <LINK target="_blank" href="https://www.facebook.com/">
+                <LINK target="_blank" href="https://www.facebook.com/Startup.SudheerVarma?mibextid=ZbWKwL" aria-label="Facebook">
                   <FaFacebook />
                 </LINK>
               </Icons>
               <Icons>
-                <LINK target="_blank" href="https://www.instagram.com/">
+                <LINK target="_blank" href="https://www.instagram.com/startup.sudheervarma/" aria-label="Instagram">
                   <FaInstagram />
                 </LINK>
               </Icons>
               <Icons>
-                <LINK target="_blank" href={"https://www.linkedin.com/"}>
+                <LINK target="_blank" href="https://www.linkedin.com/in/sudheer-varma-tirumalaraju-012b5550/" aria-label="LinkedIn">
                   <FaLinkedin />
                 </LINK>
               </Icons>
@@ -44,17 +44,17 @@ const MentorsSection = () => {
           <Card image="/images/Usman Sir.jpg">
             <Overlay>
               <Icons>
-                <LINK target="_blank" href="https://www.facebook.com/">
+                <LINK target="_blank" href="https://www.facebook.com/" aria-label="Facebook">
                   <FaFacebook />
                 </LINK>
               </Icons>
               <Icons>
-                <LINK target="_blank" href="https://www.instagram.com/">
+                <LINK target="_blank" href="https://www.instagram.com/" aria-label="Instagram">
                   <FaInstagram />
                 </LINK>
               </Icons>
               <Icons>
-                <LINK target="_blank" href="https://www.linkedin.com/">
+                <LINK target="_blank" href="https://www.linkedin.com/" aria-label="LinkedIn">
                   <FaLinkedin />
                 </LINK>
               </Icons>

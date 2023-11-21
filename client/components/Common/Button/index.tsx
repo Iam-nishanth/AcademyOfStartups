@@ -13,6 +13,7 @@ interface ButtonProps {
   style?: React.CSSProperties;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
+  children?: React.ReactNode;
 }
 
 interface AnchorProps {
@@ -38,11 +39,12 @@ export const CommonButton2: React.FC<ButtonProps> = ({
   name,
   width,
   height,
+  children,
 }) => {
 
   return (
     <GlobalButton2 width={width} height={height}>
-      {name}
+      {name} {children}
     </GlobalButton2>
   );
 };

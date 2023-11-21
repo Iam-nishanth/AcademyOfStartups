@@ -103,7 +103,7 @@ export const RoadMapContentBox = styled.div`
   }
   p {
     font-weight: 500;
-    color: #8e92a4;
+    color: #3f3f3f;
   }
   @media (max-width: 600px) {
     h3 {

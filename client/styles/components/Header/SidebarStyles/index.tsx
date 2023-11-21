@@ -49,7 +49,6 @@ export const NavLinks = styled.ul`
 
   .active{
     color: #316aff;
-    
   }
 `;
 export const NavItem = styled.li`

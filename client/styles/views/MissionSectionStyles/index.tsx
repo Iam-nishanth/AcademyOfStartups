@@ -119,6 +119,7 @@ export const StatsBox = styled.div`
     }
     .paragraph {
       font-size: 14px;
+      color: #999 !important;
     }
   }
   @media (max-width: 600px) {

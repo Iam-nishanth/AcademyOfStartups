@@ -50,7 +50,7 @@ export const Percentages = styled.div`
 
 export const JoinUs = styled.div`
   display: flex;
-  background-color: #fff;
+  background-color: #f5f5f5;
   min-height: 300px;
   align-items: center;
   gap: 30px;
@@ -61,9 +61,13 @@ export const JoinUs = styled.div`
   position: relative;
   bottom: -50px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  transition: 300ms all ease;
   @media (max-width: 650px) {
     flex-direction: column;
     padding: 30px 15px;
+  }
+  &:hover{
+    transform: translateY(-10px);
   }
 `;
 
@@ -96,7 +100,7 @@ export const Buttons = styled.div`
 export const JoinUsPara = styled.p`
   font-size: 16px;
   font-weight: 500;
-  color: #999;
+  color: #393939;
   @media (max-width: 600px) {
     font-size: 14px;
   }

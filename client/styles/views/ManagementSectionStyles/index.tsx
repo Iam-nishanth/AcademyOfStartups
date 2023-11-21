@@ -63,7 +63,7 @@ export const ButtonSection = styled.div`
   .position {
     font-size: 14px;
     font-weight: 400;
-    color: #8e92a4;
+    color: #3f3f3f;
     margin-top: 5px;
   }
   @media (max-width: 500px) {

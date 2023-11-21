@@ -1,0 +1,28 @@
+User-agent: *
+
+# Allow crawling of all public pages
+Allow: /
+Allow: /about
+Allow: /contact
+Allow: /events
+Allow: /events/id/[id]
+Allow: /investors
+Allow: /services
+Allow: /team
+
+# Disallow crawling of admin pages
+Disallow: /admin/*
+
+# Disallow crawling of login and verification pages
+Disallow: /login
+Disallow: /user/account/verify
+
+# Disallow crawling of dashboard pages
+Disallow: /investors/dashboard
+Disallow: /user/dashboard
+Disallow: /investors/login
+Disallow: /user/add-business
+
+# Disallow crawling of any other pages
+Disallow: /404*
+Disallow: /user/account*

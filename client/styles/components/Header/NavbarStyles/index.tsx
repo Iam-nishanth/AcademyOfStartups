@@ -66,10 +66,6 @@ export const NavLinks = styled.ul`
   }
   .active {
     color: #316aff;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-thickness: 2px;
-    font-weight: 800;
   }
 `;
 export const NavItem = styled.li`

@@ -6,6 +6,8 @@ import { Heading, SubHeading } from '@/styles/Globalstyles';
 import { useRouter } from 'next/router';
 import { Input } from '@/styles/components/FormStyles';
 import styled from 'styled-components';
+import Head from 'next/head';
+import withAuth from '@/components/HighOrders/WithAuth';
 
 
 
@@ -127,33 +129,41 @@ const VerifyEmail = () => {
     }
 
     return (
-        <AccountSectionContainer style={{ background: 'linear-gradient(to right, #1A2980, #001336)' }} >
-            {
-                user?.isVerified === true ? (
-                    <AccountSectionWrapper style={{ textAlign: 'center', height: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', gap: '20px' }}>
-                        <Heading style={{ color: 'white' }}>Account Verified</Heading>
-                        <SubHeading>You can now login to your account</SubHeading>
-                        <CommonButton onClick={() => router.push('/user/account')} >Go Back</CommonButton>
-                    </AccountSectionWrapper>
-                ) : (
-                    <AccountSectionWrapper style={{ textAlign: 'center', height: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', gap: '20px' }}>
-                        <Heading style={{ color: 'white' }}>Verify Email</Heading>
-                        <SubHeading>Email will be sent to {user?.userEmail}</SubHeading>
-                        {!emailSent && <CommonButton onClick={sendEmail} >Send OTP</CommonButton>}
+        <>
+            <Head>
+                <title>Verify Email</title>
+                <meta name='robots' content='noindex,nofollow' />
+            </Head>
+            <main>
+                <AccountSectionContainer style={{ background: 'linear-gradient(to right, #1A2980, #001336)' }} >
+                    {
+                        user?.isVerified === true ? (
+                            <AccountSectionWrapper style={{ textAlign: 'center', height: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', gap: '20px' }}>
+                                <Heading style={{ color: 'white' }}>Account Verified</Heading>
+                                <SubHeading>You can now login to your account</SubHeading>
+                                <CommonButton onClick={() => router.push('/user/account')} >Go Back</CommonButton>
+                            </AccountSectionWrapper>
+                        ) : (
+                            <AccountSectionWrapper style={{ textAlign: 'center', height: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', gap: '20px' }}>
+                                <Heading style={{ color: 'white' }}>Verify Email</Heading>
+                                <SubHeading>Email will be sent to {user?.userEmail}</SubHeading>
+                                {!emailSent && <CommonButton onClick={sendEmail} >Send OTP</CommonButton>}
 
-                        {emailSent && (
-                            <>
-                                <Input type="text" ref={otpInput} style={{ textAlign: 'center' }} />
-                                <CommonButton onClick={verifyEmail}>Verify Email</CommonButton>
-                                <ResendButton disabled={resendDisabled} onClick={resendEmail}>{resendDisabled ? `Resend in ${countdown} seconds` : 'Resend'}</ResendButton>
+                                {emailSent && (
+                                    <>
+                                        <Input type="text" ref={otpInput} style={{ textAlign: 'center' }} />
+                                        <CommonButton onClick={verifyEmail}>Verify Email</CommonButton>
+                                        <ResendButton disabled={resendDisabled} onClick={resendEmail}>{resendDisabled ? `Resend in ${countdown} seconds` : 'Resend'}</ResendButton>
 
-                            </>
-                        )}
+                                    </>
+                                )}
 
-                    </AccountSectionWrapper>
-                )
-            }
-        </AccountSectionContainer >
+                            </AccountSectionWrapper>
+                        )
+                    }
+                </AccountSectionContainer >
+            </main>
+        </>
     )
 }
 
@@ -214,4 +224,4 @@ const ResendButton = styled.button`
   }
 `
 
-export default VerifyEmail
+export default withAuth(VerifyEmail)

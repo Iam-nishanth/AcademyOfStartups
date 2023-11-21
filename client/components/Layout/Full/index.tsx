@@ -9,7 +9,7 @@ interface LayoutProps {
     children: React.ReactNode;
     title?: string;
     description?: string;
-    secure?: boolean
+    secure?: boolean | undefined;
 }
 
 
@@ -32,7 +32,6 @@ const Layout: React.FC<LayoutProps> = ({ children, title, description, secure })
                 <meta property="og:url" content="https://academyofstartups.com" />
                 <meta property="og:image" content="https://i.ibb.co/Db7ryjd/academy-of-startups-og.png" />
                 <meta property="og:type" content="website" />
-                secure && <meta name='robots' content='noindex,nofollow' />
             </Head>
             <main>
                 <Navbar toggle={toggle} />

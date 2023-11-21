@@ -15,8 +15,8 @@ const HeroSection = () => {
     <HeroContainer>
       <HeroWrapper>
         <TextWrapper>
-          <h2>Improve your businesses and startups with</h2>
-          <h1>Academy of Startups</h1>
+          <h1>Improve your businesses and startups with</h1>
+          <h2>Academy of Startups</h2>
           <h3>We help businesses succeed by providing them with</h3>
           <h3>Innovative and Effective solutions</h3>
           <CommonButton2 name="Get Started" width="180px" height="60px" />

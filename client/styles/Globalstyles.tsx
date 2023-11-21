@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { styled } from "styled-components";
 
-export const SubHeading = styled.h4`
+export const SubHeading = styled.p`
   font-size: 18px;
   font-weight: 500;
   color: #316aff;
@@ -37,7 +37,7 @@ export const MainHeading2 = styled.h1`
 export const Paragraph = styled.p`
   font-size: 16px;
   font-weight: 400;
-  color: #8e92a4;
+  color: #3f3f3f;
   @media (max-width: 600px) {
     font-size: 14px;
   }

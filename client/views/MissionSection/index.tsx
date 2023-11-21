@@ -38,28 +38,28 @@ const MissionSection = () => {
             <WhiteHeading className="heading">
               <CountUp isCounting end={1500} duration={3.2} /> <Plus>+</Plus>
             </WhiteHeading>
-            <Paragraph className="paragraph">Happy Clients</Paragraph>
+            <Paragraph style={{ color: "#999" }} className="paragraph">Happy Clients</Paragraph>
           </StatsBox>
           <StatsBox>
             <FaBookOpen />
             <WhiteHeading className="heading">
               <CountUp isCounting end={200} duration={3.2} /> <Plus>+</Plus>
             </WhiteHeading>
-            <Paragraph className="paragraph">Trainings</Paragraph>
+            <Paragraph style={{ color: "#999" }} className="paragraph">Trainings</Paragraph>
           </StatsBox>
           <StatsBox>
             <GiTrophyCup />
             <WhiteHeading className="heading">
               <CountUp isCounting end={20} duration={3.2} /> <Plus>+</Plus>
             </WhiteHeading>
-            <Paragraph className="paragraph">Years of Experience</Paragraph>
+            <Paragraph style={{ color: "#999" }} className="paragraph">Years of Experience</Paragraph>
           </StatsBox>
           <StatsBox>
             <FaChalkboardTeacher />
             <WhiteHeading className="heading">
               <CountUp isCounting end={10} duration={3.2} /> <Plus>+</Plus>
             </WhiteHeading>
-            <Paragraph className="paragraph">Expert Mentors</Paragraph>
+            <Paragraph style={{ color: "#999" }} className="paragraph">Expert Mentors</Paragraph>
           </StatsBox>
         </Stats>
       </SectionWrapper>

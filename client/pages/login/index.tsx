@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Layout from "@/components/Layout/Full";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import SignupSection from "@/views/SignupSection";
+import Head from "next/head";
 
 
 
@@ -18,9 +19,14 @@ const LoginPage = () => {
 
 
   return (
-    <Layout title="Login | Academy of Startups" secure={true}>
-      <SignupSection />
-    </Layout>
+    <>
+      <Head>
+        <meta name='robots' content='noindex,nofollow' />
+      </Head>
+      <Layout title="Login | Academy of Startups">
+        <SignupSection />
+      </Layout>
+    </>
   );
 }
 

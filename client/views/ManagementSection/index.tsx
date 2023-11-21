@@ -30,9 +30,9 @@ const ManagementSection = () => {
           </Paragraph>
           <div>
             <p>Business Strategy Plannings</p>
-            <ProgressBar percent={90} trail="#ccc" />
+            <ProgressBar label="Business Strategy Plannings" percent={90} trail="#ccc" />
             <p>Expert Mentoring</p>
-            <ProgressBar percent={90} trail="#ccc" />
+            <ProgressBar label="Expert Mentoring" percent={90} trail="#ccc" />
           </div>
           <ButtonSection>
             <CommonButton name="Get Started" width="150px" height="50px" />

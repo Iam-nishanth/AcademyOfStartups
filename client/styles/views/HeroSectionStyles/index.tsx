@@ -42,12 +42,13 @@ export const TextWrapper = styled.div`
     max-width: 600px; 
   }
   h1 {
+    
+    font-size: 35px;
+  }
+  h2 {
     color: #e91a29;
     font-size: 50px;
     font-weight: 700;
-  }
-  h2 {
-    font-size: 35px;
   }
   h3 {
     font-size: 25px;

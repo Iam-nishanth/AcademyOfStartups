@@ -46,9 +46,14 @@ const Sidebar = ({ isOpen, toggle }: SidebarProps): ReactElement => {
         <LINK href="/contact">Contact us</LINK>
       </NavItem>
       {!user
-        && (<Link href="/login">
-          <CommonButton name="Sign In" width="200px" />
-        </Link>)}
+        && (
+          <NavItem className={router.pathname.match('/login') ? 'active' : ''} onClick={toggle}>
+            <Link href="/login">
+              <CommonButton name="Sign In" width="200px" />
+            </Link>
+          </NavItem>
+
+        )}
     </NavLinks>
   </SidebarContainer>
 

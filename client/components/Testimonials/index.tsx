@@ -77,10 +77,10 @@ const TestimonialSection: React.FC = () => {
             {clientDisc}
           </Slider>
           <Buttons>
-            <button onClick={() => arrowRef.current?.slickPrev()}>
+            <button onClick={() => arrowRef.current?.slickPrev()} aria-label="prev">
               <IoIosArrowBack />
             </button>
-            <button onClick={() => arrowRef.current?.slickNext()}>
+            <button onClick={() => arrowRef.current?.slickNext()} aria-label="next">
               <IoIosArrowForward />
             </button>
           </Buttons>
