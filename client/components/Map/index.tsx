@@ -9,6 +9,8 @@ const Map = () => {
         allowFullScreen={true}
         loading="eager"
         referrerPolicy="no-referrer-when-downgrade"
+        name="map"
+        aria-label="address-map"
       ></iframe>
     </MapContainer>
   );

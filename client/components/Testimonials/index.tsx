@@ -13,6 +13,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { SubHeading, WhiteHeading } from "@/styles/Globalstyles";
 import { clients } from "./Data";
+import { RevealY } from "@/utils/animation/RevealY";
 
 var settings = {
   dots: true,
@@ -69,8 +70,12 @@ const TestimonialSection: React.FC = () => {
     <MainContainer>
       <Container>
         <Headings>
-          <SubHeading>Testimonials</SubHeading>
-          <WhiteHeading>Reviews From Our Clients</WhiteHeading>
+          <RevealY>
+            <SubHeading>Testimonials</SubHeading>
+          </RevealY>
+          <RevealY>
+            <WhiteHeading>Reviews From Our Clients</WhiteHeading>
+          </RevealY>
         </Headings>
         <Testimonials>
           <Slider ref={arrowRef} {...settings}>

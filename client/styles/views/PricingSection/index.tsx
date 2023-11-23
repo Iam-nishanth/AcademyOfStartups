@@ -73,6 +73,9 @@ export const PricingCard = styled.div`
         font-size: 18px;
         color: #316aff;
     }
+    a{
+        text-decoration: none !important;
+    }
 
     @media (max-width: 600px){
         padding: 20px 0 20px 20px;

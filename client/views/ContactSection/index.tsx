@@ -13,58 +13,72 @@ import {
 import React from "react";
 import { FaBuilding, FaLocationDot, FaPhoneVolume } from "react-icons/fa6";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
+import { RevealX } from "@/utils/animation/RevealX";
+import { RevealY } from "@/utils/animation/RevealY";
 
 const ContactSection = () => {
   return (
     <ContactContainer>
       <ContactWrapper>
         <AddressWrapper>
-          <SubHeading>Contact Us</SubHeading>
-          <Heading>Get in Touch with us</Heading>
+          <RevealX><SubHeading>Contact Us</SubHeading></RevealX>
+          <RevealX><Heading>Get in Touch with us</Heading></RevealX>
           <Address>
             <DIV>
               <Icon>
                 <FaBuilding />
               </Icon>
-              <Content>
-                <h3>Building</h3>
-                <p>5th floor, LR TOWERS, GR Corporate Office</p>
-              </Content>
+              <RevealX>
+                <Content>
+                  <h3>Building</h3>
+                  <p>5th floor, LR TOWERS, GR Corporate Office</p>
+                </Content>
+              </RevealX>
+
             </DIV>
             <DIV>
               <Icon>
                 <FaLocationDot />
               </Icon>
-              <Content>
-                <h3>Address</h3>
-                <p>Ayyppa Society, Madhapur, Hyderabad, Telangana 500081</p>
-              </Content>
+              <RevealX>
+                <Content>
+                  <h3>Address</h3>
+                  <p>Ayyppa Society, Madhapur, Hyderabad, Telangana 500081</p>
+                </Content>
+              </RevealX>
             </DIV>
             <DIV>
               <Icon>
                 <FaPhoneVolume />
               </Icon>
-              <Content>
-                <h3>Call us</h3>
-                <a href="tel:+919948899366">+91 99488 99366</a>
-              </Content>
+              <RevealX>
+                <Content>
+                  <h3>Call us</h3>
+                  <a href="tel:+919948899366">+91 99488 99366</a>
+                </Content>
+              </RevealX>
             </DIV>
             <DIV>
               <Icon>
                 <BsFillEnvelopeAtFill />
               </Icon>
-              <Content>
-                <h3>Email Info</h3>
-                <a href="mailto:hello@academyofstartups.com">
-                  hello@academyofstartups.com
-                </a>
-              </Content>
+              <RevealX>
+                <Content>
+                  <h3>Email Info</h3>
+                  <a href="mailto:hello@academyofstartups.com">
+                    hello@academyofstartups.com
+                  </a>
+                </Content>
+              </RevealX>
             </DIV>
           </Address>
         </AddressWrapper>
         <FormWrapper>
-          <Form />
+          <RevealY width="100%">
+            <Form />
+          </RevealY>
         </FormWrapper>
+
       </ContactWrapper>
     </ContactContainer>
   );

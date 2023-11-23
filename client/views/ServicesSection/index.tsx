@@ -9,6 +9,8 @@ import { FaBookOpen, FaFolderOpen, FaHandshake, FaPeopleGroup, FaWallet } from '
 import { FaUsersCog } from 'react-icons/fa'
 import { GiReceiveMoney } from 'react-icons/gi'
 import { HiLightBulb } from 'react-icons/hi2'
+import { RevealY } from '@/utils/animation/RevealY'
+import { RevealX } from '@/utils/animation/RevealX'
 
 
 const ServicesSection = () => {
@@ -106,6 +108,7 @@ const ServicesSection = () => {
                             <CardHeading>{card.heading}</CardHeading>
                             <CardText>{card.text}</CardText>
                         </Card>
+
                     ))}
                 </Cards>
             ),
@@ -132,12 +135,15 @@ const ServicesSection = () => {
     return (
         <ServicesSectionContainer>
             <ServicesSectionWrapper>
-                <SubHeading>Our Services</SubHeading>
-                <Heading>
-                    Give Smartness to your Business
-                    with our Services
-                </Heading>
-
+                <RevealY>
+                    <SubHeading>Our Services</SubHeading>
+                </RevealY>
+                <RevealY>
+                    <Heading>
+                        Give Smartness to your Business
+                        with our Services
+                    </Heading>
+                </RevealY>
                 <Tabs
                     defaultActiveKey="1"
                     centered

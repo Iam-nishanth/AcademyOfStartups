@@ -75,11 +75,17 @@ model InvestorInfo {
 }
 
 model Event {
-    id        String   @id @default(uuid()) @map("event_id")
-    name      String
-    date      String
-    time      String
-    location  String
+    id          String  @id @default(uuid()) @map("event_id")
+    name        String
+    subtitle    String?
+    dates       String
+    time        String
+    location    String
+    entryFee    String?
+    description String?
+    coverImage  String?
+    isVerified  Boolean @default(false) @map("is_verified")
+
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
 }

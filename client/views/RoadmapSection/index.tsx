@@ -17,6 +17,7 @@ import { TbChartInfographic } from "react-icons/tb";
 import { MdRocketLaunch } from "react-icons/md";
 import { HiBadgeCheck } from "react-icons/hi";
 import { FaRepeat } from "react-icons/fa6";
+import { RevealX } from "@/utils/animation/RevealX";
 
 const RoadmapSection = () => {
   const RoadMapData = [
@@ -68,24 +69,28 @@ const RoadmapSection = () => {
           </ImageDiv>
         </ImageWrapper>
         <RoadmapContent>
-          <SubHeading>Our Process</SubHeading>
-          <Heading>Easy Steps To Improve Your Business and Startups</Heading>
+          <RevealX>
+            <SubHeading>Our Process</SubHeading>
+          </RevealX>
+          <RevealX>
+            <Heading>Easy Steps To Improve Your Business and Startups</Heading>
+          </RevealX>
           <RoadMap>
-            <RoadMapList>
-              {RoadMapData.map((item, index) => (
-                <RoadMapItem key={index}>
-                  <RoadMapIcon>
-                    {/* Icon */}
-                    {item.Icon}
-                  </RoadMapIcon>
-                  {/* Content */}
-                  <RoadMapContentBox>
-                    <h3>{item.Title}</h3>
-                    <p>{item.Description}</p>
-                  </RoadMapContentBox>
-                </RoadMapItem>
-              ))}
-            </RoadMapList>
+            <RevealX>
+              <RoadMapList>
+                {RoadMapData.map((item, index) => (
+                  <RoadMapItem key={index}>
+                    <RoadMapIcon>
+                      {item.Icon}
+                    </RoadMapIcon>
+                    <RoadMapContentBox>
+                      <h3>{item.Title}</h3>
+                      <p>{item.Description}</p>
+                    </RoadMapContentBox>
+                  </RoadMapItem>
+                ))}
+              </RoadMapList>
+            </RevealX>
           </RoadMap>
         </RoadmapContent>
       </RoadmapWrapper>

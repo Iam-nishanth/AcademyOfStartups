@@ -337,53 +337,6 @@ const Admin = {
       }
     }
   },
-  updateInvestor: async (req, res) => {
-    const { id } = req.params;
-    const {
-      PhoneNo,
-      Address,
-      Image,
-      InvestorType,
-      InvestmentRange,
-      DomainsOfInterest,
-      ExistingInvestments,
-    } = req.body;
-
-    try {
-      const existingInvestor = await prisma.investorInfo.findUnique({
-        where: {
-          id: id,
-        },
-      });
-
-      if (!existingInvestor) {
-        return res.status(404).json({ message: "Investor not found" });
-      }
-
-      const updatedInvestor = await prisma.investorInfo.update({
-        where: {
-          id: id,
-        },
-        data: {
-          PhoneNo,
-          Address,
-          Image,
-          InvestorType,
-          InvestmentRange,
-          DomainsOfInterest,
-          ExistingInvestments,
-        },
-      });
-
-      res
-        .status(200)
-        .json({ message: "Investor updated", investorInfo: updatedInvestor });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Error while updating the investor.", error: error });
-    }
-  },
   deleteInvestor: async (req, res) => {
     const { id } = req.params;
 
@@ -444,19 +397,43 @@ const Admin = {
   },
 
   addEvent: async (req, res) => {
-    const { event } = req.body;
+    const { name, subtitle, dates, time, location, description, entryFee, coverImage } = req.body;
+    const event = {
+      name,
+      subtitle,
+      dates,
+      time,
+      location,
+      description,
+      entryFee,
+      coverImage
+    };
 
     try {
       const newEvent = await prisma.event.create({
-        data: {
-          name: event.name,
-          date: event.date,
-          time: event.time,
-          location: event.location,
-        },
+        data: event,
       });
 
       res.status(201).json({ message: "Event created successfully", newEvent });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error", error });
+    }
+  },
+  updateEvent: async (req, res) => {
+    const { id } = req.params;
+    const { event } = req.body;
+
+    try {
+      const updatedEvent = await prisma.event.update({
+        where: {
+          id: id,
+        },
+        data: event,
+      });
+
+      res
+        .status(200)
+        .json({ message: "Event updated successfully", updatedEvent });
     } catch (error) {
       res.status(500).json({ message: "Internal server error", error });
     }

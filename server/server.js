@@ -9,7 +9,7 @@ import { authRouter } from "./routers/auth.js";
 import { startupRouter } from "./routers/startups.js";
 import cookieParser from "cookie-parser";
 import { InvestorRouter } from "./routers/investor.js";
-import CountRouter from "./routers/count.js";
+import CommonRouter from "./routers/common.js";
 import { adminRouter } from "./routers/admin.js";
 
 const app = express();
@@ -48,7 +48,7 @@ const port = process.env.PORT || 8080;
 app.use("/auth", authRouter);
 app.use(startupRouter);
 app.use("/auth", InvestorRouter);
-app.use(CountRouter);
+app.use(CommonRouter);
 app.use("/admin", adminRouter);
 
 app.get("/", (req, res) => {

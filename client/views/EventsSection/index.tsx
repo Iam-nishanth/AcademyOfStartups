@@ -1,3 +1,4 @@
+import React from "react";
 import { CommonButton } from "@/components/Common/Button";
 import { Heading, SubHeading } from "@/styles/Globalstyles";
 import {
@@ -8,78 +9,70 @@ import {
   Span,
 } from "@/styles/views/EventsStyles";
 import Link from "next/link";
+import axios from '@/lib/axios';
+import { Skeleton } from "antd";
 
-export const Timings = [
-  {
-    id: 11,
-    date: "10th Sep 2023",
-    time: "11 AM - 1PM",
-    title: "Academy of Startups",
-    desc: "Investment Webinar",
-    price: "99",
-  },
-  {
-    id: 1,
-    date: "2nd Sep 2023",
-    time: "11 AM - 1PM",
-    title: "Digital Mahila",
-    desc: "Webinar",
-    price: "99",
-  },
-  {
-    id: 2,
-    date: "7th Oct 2023",
-    time: "11 AM - 1PM",
-    title: "Digital Mahila",
-    desc: "Webinar",
-    price: "99",
-  },
-  {
-    id: 3,
-    date: "4th Nov 2023",
-    time: "11AM - 1PM",
-    title: "Digital Mahila",
-    desc: "Webinar",
-    price: "99",
-  },
-  {
-    id: 4,
-    date: "2nd Dec 2023",
-    time: "11 AM - 1PM",
-    title: "Digital Mahila",
-    desc: "Webinar",
-    price: "99",
-  },
-];
+interface Event {
+  id: string;
+  name: string;
+  subtitle: string | undefined;
+  dates: string;
+  time: string;
+  location: string;
+  description: string | undefined;
+  entryFee: number | undefined;
+  coverImage?: string;
+}
 
-const EventsSection = () => {
-  const CardPreview = Timings.map((item) => (
-    <EventCard key={item.id}>
-      <div>
-        <h2>{item.title}</h2>
-        <p>{item.desc}</p>
-      </div>
-      <div>
-        <p>
-          <Span>Date: </Span>
-          {item.date}
-        </p>
-        <p>
-          <Span>Time: </Span>
-          {item.time}
-        </p>
-      </div>
-      <Link href={`/events/id/${item.id}`}>
-        <CommonButton name="Register" width="150px" height="40px" />
-      </Link>
-    </EventCard>
-  ));
+export const getStaticProps = async () => {
+  try {
+    const response = await axios.get("/api/get/events");
+    return {
+      props: {
+        events: response.data,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        events: [],
+      },
+    };
+  }
+};
+
+
+const EventsSection = (props: any) => {
+  const [events, setEvents] = React.useState<Event[]>(props.events);
+
+  console.log("events", events);
+
+
+
+  // React.useEffect(() => {
+  //   const fetchEvents = async () => {
+  //     try {
+  //       const response = await axios.get("/api/get/events");
+  //       if (response.status === 200) {
+  //         setEvents(response.data);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchEvents();
+  // }, []);
+
   return (
     <EventsContainer>
       <EventsWrapper>
         <SubHeading>Coming Soon</SubHeading>
         <Heading>Upcoming Events</Heading>
-        <CardWrapper>{CardPreview}</CardWrapper>
+
+        <CardWrapper>
+        </CardWrapper>
+
       </EventsWrapper>
     </EventsContainer>
   );

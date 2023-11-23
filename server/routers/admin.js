@@ -18,6 +18,7 @@ adminRouter.post("/add-investor", verifyAdmin, upload.none(), Admin.addInvestor)
 adminRouter.delete("/delete-investor/:id", verifyAdmin, Admin.deleteInvestor);
 
 adminRouter.get("/all-events", verifyAdmin, Admin.allEvents);
-adminRouter.post("/add-event", verifyAdmin, Admin.addEvent);
+adminRouter.post("/add-event", verifyAdmin, upload.none(), Admin.addEvent);
+adminRouter.put("/update-event/:id", verifyAdmin, Admin.updateEvent);
 adminRouter.delete("/delete-event/:id", verifyAdmin, Admin.deleteEvent);
 

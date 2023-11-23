@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import { TbTargetArrow } from "react-icons/tb";
 import { data } from "./questions";
+import { RevealX } from "@/utils/animation/RevealX";
 
 const FAQSection: React.FC = () => {
 
@@ -28,10 +29,14 @@ const FAQSection: React.FC = () => {
     <FaqContainer>
       <FaqWrapper>
         <ContentWrapper>
-          <Heading>Frequently Asked Questions (FAQ's)</Heading>
-          <SubHeading>
-            Frequently asked questions by our Clients and Members.
-          </SubHeading>
+          <RevealX>
+            <Heading>Frequently Asked Questions (FAQ's)</Heading>
+          </RevealX>
+          <RevealX>
+            <SubHeading>
+              Frequently asked questions by our Clients and Members.
+            </SubHeading>
+          </RevealX>
           <QuestionsWrapper>
             {/* <Accordion /> */}
             <FAQ items={clientsArr} />
@@ -48,7 +53,7 @@ const FAQSection: React.FC = () => {
           </Tile>
         </ImageWrapper>
       </FaqWrapper>
-    </FaqContainer>
+    </FaqContainer >
   );
 }
 

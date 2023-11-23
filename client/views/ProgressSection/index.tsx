@@ -11,11 +11,12 @@ import {
   ProgressSectionContainer,
   ProgressSectionWrapper,
 } from "@/styles/views/ProgressSectionStyles";
+import { RevealY } from "@/utils/animation/RevealY";
 import { Progress, ConfigProvider } from "antd";
 
 const theme = {
   token: {
-    colorText: "#3f3f3f",
+    colorText: "#3f3f3f | #fff",
     motionDurationSlow: "0.6s",
   },
 };
@@ -43,14 +44,17 @@ const ProgressSection = () => {
     <ProgressSectionContainer>
       <ProgressSectionWrapper>
         <PercentageWrapper>
-          <Headings>
-            <SubHeading>Who We Are</SubHeading>
-            <MainHeading>
-              Over 1,200+ Members Trust <br />
-              <span>Academy of Startups</span>
-              <br /> To Transform their Businesses
-            </MainHeading>
-          </Headings>
+          <RevealY>
+
+            <Headings>
+              <SubHeading>Who We Are</SubHeading>
+              <MainHeading>
+                Over 1,200+ Members Trust <br />
+                <span>Academy of Startups</span>
+                <br /> To Transform their Businesses
+              </MainHeading>
+            </Headings>
+          </RevealY>
           <Percentages>
             <p>Startups</p>
             <ProgressBar percent={90} trail="#fff" label="Startups Progress" />
@@ -64,21 +68,26 @@ const ProgressSection = () => {
         </PercentageWrapper>
         <JoinUs>
           <JoinHeadings>
-            <MainHeading color="#333333">
-              Get the Best answers for your <br /> Worst Challenges
-            </MainHeading>
-            <JoinUsPara>
-              Challenges are situations in business. Many will consider it as
-              problemsand leave the industry. We will help businesses & startups
-              at any level to grow by analyzing structure, implementing growth
-              methods and execute in result oriented milestones.
-            </JoinUsPara>
+            <RevealY>
+              <MainHeading color="#333333">
+                Get the Best answers for your <br /> Worst Challenges
+              </MainHeading>
+            </RevealY>
+            <RevealY>
+              <JoinUsPara>
+                Challenges are situations in business. Many will consider it as
+                problemsand leave the industry. We will help businesses & startups
+                at any level to grow by analyzing structure, implementing growth
+                methods and execute in result oriented milestones.
+              </JoinUsPara>
+            </RevealY>
           </JoinHeadings>
           <Buttons>
             <CommonButton width="160px" height="50px" name="Join Us" />
             <AnchorButton href="/services" name="Learn More →" />
           </Buttons>
         </JoinUs>
+
       </ProgressSectionWrapper>
     </ProgressSectionContainer>
   );

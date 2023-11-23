@@ -11,17 +11,20 @@ import AddEvent from '@/components/AdminComponents/AddEvent';
 import { decryptResponse } from '@/lib/encryption';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 interface EventType {
-    id: string
-    name: string
-    date: string
-    time: string
-    location: string
+    id: string;
+    name: string;
+    subtitle: string;
+    dates: string;
+    time: string;
+    location: string;
+    description: string;
+    entryFee: string;
+    coverImage: any;
     createdAt: string
 }
-
-
 
 const ManageEvents = () => {
     const { user, token, dispatch } = useAuthContext();
@@ -141,10 +144,19 @@ const ManageEvents = () => {
                                                     <strong className='title'>Name  <b>:</b></strong><span>{event.name}</span>
                                                 </Pair>
                                                 <Pair>
-                                                    <strong className='title'>Date  <b>:</b></strong><span>{event.date}</span>
+                                                    <strong className='title'>Subtitle  <b>:</b></strong><span>{event.subtitle}</span>
+                                                </Pair>
+                                                <Pair>
+                                                    <strong className='title'>Date  <b>:</b></strong><span>{event.dates}</span>
                                                 </Pair>
                                                 <Pair>
                                                     <strong className='title'>Time  <b>:</b></strong><span>{event.time}</span>
+                                                </Pair>
+                                                <Pair>
+                                                    <strong className='title'>Entry Fee  <b>:</b></strong><span>{event.entryFee}</span>
+                                                </Pair>
+                                                <Pair>
+                                                    <strong className='title'>Description  <b>:</b></strong><span>{event.description}</span>
                                                 </Pair>
                                                 <Pair>
                                                     <strong className='title'>Location  <b>:</b></strong><span>{event.location}</span>
@@ -152,6 +164,16 @@ const ManageEvents = () => {
                                                 <Pair>
                                                     <strong className='title'>Created At <b>:</b></strong>
                                                     <span>{new Date(event.createdAt).toLocaleString()}</span>
+                                                </Pair>
+                                                <Pair style={{ height: '80px', alignItems: 'center' }}>
+                                                    <strong className='title'>Ft. Image <b>:</b></strong>
+                                                    <span >{
+                                                        event.coverImage ? (
+                                                            <Image src={event.coverImage.toString()} alt={event.name + ' Image'} width={150} height={80} />
+                                                        ) : (
+                                                            'No Image'
+                                                        )
+                                                    }</span>
                                                 </Pair>
                                                 <Pair style={{ justifyContent: 'center' }}>
                                                     <CardButton onClick={() => deleteEvent(event.id)} background='#fd3838'>Delete</CardButton>

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { message } from "antd";
-import axios, { AxiosResponse } from "axios";
+import axios from "@/lib/axios";
 import {
   FORM,
   Input,
@@ -41,11 +41,10 @@ const Form: React.FC = () => {
     try {
       const loadingMessage = message.loading("Submitting form...", 0);
 
-      const response = await axios.post("http://localhost:8080/home", data);
+      const response = await axios.post("/api/contact/email", data);
 
       if (response.status === 200) {
         loadingMessage();
-
         message.success("Form submitted successfully");
         reset();
       }
@@ -60,24 +59,24 @@ const Form: React.FC = () => {
   return (
     <FORM onSubmit={handleSubmit(onSubmit)}>
       <InputContainer>
-        <Label>
+        <Label htmlFor="name">
           Name<Required>*</Required>
         </Label>
-        <Input type="text" {...register("name")} />
+        <Input id="name" type="text" {...register("name")} />
         {errors.name && <Error>{errors.name.message}</Error>}
       </InputContainer>
       <InputContainer>
-        <Label>
+        <Label htmlFor="email">
           Email<Required>*</Required>{" "}
         </Label>
-        <Input type="text" {...register("email")} />
+        <Input id="email" type="email" {...register("email")} />
         {errors.email && <Error>{errors.email.message}</Error>}
       </InputContainer>
       <InputContainer>
-        <Label>
+        <Label htmlFor="subject">
           Subject<Required>*</Required>{" "}
         </Label>
-        <TextArea {...register("subject")} />
+        <TextArea id="subject" {...register("subject")} />
         {errors.subject && <Error>{errors.subject.message}</Error>}
       </InputContainer>
       <CommonButton

@@ -8,8 +8,8 @@ import {
 import { RiTeamFill } from "react-icons/ri";
 import { GoGoal } from "react-icons/go";
 import { HiBadgeCheck } from "react-icons/hi";
-import axios from "axios";
-import { CountUp } from 'use-count-up'
+import axios from "@/lib/axios";
+import { RevealY } from "@/utils/animation/RevealY";
 
 interface Counts {
     startupCount: string;
@@ -23,7 +23,7 @@ const CountCards = () => {
     React.useEffect(() => {
         const fetchCount = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/auth/startups/count');
+                const response = await axios.get('/api/startups/count');
                 if (response.status === 200) {
                     setCount(response.data);
 
@@ -36,48 +36,51 @@ const CountCards = () => {
     }, [setCount]);
 
     return (
-        <FeatureCardsContainer>
-            <CardsWrapper >
-                <Card
-                    maxWidth="380px"
-                    flexDirection="row"
-                    color="#fff"
-                    backgroundColor="#316aff"
-                >
-                    <RiTeamFill />
-                    <Content>
-                        <p>Startups Enrolled</p>
-                        <h3>
-                            {count?.startupCount}
-                        </h3>
-                    </Content>
-                </Card>
-                <Card
-                    maxWidth="380px"
-                    flexDirection="row"
-                    color="#fff"
-                    backgroundColor="#316aff"
-                >
-                    <GoGoal />
-                    <Content>
-                        <p>Investors Community</p>
-                        <h3>{count?.investorCount}</h3>
-                    </Content>
-                </Card>
-                <Card
-                    maxWidth="380px"
-                    flexDirection="row"
-                    color="#fff"
-                    backgroundColor="#316aff"
-                >
-                    <HiBadgeCheck />
-                    <Content>
-                        <p>Network Insights</p>
-                        <h3>100</h3>
-                    </Content>
-                </Card>
-            </CardsWrapper>
-        </FeatureCardsContainer>
+        <RevealY width="100%">
+            <FeatureCardsContainer>
+                <CardsWrapper >
+                    <Card
+                        maxWidth="380px"
+                        flexDirection="row"
+                        color="#fff"
+                        backgroundColor="#316aff"
+                    >
+                        <RiTeamFill />
+                        <Content>
+                            <p>Startups Enrolled</p>
+                            <h3>
+                                {count?.startupCount}
+                            </h3>
+                        </Content>
+                    </Card>
+                    <Card
+                        maxWidth="380px"
+                        flexDirection="row"
+                        color="#fff"
+                        backgroundColor="#316aff"
+                    >
+                        <GoGoal />
+                        <Content>
+                            <p>Investors Community</p>
+                            <h3>{count?.investorCount}</h3>
+                        </Content>
+                    </Card>
+                    <Card
+                        maxWidth="380px"
+                        flexDirection="row"
+                        color="#fff"
+                        backgroundColor="#316aff"
+                    >
+                        <HiBadgeCheck />
+                        <Content>
+                            <p>Network Insights</p>
+                            <h3>100</h3>
+                        </Content>
+                    </Card>
+                </CardsWrapper>
+
+            </FeatureCardsContainer>
+        </RevealY>
     );
 }
 

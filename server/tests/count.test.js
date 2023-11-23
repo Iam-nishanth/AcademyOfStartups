@@ -12,7 +12,7 @@ describe("Count Controller", () => {
 
   describe("GET /count", () => {
     it("should return the count of startups and investors", async () => {
-      const response = await request.get("/auth/startups/count");
+      const response = await request.get("/api/startups/count");
 
       expect(response.status).toBe(200);
     });

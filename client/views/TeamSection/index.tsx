@@ -11,6 +11,8 @@ import {
   TeamContainer,
   TeamWrapper,
 } from "@/styles/views/TeamStyles";
+import { RevealX } from "@/utils/animation/RevealX";
+import { RevealY } from "@/utils/animation/RevealY";
 import Image from "next/image";
 import React from "react";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
@@ -119,14 +121,20 @@ const TeamSection = () => {
     <TeamContainer>
       <TeamWrapper>
         <Headings>
-          <SubHeading>Our Team</SubHeading>
-          <Heading>Meet Our Expert Team</Heading>
-          <Paragraph>
-            Harness the power of our exceptional team to accelerate your
-            business growth and elevate your startup management. Our top-tier,
-            end-to-end solution is backed by a dedicated team of experts, ready
-            to assist you every step of the way.
-          </Paragraph>
+          <RevealY>
+            <SubHeading>Our Team</SubHeading>
+          </RevealY>
+          <RevealY>
+            <Heading>Meet Our Expert Team</Heading>
+          </RevealY>
+          <RevealY>
+            <Paragraph>
+              Harness the power of our exceptional team to accelerate your
+              business growth and elevate your startup management. Our top-tier,
+              end-to-end solution is backed by a dedicated team of experts, ready
+              to assist you every step of the way.
+            </Paragraph>
+          </RevealY>
         </Headings>
         <TeamCard>
           <ImageSide>
@@ -161,17 +169,25 @@ const TeamSection = () => {
             </ImageDiv>
           </ImageSide>
           <ContentSide>
-            <h5>About</h5>
-            <Paragraph>
-              Mr. Sudheer Varma, founder of Academy of Startups, aiming the
-              company sales to reach unicorn status in long run. He is super
-              positive person with unlimited creative and artistic skills to
-              design and solve complex issues in business organizations. He
-              believes in work, consistency and smartness could bring ultimate
-              results.
-            </Paragraph>
-            <h5>Skills</h5>
-            <ul>{renderList}</ul>
+            <RevealX>
+              <h5>About</h5>
+            </RevealX>
+            <RevealX>
+              <Paragraph>
+                Mr. Sudheer Varma, founder of Academy of Startups, aiming the
+                company sales to reach unicorn status in long run. He is super
+                positive person with unlimited creative and artistic skills to
+                design and solve complex issues in business organizations. He
+                believes in work, consistency and smartness could bring ultimate
+                results.
+              </Paragraph>
+            </RevealX>
+            <RevealX>
+              <h5>Skills</h5>
+            </RevealX>
+            <RevealX>
+              <ul>{renderList2}</ul>
+            </RevealX>
           </ContentSide>
         </TeamCard>
         <TeamCard>
@@ -207,17 +223,25 @@ const TeamSection = () => {
             </ImageDiv>
           </ImageSide>
           <ContentSide>
-            <h5>About</h5>
-            <Paragraph>
-              Mr. Usman Bin Ali, Co founder and lead consultant in organization
-              has international domain experience in business consulting with
-              wide range of clientele. He is board of member for many mega
-              companies and truly professional strategist with HNI and Corporate
-              connections. Man with vision, experience and disciplined work is
-              his formula.
-            </Paragraph>
-            <h5>Skills</h5>
-            <ul>{renderList2}</ul>
+            <RevealX>
+              <h5>About</h5>
+            </RevealX>
+            <RevealX>
+              <Paragraph>
+                Mr. Usman Bin Ali, Co founder and lead consultant in organization
+                has international domain experience in business consulting with
+                wide range of clientele. He is board of member for many mega
+                companies and truly professional strategist with HNI and Corporate
+                connections. Man with vision, experience and disciplined work is
+                his formula.
+              </Paragraph>
+            </RevealX>
+            <RevealX>
+              <h5>Skills</h5>
+            </RevealX>
+            <RevealX>
+              <ul>{renderList2}</ul>
+            </RevealX>
           </ContentSide>
         </TeamCard>
       </TeamWrapper>

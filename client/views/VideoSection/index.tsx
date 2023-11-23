@@ -14,6 +14,7 @@ import {
 import React from "react";
 import { TiTick } from "react-icons/ti";
 import { TfiBarChart } from "react-icons/tfi";
+import { RevealX } from "@/utils/animation/RevealX";
 
 const VideoSection = () => {
   const image = "/images/Videobg.svg";
@@ -22,53 +23,57 @@ const VideoSection = () => {
     <VideoSectionContainer>
       <VideoSectionWrapper>
         <ContentWrapper>
-          <TextWrapper>
-            <SubHeading>Why choose us</SubHeading>
-            <MainHeading>WE GROW YOUR BUSINESS</MainHeading>
-            <Paragraph>
-              We give value to customer relation than transactions & our success
-              ratio is 100%
-            </Paragraph>
-          </TextWrapper>
+          <RevealX>
+            <TextWrapper>
+              <SubHeading>Why choose us</SubHeading>
+              <MainHeading>WE GROW YOUR BUSINESS</MainHeading>
+              <Paragraph style={{ color: "#bdbccb" }}>
+                We give value to customer relation than transactions & our success
+                ratio is 100%
+              </Paragraph>
+            </TextWrapper>
+          </RevealX>
           <ListWrapper>
-            <List>
-              <ListItem>
-                <span>
-                  <TiTick />
-                </span>
-                <span>Constant Mentoring</span>
-              </ListItem>
-              <ListItem>
-                <span>
-                  <TiTick />
-                </span>
-                <span>Commitment to customers</span>
-              </ListItem>
-              <ListItem>
-                <span>
-                  <TiTick />
-                </span>
-                <span>25+ years of Domain Experience</span>
-              </ListItem>
-              <ListItem>
-                <span>
-                  <TiTick />
-                </span>
-                <span>Country Wide Access</span>
-              </ListItem>
-              <ListItem>
-                <span>
-                  <TiTick />
-                </span>
-                <span>Wide Range of Domains</span>
-              </ListItem>
-              <ListItem>
-                <span>
-                  <TiTick />
-                </span>
-                <span>Always Updating</span>
-              </ListItem>
-            </List>
+            <RevealX>
+              <List>
+                <ListItem>
+                  <span>
+                    <TiTick />
+                  </span>
+                  <span>Constant Mentoring</span>
+                </ListItem>
+                <ListItem>
+                  <span>
+                    <TiTick />
+                  </span>
+                  <span>Commitment to customers</span>
+                </ListItem>
+                <ListItem>
+                  <span>
+                    <TiTick />
+                  </span>
+                  <span>25+ years of Domain Experience</span>
+                </ListItem>
+                <ListItem>
+                  <span>
+                    <TiTick />
+                  </span>
+                  <span>Country Wide Access</span>
+                </ListItem>
+                <ListItem>
+                  <span>
+                    <TiTick />
+                  </span>
+                  <span>Wide Range of Domains</span>
+                </ListItem>
+                <ListItem>
+                  <span>
+                    <TiTick />
+                  </span>
+                  <span>Always Updating</span>
+                </ListItem>
+              </List>
+            </RevealX>
             <Card
               maxWidth="500px"
               flexDirection="column"
@@ -81,6 +86,7 @@ const VideoSection = () => {
               </Content>
             </Card>
           </ListWrapper>
+
         </ContentWrapper>
 
         <VideoModal image={image} videoId={videoId} />

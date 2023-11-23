@@ -15,18 +15,26 @@ import { message } from "antd";
 import * as yup from "yup";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useRouter } from "next/router";
+import ImageConvert from "@/components/Common/ImageConvert";
 
 interface EventType {
-    name: string
-    date: string
-    time: string
-    location: string
+    name: string;
+    subtitle: string | undefined;
+    dates: string;
+    time: string;
+    location: string;
+    description: string | undefined;
+    entryFee: string | undefined;
+    coverImage?: string;
 }
 export const EventValidation = yup.object().shape({
     name: yup.string().required("Name is required"),
-    date: yup.string().required("Date is required"),
+    subtitle: yup.string(),
+    dates: yup.string().required("Date is required"),
     time: yup.string().required("Time is required"),
     location: yup.string().required("Location is required"),
+    description: yup.string(),
+    entryFee: yup.string(),
 })
 
 const AddEvent: React.FC = () => {
@@ -38,18 +46,32 @@ const AddEvent: React.FC = () => {
     } = useForm<EventType>({
         resolver: yupResolver(EventValidation),
     });
-
+    const [base64Image, setBase64Image] = React.useState<string>("");
     const { token, dispatch } = useAuthContext();
     const router = useRouter();
+    const handleImageUpload = (image: string) => {
+        setBase64Image(image);
+    };
 
     const onSubmit = (data: EventType) => {
 
-        const signIn = async () => {
+        const addEvent = async () => {
+            const formData = new FormData();
+            base64Image && formData.append("coverImage", base64Image);
+            formData.append("name", data.name);
+            formData.append("subtitle", data.subtitle || "");
+            formData.append("dates", data.dates);
+            formData.append("time", data.time);
+            formData.append("location", data.location);
+            formData.append("description", data.description || "");
+            formData.append("entryFee", data.entryFee || "");
             try {
                 const loadingMessage = message.loading("Loading...", 0);
-                const response = await axios.post<any>("/admin/add-event", { event: data }, {
+                const response = await axios.post<any>("/admin/add-event", formData, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data",
+
                     }
                 });
 
@@ -76,7 +98,7 @@ const AddEvent: React.FC = () => {
             }
         };
 
-        signIn();
+        addEvent();
     };
 
     return (
@@ -95,15 +117,25 @@ const AddEvent: React.FC = () => {
                     )}
                 </InputDiv>
                 <InputDiv>
-                    <Label>Event Date<Required>*</Required></Label>
+                    <Label>Subtitle</Label>
                     <Controller
-                        name="date"
+                        name="subtitle"
                         control={control}
                         defaultValue=""
                         render={({ field }) => <Input type="text" {...field} />}
                     />
-                    {errors.date && (
-                        <p style={{ color: "red" }}>{errors.date.message}</p>
+
+                </InputDiv>
+                <InputDiv>
+                    <Label>Event Date<Required>*</Required></Label>
+                    <Controller
+                        name="dates"
+                        control={control}
+                        defaultValue=""
+                        render={({ field }) => <Input type="text" {...field} />}
+                    />
+                    {errors.dates && (
+                        <p style={{ color: "red" }}>{errors.dates.message}</p>
                     )}
                 </InputDiv>
                 <InputDiv>
@@ -130,7 +162,33 @@ const AddEvent: React.FC = () => {
                         <p style={{ color: "red" }}>{errors.location.message}</p>
                     )}
                 </InputDiv>
-
+                <InputDiv>
+                    <Label>Entry Fee</Label>
+                    <Controller
+                        name="entryFee"
+                        control={control}
+                        defaultValue=""
+                        render={({ field }) => <Input type="text" {...field} />}
+                    />
+                    {errors.entryFee && (
+                        <p style={{ color: "red" }}>{errors.entryFee.message}</p>
+                    )}
+                </InputDiv>
+                <InputDiv>
+                    <Label>Event Description</Label>
+                    <Controller
+                        name="description"
+                        control={control}
+                        defaultValue=""
+                        render={({ field }) => <textarea rows={4} {...field} />}
+                    />
+                </InputDiv>
+                <InputDiv>
+                    <Label>Logo :</Label>
+                    <div style={{ padding: "10px 40px", display: "flex", flexDirection: "column" }}>
+                        <ImageConvert onImageUpload={handleImageUpload} />
+                    </div>
+                </InputDiv>
 
                 <InputDiv>
                     <CommonButton name="Submit" width="30%" height="40px" />
