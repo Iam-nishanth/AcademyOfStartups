@@ -5,6 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { registerSchema } from "../utils/Validation/index.js";
+import { encryptResponse } from "../utils/encryption/index.js";
 
 const prisma = new PrismaClient();
 
@@ -13,7 +14,7 @@ const saltrounds = 10;
 // ----------------ACCESS TOKEN GENERATION----------------
 function generateAccessToken(userId) {
   return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "12h",
+    expiresIn: "48h",
   });
 }
 
@@ -80,19 +81,16 @@ const Auth = {
               businessEmail: user.userEmail,
             },
           });
-
-          res.cookie("jwt", accessToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "Strict",
-            maxAge: 24 * 60 * 60 * 100,
-          });
-
+          const encryptedUser = encryptResponse(user, process.env.ENCRYPTION_KEY);
+          const encryptedBusiness = encryptResponse(
+            business,
+            process.env.ENCRYPTION_KEY
+          );
           res.status(200).json({
             auth: true,
             token: accessToken,
-            user: user,
-            business: business,
+            user: encryptedUser,
+            business: encryptedBusiness,
           });
         } else {
           res.status(401).json({ message: "Incorrect password", error: err });

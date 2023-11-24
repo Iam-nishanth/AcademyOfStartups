@@ -18,6 +18,7 @@ import { MdRocketLaunch } from "react-icons/md";
 import { HiBadgeCheck } from "react-icons/hi";
 import { FaRepeat } from "react-icons/fa6";
 import { RevealX } from "@/utils/animation/RevealX";
+import { ZoomIn } from "@/utils/animation/ZoomIn";
 
 const RoadmapSection = () => {
   const RoadMapData = [
@@ -58,14 +59,17 @@ const RoadmapSection = () => {
       <RoadmapWrapper>
         <ImageWrapper>
           <ImageDiv>
-            <Image
-              quality={100}
-              width={700}
-              height={700}
-              src={"/images/Improvement.svg"}
-              alt="Roadmap-Image"
-              priority={false}
-            />
+            <ZoomIn>
+
+              <Image
+                quality={100}
+                width={700}
+                height={700}
+                src={"/images/Improvement.svg"}
+                alt="Roadmap-Image"
+                priority={false}
+              />
+            </ZoomIn>
           </ImageDiv>
         </ImageWrapper>
         <RoadmapContent>

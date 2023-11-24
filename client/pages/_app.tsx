@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthContextProvider } from "@/context/AuthContext";
 import Head from "next/head";
+import AuthVerify from "@/components/HighOrders/AuthVerify";
 
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -29,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
+              <AuthVerify />
               <Component {...pageProps} />
             </motion.div>
           </AnimatePresence>

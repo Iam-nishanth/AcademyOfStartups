@@ -1,6 +1,5 @@
 import React from "react";
-import { CommonButton } from "@/components/Common/Button";
-import { Heading, SubHeading } from "@/styles/Globalstyles";
+import { SubHeading } from "@/styles/Globalstyles";
 import {
   CardWrapper,
   EventCard,
@@ -8,7 +7,6 @@ import {
   EventsWrapper,
   Span,
 } from "@/styles/views/EventsStyles";
-import Link from "next/link";
 import axios from '@/lib/axios';
 import { Skeleton } from "antd";
 
@@ -18,64 +16,59 @@ interface Event {
   subtitle: string | undefined;
   dates: string;
   time: string;
-  location: string;
-  description: string | undefined;
-  entryFee: number | undefined;
-  coverImage?: string;
 }
 
-export const getStaticProps = async () => {
-  try {
-    const response = await axios.get("/api/get/events");
-    return {
-      props: {
-        events: response.data,
-      },
+
+
+const EventsSection = () => {
+  const [events, setEvents] = React.useState<Event[]>();
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get("/api/get/events");
+        if (response.status === 200) {
+          setIsLoading(false);
+          setEvents(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
-  } catch (error) {
-    console.log(error);
-    return {
-      props: {
-        events: [],
-      },
-    };
-  }
-};
+    fetchEvents();
+  }, []);
 
-
-const EventsSection = (props: any) => {
-  const [events, setEvents] = React.useState<Event[]>(props.events);
-
-  console.log("events", events);
-
-
-
-  // React.useEffect(() => {
-  //   const fetchEvents = async () => {
-  //     try {
-  //       const response = await axios.get("/api/get/events");
-  //       if (response.status === 200) {
-  //         setEvents(response.data);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchEvents();
-  // }, []);
-
-  return (
+  if (isLoading) return (
     <EventsContainer>
       <EventsWrapper>
-        <SubHeading>Coming Soon</SubHeading>
-        <Heading>Upcoming Events</Heading>
-
-        <CardWrapper>
-        </CardWrapper>
-
+        <Skeleton active paragraph={{ rows: 15, width: '100%' }} />
       </EventsWrapper>
     </EventsContainer>
-  );
+  )
+  else return (
+    <EventsContainer>
+      <EventsWrapper>
+        <CardWrapper>
+          {
+            events?.map((item) =>
+              <EventCard href={`/events/id/${item.id}`} key={item.id}>
+                <strong style={{ fontSize: "25px" }}>{item.name}</strong>
+                <SubHeading>{item.subtitle}</SubHeading>
+                <p>
+                  Date :
+                  <Span> {item.dates}</Span>
+                </p>
+                <p>Time : <Span>{item.time}</Span>
+                </p>
+              </EventCard>
+            )
+          }
+        </CardWrapper>
+      </EventsWrapper>
+    </EventsContainer>
+  )
+
 };
 
 export default EventsSection;

@@ -25,7 +25,7 @@ interface EventType {
     location: string;
     description: string | undefined;
     entryFee: string | undefined;
-    coverImage?: string;
+    paymentLink: string | undefined;
 }
 export const EventValidation = yup.object().shape({
     name: yup.string().required("Name is required"),
@@ -35,6 +35,7 @@ export const EventValidation = yup.object().shape({
     location: yup.string().required("Location is required"),
     description: yup.string(),
     entryFee: yup.string(),
+    paymentLink: yup.string(),
 })
 
 const AddEvent: React.FC = () => {
@@ -53,7 +54,7 @@ const AddEvent: React.FC = () => {
         setBase64Image(image);
     };
 
-    const onSubmit = (data: EventType) => {
+    const onSubmit = (data: any) => {
 
         const addEvent = async () => {
             const formData = new FormData();
@@ -65,6 +66,7 @@ const AddEvent: React.FC = () => {
             formData.append("location", data.location);
             formData.append("description", data.description || "");
             formData.append("entryFee", data.entryFee || "");
+            formData.append("paymentLink", data.paymentLink || "");
             try {
                 const loadingMessage = message.loading("Loading...", 0);
                 const response = await axios.post<any>("/admin/add-event", formData, {
@@ -173,6 +175,15 @@ const AddEvent: React.FC = () => {
                     {errors.entryFee && (
                         <p style={{ color: "red" }}>{errors.entryFee.message}</p>
                     )}
+                </InputDiv>
+                <InputDiv>
+                    <Label>Payment Link</Label>
+                    <Controller
+                        name="paymentLink"
+                        control={control}
+                        defaultValue=""
+                        render={({ field }) => <Input type="text" {...field} />}
+                    />
                 </InputDiv>
                 <InputDiv>
                     <Label>Event Description</Label>

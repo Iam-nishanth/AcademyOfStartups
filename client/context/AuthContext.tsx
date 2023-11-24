@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import { AuthContextProviderProps, AuthContextType, State, Action } from '@/types/AuthTypes';
+import { decryptResponse } from "@/lib/encryption";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -64,8 +65,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         const investor = localStorage.getItem('investor');
 
         if (user && business && token) {
-            const userObject = JSON.parse(user);
-            const businessObject = business ? JSON.parse(business) : null;
+            const userObject = decryptResponse(JSON.parse(user), process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string);
+            const businessObject = business ? decryptResponse(JSON.parse(business), process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string) : null;
             const AccessToken = token ? JSON.parse(token) : null;
             const InvestorObject = investor ? JSON.parse(investor) : null;
 

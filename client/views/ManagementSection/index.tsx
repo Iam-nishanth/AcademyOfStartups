@@ -11,6 +11,7 @@ import { ProgressBar } from "../ProgressSection";
 import { CommonButton } from "@/components/Common/Button";
 import Image from "next/image";
 import { RevealY } from "@/utils/animation/RevealY";
+import { ZoomIn } from "@/utils/animation/ZoomIn";
 
 const ManagementSection = () => {
   return (
@@ -54,12 +55,14 @@ const ManagementSection = () => {
           </RevealY>
         </ContentWrapper>
         <ImageWrapper>
-          <Image
-            src="/images/Management.svg"
-            alt="management-image"
-            fill
-            sizes="(max-width: 640px) 100vw, 640px"
-          />
+          <ZoomIn>
+            <Image
+              src="/images/Management.svg"
+              alt="management-image"
+              fill
+              sizes="(max-width: 640px) 100vw, 640px"
+            />
+          </ZoomIn>
         </ImageWrapper>
       </SectionWrapper>
     </SectionContainer>

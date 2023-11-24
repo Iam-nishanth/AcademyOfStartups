@@ -25,7 +25,7 @@ type NavbarProps = {
 };
 
 const Navbar = ({ toggle, NavBackground }: NavbarProps): JSX.Element => {
-  const { user, business } = useAuthContext();
+  const { user, business, loading } = useAuthContext();
 
   const router = useRouter();
 

@@ -15,6 +15,7 @@ import React from "react";
 import { TiTick } from "react-icons/ti";
 import { TfiBarChart } from "react-icons/tfi";
 import { RevealX } from "@/utils/animation/RevealX";
+import { ZoomIn } from "@/utils/animation/ZoomIn";
 
 const VideoSection = () => {
   const image = "/images/Videobg.svg";
@@ -88,8 +89,9 @@ const VideoSection = () => {
           </ListWrapper>
 
         </ContentWrapper>
-
-        <VideoModal image={image} videoId={videoId} />
+        <ZoomIn>
+          <VideoModal image={image} videoId={videoId} />
+        </ZoomIn>
       </VideoSectionWrapper>
     </VideoSectionContainer>
   );

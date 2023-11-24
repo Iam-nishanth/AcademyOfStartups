@@ -19,6 +19,7 @@ import { LoginResponse } from "@/types/Logintypes";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { LoginValidationSchema } from "@/utils/validation";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import { decryptResponse } from "@/lib/encryption";
 
 type FormData = {
   email: string;
@@ -62,8 +63,8 @@ const LoginForm: React.FC = () => {
           localStorage.setItem('token', JSON.stringify(response.data.token))
           dispatch({
             type: 'LOGIN', payload: {
-              user: response.data.user,
-              business: response.data.business,
+              user: decryptResponse(response.data.user, process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string),
+              business: decryptResponse(response.data.business, process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string),
               token: response.data.token
             }
           })

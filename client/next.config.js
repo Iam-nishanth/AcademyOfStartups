@@ -10,7 +10,7 @@ const nextConfig = {
     },
   },
   images: {
-    domains: ['academyofstartups.com', "dhunis.ltd"],
+    domains: ['academyofstartups.com', "dhunis.ltd", "i.ibb.co"],
   },
 };
 

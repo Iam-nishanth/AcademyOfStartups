@@ -21,7 +21,7 @@ const PasswordSchema = yup.object().shape({
 })
 
 const AccountSection = () => {
-    const { handleSubmit, control, formState: { errors } } = useForm({
+    const { handleSubmit, control, formState: { errors }, reset } = useForm({
         resolver: yupResolver(PasswordSchema),
     });
     const { user, business, token } = useAuthContext();
@@ -52,6 +52,7 @@ const AccountSection = () => {
             if (response.status === 200) {
                 loadingMessage();
                 message.success("Password Changed Successfully");
+                reset();
             }
         } catch (error: any) {
             message.destroy();

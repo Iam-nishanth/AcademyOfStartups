@@ -7,6 +7,10 @@ import Image from 'next/image'
 import { AnchorButton, CommonButton } from '@/components/Common/Button'
 import Link from 'next/link'
 import { useAuthContext } from '@/hooks/useAuthContext'
+import { RevealY } from '@/utils/animation/RevealY'
+import { RevealX } from '@/utils/animation/RevealX'
+import { ZoomIn } from '@/utils/animation/ZoomIn'
+import { color } from 'framer-motion'
 
 
 const InvestorSection = () => {
@@ -18,34 +22,43 @@ const InvestorSection = () => {
             <InvestorContainer>
                 <InvestorWrapper>
                     <HeadingSection>
-
-                        <MainHeading>Partner with us to create a lasting impact on the <br /> <span>Startup Landscape</span></MainHeading>
+                        <RevealY>
+                            <MainHeading>Partner with us to create a lasting impact on the <br /> <span>Startup Landscape</span></MainHeading>
+                        </RevealY>
 
                         {
                             !investorData ? (
-                                <Buttons>
-                                    <Link href={{ pathname: '/investors/login', query: { redirect: 'Register' } }}>
-                                        <CommonButton name='Register' width='150px' height='50px' />
-                                    </Link>
-                                    <Link href='/investors/login'>
-                                        <CommonButton name='Login' width='150px' height='50px' />
-                                    </Link>
-                                </Buttons>
+                                <RevealX>
+
+                                    <Buttons>
+                                        <Link href={{ pathname: '/investors/login', query: { redirect: 'Register' } }}>
+                                            <CommonButton name='Register' width='150px' height='50px' />
+                                        </Link>
+                                        <Link href='/investors/login'>
+                                            <CommonButton name='Login' width='150px' height='50px' />
+                                        </Link>
+                                    </Buttons>
+                                </RevealX>
                             )
                                 : (
-                                    <Link href='/investors/dashboard'>
-                                        <CommonButton name='Go to Dashboard' width='350px' height='50px' />
-                                    </Link>
+                                    <RevealY>
+                                        <Link href='/investors/dashboard'>
+                                            <CommonButton name='Go to Dashboard' width='350px' height='50px' />
+                                        </Link>
+                                    </RevealY>
                                 )
                         }
-
-                        <Paragraph>Join our network of leading entrepreneurs with a proven track record of success. Together, we can invest in the next generation of startups that have the potential to make a real difference in the world. Our extensive network gives you access to the best deals and the most promising entrepreneurs. Partner with us today to create a lasting impact on the startup landscape.</Paragraph>
-                        <Image src='/images/Investment.svg' width={550} height={450} alt='Investor' />
+                        <RevealY>
+                            <Paragraph style={{ color: '#dedede' }}>Join our network of leading entrepreneurs with a proven track record of success. Together, we can invest in the next generation of startups that have the potential to make a real difference in the world. Our extensive network gives you access to the best deals and the most promising entrepreneurs. Partner with us today to create a lasting impact on the startup landscape.</Paragraph>
+                        </RevealY>
+                        <ZoomIn>
+                            <Image src='/images/Investment.svg' width={550} height={450} alt='Investor' />
+                        </ZoomIn>
                     </HeadingSection>
 
                 </InvestorWrapper>
 
-            </InvestorContainer>
+            </InvestorContainer >
 
 
             {/* <ContentSection>
