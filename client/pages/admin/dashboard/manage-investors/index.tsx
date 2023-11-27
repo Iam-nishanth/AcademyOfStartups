@@ -27,7 +27,11 @@ const ManageInvestors = () => {
     React.useEffect(() => {
         const getInvestors = async () => {
             try {
-                const response = await axios.get<any>('/admin/all-investors')
+                const response = await axios.get<any>('/admin/all-investors', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 if (response.status === 200) {
                     const decryptedInvestors = decryptResponse(response.data, process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string)
                     setInvestors(decryptedInvestors)
