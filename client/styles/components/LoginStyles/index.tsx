@@ -11,10 +11,11 @@ export const LoginFORM = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #fff;
   width: 100%;
   padding: 30px;
   gap: 30px;
+  
+
   @media (max-width: 800px) {
     gap: 10px;
     padding: 30px 15px;
@@ -101,9 +102,8 @@ export const Password = styled.div`
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    background-color: #316bff58;
     padding: 10px 10px;
-    border-radius: 50%;
+    background: transparent;
     border: none;
     outline: none;
     svg{

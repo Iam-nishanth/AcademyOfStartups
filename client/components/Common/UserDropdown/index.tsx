@@ -5,6 +5,7 @@ import type { MenuProps } from 'antd';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import Link from 'next/link';
+import { IoPersonCircle } from 'react-icons/io5';
 
 const { useToken } = theme;
 
@@ -23,13 +24,19 @@ const UserDropdown: React.FC<userProps> = ({ user, color }) => {
         {
             key: '1',
             label: (
+                <strong style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px', textAlign: 'center' }}>Hi {user}</strong>
+            ),
+        },
+        {
+            key: '2',
+            label: (
                 <Link style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px' }} href="/user/dashboard">
                     Dashboard
                 </Link>
             ),
         },
         {
-            key: '2',
+            key: '3',
             label: (
                 <Link style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px' }} href="/user/account">
                     My Account
@@ -41,13 +48,19 @@ const UserDropdown: React.FC<userProps> = ({ user, color }) => {
         {
             key: '1',
             label: (
+                <strong>Hi {user}</strong>
+            )
+        },
+        {
+            key: '2',
+            label: (
                 <Link style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px' }} href="/admin/dashboard">
                     Admin-Dashboard
                 </Link>
             )
         },
         {
-            key: '2',
+            key: '3',
             label: (
                 <Link style={{ fontWeight: 'bold', fontSize: 16, padding: '5px 10px' }} href="/admin/account">
                     My Account
@@ -67,6 +80,7 @@ const UserDropdown: React.FC<userProps> = ({ user, color }) => {
         boxShadow: 'none',
     };
 
+
     const LogoutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
@@ -84,7 +98,6 @@ const UserDropdown: React.FC<userProps> = ({ user, color }) => {
         <div className='dropdown'>
 
             <Dropdown
-
                 placement='topRight'
                 menu={isAdmin ? { items: adminItems } : { items: items }}
                 dropdownRender={(menu) => (
@@ -99,7 +112,7 @@ const UserDropdown: React.FC<userProps> = ({ user, color }) => {
             >
                 <a >
                     <Space>
-                        <strong style={{ color: color }}>{user}</strong><CaretDownOutlined />
+                        <IoPersonCircle style={{ color: color, width: 30, height: 30 }} /><CaretDownOutlined />
                     </Space>
                 </a>
             </Dropdown>

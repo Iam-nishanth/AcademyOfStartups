@@ -5,6 +5,7 @@ import { useAuthContext } from '@/hooks/useAuthContext';
 import axios from '@/lib/axios';
 import { Business } from '@/types/AuthTypes';
 import { useRouter } from 'next/router';
+import { decryptResponse } from '@/lib/encryption';
 interface ModalComponentProps {
     showModal: () => void;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,18 +19,12 @@ interface response {
     data: object
     startup: Business
 }
-interface Error {
-    response: object;
-    message: string
-    data: object
-    status: number
-}
+
 
 const ModalComponent: React.FC<ModalComponentProps> = ({ showModal, setOpen, open }) => {
 
     const [confirmLoading, setConfirmLoading] = useState(false);
     const { business, user, token, dispatch } = useAuthContext();
-
 
 
     const router = useRouter();
@@ -55,22 +50,19 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ showModal, setOpen, ope
             loadingMessage();
             if (response.status === 200) {
                 message.success("Business Details Updated");
-
-                localStorage.removeItem('business')
                 localStorage.setItem('business', JSON.stringify(response.data.startup))
                 dispatch({
                     type: 'EDIT', payload: {
-                        business: response.data.startup
+                        business: decryptResponse(response.data.startup, process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string)
                     }
                 })
 
-                // Set a timeout to reload the router after 2 seconds
                 setConfirmLoading(true);
                 setTimeout(() => {
                     router.reload();
                 }, 2000);
             }
-        } catch (error: Error | any) {
+        } catch (error: any) {
             message.destroy()
             if (error.response.status === 404 || error.response.status === 401) {
                 message.error(error.response.data.message);

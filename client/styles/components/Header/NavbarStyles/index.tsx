@@ -145,8 +145,8 @@ export const UserWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 100%;
   max-width: 200px;
+  padding-right: 10px;
 
   @media (max-width: 600px) {
     max-width: 150px;

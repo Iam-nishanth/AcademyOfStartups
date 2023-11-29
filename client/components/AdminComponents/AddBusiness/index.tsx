@@ -266,7 +266,10 @@ const AddBusiness = () => {
                     defaultValue=""
                     control={control}
                     render={({ field }) => (
-                        <Input placeholder="INC No. of Company" {...field} />
+                        <Input placeholder="INC No. of Company" {...field}
+                            value={field.value.toUpperCase()}
+                            onChange={(e) => field.onChange(e.target.value.toUpperCase())}
+                        />
                     )}
                 />
                 {errors.incNo && <Error>{errors.incNo.message}</Error>}
@@ -299,7 +302,10 @@ const AddBusiness = () => {
                     defaultValue=""
                     control={control}
                     render={({ field }) => (
-                        <Input placeholder="PAN No. of Company" {...field} />
+                        <Input placeholder="PAN No. of Company" {...field}
+                            value={field.value.toUpperCase()}
+                            onChange={(e) => field.onChange(e.target.value.toUpperCase())}
+                        />
                     )}
                 />
                 {errors.panNo && <Error>{errors.panNo.message}</Error>}
@@ -311,7 +317,12 @@ const AddBusiness = () => {
                     name="gstNo"
                     defaultValue=""
                     control={control}
-                    render={({ field }) => <Input placeholder="GST No." {...field} />}
+                    render={({ field }) => <Input placeholder="GST No." {...field}
+                        value={field.value?.toUpperCase()}
+                        onChange={(e) => {
+                            field.onChange(e.target.value.toUpperCase());
+                        }}
+                    />}
                 />
             </InputDiv>
 
@@ -348,6 +359,7 @@ const AddBusiness = () => {
                 <div style={{ padding: "10px 40px", display: "flex", flexDirection: "column" }}>
                     <ImageConvert onImageUpload={handleImageUpload} />
                 </div>
+                <Error>File should not be larger than 2MB</Error>
             </InputDiv>
 
             <CommonButton name="Submit" width="30%" height="40px" />

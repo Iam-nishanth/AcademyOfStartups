@@ -54,6 +54,7 @@ const EditBusinessForm = ({ onSubmit }: { onSubmit: (data: BusinessFormData) => 
 
 
 
+
     const submitForm = (data: BusinessFormData) => {
         onSubmit(data);
     };

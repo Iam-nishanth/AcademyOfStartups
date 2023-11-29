@@ -1,5 +1,5 @@
 import React from "react";
-import { SubHeading } from "@/styles/Globalstyles";
+import { Heading, SubHeading } from "@/styles/Globalstyles";
 import {
   CardWrapper,
   EventCard,
@@ -49,6 +49,7 @@ const EventsSection = () => {
   else return (
     <EventsContainer>
       <EventsWrapper>
+        <Heading>Upcoming Events</Heading>
         <CardWrapper>
           {
             events?.map((item) =>

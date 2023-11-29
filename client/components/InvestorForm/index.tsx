@@ -288,6 +288,7 @@ const InvestorForm = () => {
                 <div style={{ padding: "10px 40px" }}>
                     <ImageUpload onImageUpload={handleImageUpload} />
                 </div>
+                <Error>File should not be larger than 2MB</Error>
             </InputDiv>
 
             <CommonButton name="Submit" width="30%" height="40px" />

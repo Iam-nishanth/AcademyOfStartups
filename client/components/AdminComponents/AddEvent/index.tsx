@@ -16,6 +16,7 @@ import * as yup from "yup";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useRouter } from "next/router";
 import ImageConvert from "@/components/Common/ImageConvert";
+import { Error } from "@/styles/components/FormStyles";
 
 interface EventType {
     name: string;
@@ -195,10 +196,11 @@ const AddEvent: React.FC = () => {
                     />
                 </InputDiv>
                 <InputDiv>
-                    <Label>Logo :</Label>
+                    <Label>Cover Image :</Label>
                     <div style={{ padding: "10px 40px", display: "flex", flexDirection: "column" }}>
                         <ImageConvert onImageUpload={handleImageUpload} />
                     </div>
+                    <Error>File should not be larger than 2MB</Error>
                 </InputDiv>
 
                 <InputDiv>

@@ -77,15 +77,15 @@ const StartupsLogin = () => {
 
       if (response.status === 200) {
         loadingMessage();
-
-        message.success("Startup Registered successfully");
+        message.success("Startup Registered, Please Login again");
         reset();
         message.loading("Redirecting...", 0);
-        setTimeout(() => {
-          message.destroy()
-
-          router.push('/user/account/verify')
-        }, 2000);
+        localStorage.removeItem('user');
+        localStorage.removeItem('business');
+        localStorage.removeItem('token');
+        dispatch({ type: 'LOGOUT' });
+        message.destroy();
+        router.replace('/login');
       }
     } catch (error: any) {
       console.error(error);
@@ -268,7 +268,11 @@ const StartupsLogin = () => {
           name="incNo"
           control={control}
           render={({ field }) => (
-            <Input placeholder="INC No. of Company" {...field} />
+            <Input placeholder="INC No. of Company" {...field} value={field.value.toUpperCase()}
+              onChange={(e) => {
+                field.onChange(e.target.value.toUpperCase());
+              }}
+            />
           )}
         />
         {errors.incNo && <Error>{errors.incNo.message}</Error>}
@@ -298,7 +302,12 @@ const StartupsLogin = () => {
           name="panNo"
           control={control}
           render={({ field }) => (
-            <Input placeholder="PAN No. of Company" {...field} />
+            <Input placeholder="PAN No. of Company" {...field}
+              value={field.value.toUpperCase()}
+              onChange={(e) => {
+                field.onChange(e.target.value.toUpperCase());
+              }}
+            />
           )}
         />
         {errors.panNo && <Error>{errors.panNo.message}</Error>}
@@ -310,7 +319,12 @@ const StartupsLogin = () => {
           name="gstNo"
           control={control}
           defaultValue=""
-          render={({ field }) => <Input placeholder="GST No." {...field} />}
+          render={({ field }) => <Input placeholder="GST No." {...field}
+            value={field.value?.toUpperCase()}
+            onChange={(e) => {
+              field.onChange(e.target.value.toUpperCase());
+            }}
+          />}
         />
         {/* {errors.gstNo && <Error>{errors.gstNo.message}</Error>} */}
       </InputDiv>
@@ -346,6 +360,7 @@ const StartupsLogin = () => {
         <div style={{ padding: "10px 40px", display: "flex", flexDirection: "column" }}>
           <ImageConvert onImageUpload={handleImageUpload} />
         </div>
+        <Error>File should not be larger than 2MB</Error>
       </InputDiv>
 
       <CommonButton name="Submit" width="30%" height="40px" />

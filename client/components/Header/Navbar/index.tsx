@@ -16,7 +16,6 @@ import {
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { CommonButton } from "@/components/Common/Button";
 import UserDropdown from "@/components/Common/UserDropdown";
-import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 
 type NavbarProps = {
@@ -25,12 +24,13 @@ type NavbarProps = {
 };
 
 const Navbar = ({ toggle, NavBackground }: NavbarProps): JSX.Element => {
-  const { user, business, loading } = useAuthContext();
+  const { user } = useAuthContext();
 
   const router = useRouter();
 
   const capitalizeFirstLetter = (word: string): string => {
-    return word[0].toUpperCase() + word.slice(1);
+    const firstWord = word;
+    return firstWord[0].toUpperCase() + firstWord.slice(1);
   }
 
   const DisplayName = user && `${capitalizeFirstLetter(user?.name)}`;

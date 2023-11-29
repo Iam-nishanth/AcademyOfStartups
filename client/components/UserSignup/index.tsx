@@ -71,7 +71,7 @@ const UserSignup: React.FC = () => {
                     })
 
                     router.push({
-                        pathname: '/user/add-business',
+                        pathname: '/user/verify',
                         query: { email: data.email },
                     });
                 }

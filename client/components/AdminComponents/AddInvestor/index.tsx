@@ -283,6 +283,7 @@ const AddInvestor = () => {
                 <div style={{ padding: "10px 40px" }}>
                     <ImageUpload onImageUpload={handleImageUpload} />
                 </div>
+                <Error>File should not be larger than 2MB</Error>
             </InputDiv>
 
 

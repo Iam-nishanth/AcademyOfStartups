@@ -15,7 +15,7 @@ Disallow: /admin/*
 
 # Disallow crawling of login and verification pages
 Disallow: /login
-Disallow: /user/account/verify
+Disallow: /user/verify
 
 # Disallow crawling of dashboard pages
 Disallow: /investors/dashboard

@@ -26,6 +26,9 @@ export const HeroWrapper = styled.div`
   @media (min-width: 1600px){
     max-width: 1600px; 
   }
+  @media (max-width: 1200px){
+    padding: 0 20px;
+  }
   @media (max-width: 700px) {
     justify-content: center;
   }

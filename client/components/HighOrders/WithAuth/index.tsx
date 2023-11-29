@@ -21,7 +21,10 @@ const withAuth = <P extends AuthProps>(
                 router.push('/login');
             }
             else if (!loading && user?.role === "ADMIN") router.push({ pathname: '/admin/dashboard', query: { from: 'redirect' } })
-            else if (!loading && user && !business) {
+            else if (!loading && user && user.isVerified === false) {
+                router.push({ pathname: '/user/verify', query: { email: user.userEmail } });
+            }
+            else if (!loading && user && user.isVerified === true && !business) {
                 router.push({ pathname: '/user/add-business', query: { email: user.userEmail } });
             }
         }, [user, loading]);

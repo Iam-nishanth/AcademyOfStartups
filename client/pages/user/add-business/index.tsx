@@ -16,23 +16,23 @@ const SignupPage = () => {
     const router = useRouter();
 
     React.useEffect(() => {
-        if (!loading && user && business) {
+        if (!loading && user && user.isVerified === true && business) {
             router.push({ pathname: '/user/dashboard', query: { from: 'redirect' } })
         }
     }, [loading])
 
 
     return (
-        <Layout title="Add your Business" secure={true} >
+        <Layout title="Add your Business" >
             <SignupSectionContainer>
                 <SignupSectionWrapper>
-                    <ImageContainer>
+                    {/* <ImageContainer>
                         <Heading>Please add the details <br /> to complete the <br /> registration process</Heading>
                         <Image src="/images/StartupSvg.svg" alt="signup" width={500} height={500} />
-                    </ImageContainer>
-                    <FormContainer>
-                        <StartupsLogin />
-                    </FormContainer>
+                    </ImageContainer> */}
+                    {/* <FormContainer> */}
+                    <StartupsLogin />
+                    {/* </FormContainer> */}
                 </SignupSectionWrapper>
             </SignupSectionContainer>
         </Layout>

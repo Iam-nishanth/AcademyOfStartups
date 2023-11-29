@@ -7,13 +7,12 @@ import { useRouter } from 'next/router';
 import { Input } from '@/styles/components/FormStyles';
 import styled from 'styled-components';
 import Head from 'next/head';
-import withAuth from '@/components/HighOrders/WithAuth';
 
 
 
 const VerifyEmail = () => {
 
-    const { user, token, dispatch } = useAuthContext();
+    const { user, token, dispatch, loading } = useAuthContext();
     const otpInput = React.useRef<HTMLInputElement>(null);
     const [emailSent, setEmailSent] = React.useState(false);
     const [resendDisabled, setResendDisabled] = React.useState(false);
@@ -37,6 +36,8 @@ const VerifyEmail = () => {
     }
 
     useEffect(() => {
+        if (!loading && !user) window.location.replace('/login');
+
         countDown()
         return () => {
             clearInterval(countdown);
@@ -59,8 +60,6 @@ const VerifyEmail = () => {
                 message.success("OTP sent to your Email")
                 setEmailSent(true)
                 setResendDisabled(true)
-
-
             }
         } catch (error) {
             console.log(error)
@@ -106,20 +105,9 @@ const VerifyEmail = () => {
             })
             loadingMessage();
             if (response.status === 200) {
+                dispatch({ type: 'VERIFY_USER', payload: { ...user, isVerified: true } })
                 message.success("Email Verified")
-
-
-                setTimeout(() => {
-                    message.loading("Redirecting...", 0);
-                    localStorage.removeItem('user');
-                    localStorage.removeItem('business');
-                    localStorage.removeItem('token');
-                    dispatch({ type: 'LOGOUT' });
-                    message.destroy();
-                    router.replace('/login');
-                }, 2000);
-
-
+                router.push({ pathname: '/user/add-business', query: { email: user?.userEmail } })
             }
         } catch (error) {
             console.log(error)
@@ -141,7 +129,7 @@ const VerifyEmail = () => {
                             <AccountSectionWrapper style={{ textAlign: 'center', height: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', gap: '20px' }}>
                                 <Heading style={{ color: 'white' }}>Account Verified</Heading>
                                 <SubHeading>You can now login to your account</SubHeading>
-                                <CommonButton onClick={() => router.push('/user/account')} >Go Back</CommonButton>
+                                <CommonButton onClick={() => router.push('/')} >Go Back</CommonButton>
                             </AccountSectionWrapper>
                         ) : (
                             <AccountSectionWrapper style={{ textAlign: 'center', height: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', gap: '20px' }}>
@@ -151,7 +139,7 @@ const VerifyEmail = () => {
 
                                 {emailSent && (
                                     <>
-                                        <Input type="text" ref={otpInput} style={{ textAlign: 'center' }} />
+                                        <Input type="text" ref={otpInput} style={{ textAlign: 'center', width: '100%', maxWidth: '300px' }} />
                                         <CommonButton onClick={verifyEmail}>Verify Email</CommonButton>
                                         <ResendButton disabled={resendDisabled} onClick={resendEmail}>{resendDisabled ? `Resend in ${countdown} seconds` : 'Resend'}</ResendButton>
 
@@ -224,4 +212,4 @@ const ResendButton = styled.button`
   }
 `
 
-export default withAuth(VerifyEmail)
+export default VerifyEmail

@@ -19,7 +19,10 @@ const DashBoardsection: React.FC = () => {
     const [investorData, setInvestorData] = useState<Investor[]>([]);
 
     useEffect(() => {
-        if (!loading && user && !business) {
+        if (!loading && user && user.isVerified === false) {
+            router.push('/user/verify');
+        }
+        else if (!loading && user && user.isVerified === true && !business) {
             router.push('/user/add-business');
         }
 
