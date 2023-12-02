@@ -8,7 +8,7 @@ interface RevealProps {
 
 export const RevealX = ({ children, width = "fit-content" }: RevealProps) => {
     const ref = React.useRef(null)
-    const isInView = useInView(ref, { once: true, margin: "0px 0px -150px 0px" })
+    const isInView = useInView(ref, { once: true, margin: "0px 0px -100px 0px" })
     const mainControls = useAnimation();
 
     React.useEffect(() => {
